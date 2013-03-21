@@ -1,7 +1,5 @@
 ﻿@model MvcApplication2.Models.DISpecialistModel
-@{
-    ViewBag.Title = "DISpecialist";
-}
+
 <script type="text/javascript">
     function ChangeListBoxWidth(obj) {
         obj.style.width = '';
@@ -108,34 +106,81 @@
         }
     });
     myEditor.render();
+
+    
 </script>
-
-@using (Html.BeginForm("search", "DISpecialist"))
-{
-    @Html.Raw("<div>Search:</div><div>");
-    
-    List<SelectListItem> items = new List<SelectListItem>();
-    
-    items.Add(new SelectListItem
+    @using (Html.BeginForm("filterRequestByKeyword", "DISpecialist"))
     {
-        Text = "Keyword",
-        Value = "1",
-    });
-    items.Add(new SelectListItem
-    {
-        Text = "RequestID",
-        Value = "2"
-    });
         
-    @Html.DropDownListFor(x => x.SearchModel.searchBy, new SelectList(items, "Value", "Text"))
+    @Html.Raw("<div>Search:</div><div>");
 
-    @Html.EditorFor(x=> x.SearchModel.searchKey)
+                                        List<SelectListItem> items = new List<SelectListItem>();
 
-    
-        <input type="submit" value="Search" />
-    
+                                        items.Add(new SelectListItem
+                                        {
+                                            Text = "Keyword",
+                                            Value = "1",
+                                        });
+                                        items.Add(new SelectListItem
+                                        {
+                                            Text = "RequestID",
+                                            Value = "2"
+                                        });
+        
+    @Html.DropDownListFor(x => x.searchModel.searchBy, new SelectList(items, "Value", "Text"))
+
+    @Html.TextBoxFor(m=>m.searchModel.searchKey,new { id = "searchBar" })
+    <input type="submit" value="Search" />
+
+        
     @Html.Raw("</div>");
-}
+    }
+
+
+
+    @using (Html.BeginForm("view", "DISpecialist"))
+    {
+    @Html.Raw("<div>");
+
+
+
+                      if (Model != null && Model.requests != null)
+                      {
+    @Html.Raw(" <table   <tr>   <th>RequestId</th>   <th>PatientId</th>  <th>Time Created</th> <th>Created By</th> <th>Completed By</th> <th>Time Completed</th></tr>");
+                                                                                                                                                                       foreach (var item in Model.requests)
+                                                                                                                                                                       {
+                
+    @Html.Raw("<tr><td>");
+    @Html.DisplayFor(modelItem => item.request.RequestId)
+    @Html.Raw("</td>");
+    @Html.Raw("<td>");
+    @Html.DisplayFor(modelItem => item.patient.PatientId)
+    @Html.Raw("</td>");
+    @Html.Raw("<td>");
+    @Html.DisplayFor(modelItem => item.userCreateRequest.TimeCreated)
+    @Html.Raw("</td>");
+    @Html.Raw("<td>");
+    @Html.Label(item.createrProfile.FirstName + " " + item.createrProfile.LastName)
+    @Html.Raw("</td>");
+    @Html.Raw("<td>");
+    @Html.Label((item.completerProfile == null ? "" : item.completerProfile.FirstName) + " " + (item.completerProfile == null ? "" : item.completerProfile.LastName))
+    @Html.Raw("</td>");
+    @Html.Raw("<td>");
+    @Html.DisplayFor(modelItem => item.userCompleteRequest.CompletionTime)
+    @Html.Raw("</td>");
+    @Html.Raw("</td></tr>");
+
+                                                                                                                                                                       }
+    @Html.Raw("</table>") 
+     
+                      }
+     
+   
+    <input type="submit" value="View Request" />  
+    @Html.Raw("</div>");
+    }
+
+
 
 
 @*<div id="dispecialist">
@@ -149,6 +194,8 @@
     <br />
     <button id="newRequest">New Request</button>
 </div>*@
+
+
 @*<div id="rborder" hidden>
 
     <p><b>&nbsp;&nbsp;Request Form</b></p>
@@ -332,3 +379,8 @@
    
     <div style="clear: both"></div>
 </div>*@
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

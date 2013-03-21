@@ -1,10 +1,8 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
- 
+
 <head>
-  
+
     <meta charset="utf-8" />
     <title>@ViewBag.Title - DIRA</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -34,11 +32,11 @@
         $(function () { var availableTags = ["Mike", "Mj", "Tok", "ib", "Ray"]; $("#inputbox").autocomplete({ source: availableTags }); });
 
     </script>
-    
+
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    
+
 </head>
 <body>
     <header>
@@ -55,11 +53,7 @@
                     
                     
                 </section>
-                <nav>                        
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Admin", "Admin", "Admin")</li>
-                    </ul>
-                    </nav>
+                
 
             </div>
         </div>
@@ -91,39 +85,47 @@
 
 @helper TabFactory_create(string username, string[] role)
 {
- 
+@*
     <div id="tabs">
         <ul>
             @for (int i = 0; i < role.Length; i++)
             {
                 <li><a href="@("#" + role[i])">@(role[i])</a></li>
             }
+
+        </ul>*@
+
+
+    <nav>
+        <ul id="menu">
+    @for (int i = 0; i < role.Length; i++)
+    {
             
-        </ul>
+    
+            if (role[i].Equals("Admin"))
+            {
+                <li>@Html.ActionLink("Admin", "Admin", "Admin")</li>
+            }
+            else if (role[i].Equals("Editor"))
+            {
+                <li>@Html.ActionLink("DI Specialist","DISpecialist","DISpecialist")</li>
+            }
+            else if (role[i].Equals("Viewer"))
+            {
+               // <li>@Html.ActionLink("Viewer", role[i], role[i])</li>
+            }
+            else if (role[i].Equals("Reporter"))
+            {
+                <li>@Html.ActionLink("Reporter", "Reporter", "Reporter")</li>
+            }
+
+       
+    }
+             </ul>
+    </nav>
 
 
-
-        @for (int i = 0; i < role.Length; i++)
-        {
-            <div id="@(role[i])">
-                @if (role[i] == "Admin")
-                {
-                    @AdminFactory_create()
-                }
-                else if (role[i] == "Editor")
-                {
-                    @DI_SpecialistFactory_create(@username)
-                }
-                else if (role[i] == "Reporter")
-                {
-                    @ReporterFactory_create(username)
-                }
-               
-            </div>
-        }
-
-
-    </div>
+    // </div>
     /*... code to make the page look nicer …*/ 
     
 }
@@ -131,12 +133,13 @@
 
 @helper AdminFactory_create()
 {
-    @*<section>
+@*<section>
         @Html.Partial("~/Views/Admin/Admin.cshtml", new MvcApplication2.Models.Keywords())
     </section>*@
 }
-@helper SearchBar_create(){    
- @*   
+@helper SearchBar_create()
+{    
+@*   
 // search bar with a autocomplete enabled input text box    
                                <div>        <input type="text" id="inputbox" autofocus />        
                                    <input type="button" value="Search" onclick="location.href='<%: Url.Action("Action", "Controller") %>'" />    </div>    
@@ -152,7 +155,7 @@
 
 @helper DI_SpecialistFactory_create(string username)
 {
-    @Html.Partial("~/Views/DISpecialist/DISpecialist.cshtml",new MvcApplication2.Models.DISpecialistModel())
+    @Html.Partial("~/Views/DISpecialist/DISpecialist.cshtml")//,new MvcApplication2.Models.DISpecialistModel())
     //@Html.Partial("~/View/")
 }
 
@@ -191,6 +194,7 @@
 
 @helper ReporterFactory_create(string username)
 {
-    @Html.Partial("~/Views/Reporter/Reporter.cshtml",new MvcApplication2.Models.ReporterPanelModel())
+    
+    @Html.Partial("~/Views/Reporter/Reporter.cshtml")//,new MvcApplication2.Models.ReporterPanelModel())
 }
 

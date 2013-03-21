@@ -19,21 +19,19 @@ namespace MvcApplication2.Controllers
         //
         // GET: /Reporter/
 
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        public ActionResult ExportToExcel()
+
+
+        public ActionResult Reporter()
         {
-            System.Diagnostics.Debug.WriteLine("123");
+            
             return View();
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ExportToExcel(ReporterPanelModel m) 
+        public ActionResult Reporter(ReporterPanelModel m) 
         {
             if (ModelState.IsValid)
             {

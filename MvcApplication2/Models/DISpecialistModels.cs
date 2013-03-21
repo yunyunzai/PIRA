@@ -36,7 +36,7 @@ namespace MvcApplication2.Models
         public DbSet<UserCompleteRequest> UserCompleteRequest { get; set; }
         public DbSet<UserCreateRequest> UserCreateRequest { get; set; }
         public DbSet<UserEditRequest> UserEditRequest { get; set; }
-
+        public DbSet<UserProfile> Users{ get; set; }
 
 
 
@@ -73,7 +73,7 @@ namespace MvcApplication2.Models
         [System.ComponentModel.DisplayName("Caller Phone")]
         public string Phone { get; set; }
         [System.ComponentModel.DisplayName("Patient ID")]
-        public Int64 PatientId { get; set; }  
+        public Int64? PatientId { get; set; }  
     }
 
     [Table("Patient")]
@@ -246,14 +246,27 @@ namespace MvcApplication2.Models
 
     public class DISpecialistModel
     {
-        public SearchModel SearchModel{ get; set; }
-
+        public SearchModel searchModel{ get; set; }
+        public List<RequestViewModel> requests { get; set; }
     }
 
     public class SearchModel
     {
         public string searchBy { get; set; }
         public string searchKey { get; set; }
+    }
+
+    public class RequestViewModel
+    {
+        public Request request { get; set; }
+        public Patient patient { get; set; }
+        public UserProfile createrProfile { get; set; }
+        public UserProfile completerProfile { get; set; }
+        public Caller caller { get; set; }
+        public CallerType callerType { get; set; }
+        public UserCreateRequest userCreateRequest { get; set; }
+        public UserCompleteRequest userCompleteRequest { get; set; }
+        
     }
    
 }
