@@ -1,0 +1,50 @@
+﻿@model MvcApplication2.Models.Request
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Request</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsActive)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsActive)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TotalTimeSpent)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TotalTimeSpent)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Caller.Email)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Caller.Email)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Phone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Patient.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Patient.Name)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RequestId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

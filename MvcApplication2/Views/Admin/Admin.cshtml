@@ -1,0 +1,106 @@
+﻿@model IEnumerable<MvcApplication2.Models.Keywords>
+
+<script>
+  $(function() {
+      var availableTags = [@foreach(var i in Model){
+                               <text>"@i.Keyword",</text>
+                           }
+      ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+<div class="content-wrapper">
+    <div class="float-left">
+        <nav>
+            <ul id="menu">
+                <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                 <li>@Html.ActionLink("User Management", "Index", "Users")</li>
+                <li id="vh"><a href="#">View History</a></li>
+            </ul>
+        </nav>
+    </div>
+</div><br /><br /><br /><hr />
+
+    <div id="keyword_management" >
+    @Html.ActionLink("Add New Keyword", "AddKeyword")
+    @using (Html.BeginForm())
+    {    
+         <div class="ui-widget"> Keyword: @Html.TextBox("SearchString", "", new { id = "tags" }) &nbsp;  
+         <input type="submit" value="Filter" /></div> 
+    } 
+        <div style="height: 400px; overflow-y:scroll;">
+    <table style="border: 1px solid #e3e3e3;
+	background-color: #f2f2f2;
+        width: 100%;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;">
+           <tr>
+               <th style="font-size: 17px;
+	line-height: 20px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
+	text-shadow: white 1px 1px 1px;">Keyword</th>
+               <th style="font-size: 17px;
+	line-height: 20px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
+	text-shadow: white 1px 1px 1px;">Active</th>
+           </tr>
+   @foreach (var item in Model)
+   {
+       
+           <tr>
+            <td style="line-height: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.Keyword)</td>
+            <td style="line-height: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.IsActive)</td>
+               
+            <td style="line-height: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;">@Html.ActionLink("Edit", "EditKeyword", new { key = item.Keyword })</td>
+           </tr>
+       
+   }
+        </table>
+            </div>
+        </div>
+
+
+<div class="UserManagement" hidden>
+    <br />
+    <br />
+    <hr />
+    <label>User ID </label>
+    <form >
+        <select name="user">
+            <option value="new user" selected>New User</option>
+        </select><br />
+    </form>   
+    <section>
+        @*@Html.Partial("_Admin_UM")*@
+    </section>
+</div>
+<div class="ViewHistory" hidden>
+    <br />
+    <br />
+    <hr />
+    <form>
+        <input type="text" name="history_search_box" />&nbsp;
+        <input type="button" name="history_search_button" value="View"/>
+        <input type="button" name="export" value="Export" style="position:relative; left:25px;" />
+    </form>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

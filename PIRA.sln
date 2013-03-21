@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIRA", "MvcApplication2\PIRA.csproj", "{F4E0D034-9008-4A75-9DEE-0CD62C8DBB7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F519BEE-32CB-4969-970C-2214FD26B269}"
+	ProjectSection(SolutionItems) = preProject
+		MvcApplication2\Views\Requests\Edit.cshtml = MvcApplication2\Views\Requests\Edit.cshtml
+		MvcApplication2\Views\Reporter\ExportToExcel.cshtml = MvcApplication2\Views\Reporter\ExportToExcel.cshtml
+		MvcApplication2\Views\Reporter\Reporter.cshtml = MvcApplication2\Views\Reporter\Reporter.cshtml
+		MvcApplication2\Views\Reporter\SaveFile.cshtml = MvcApplication2\Views\Reporter\SaveFile.cshtml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4E0D034-9008-4A75-9DEE-0CD62C8DBB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E0D034-9008-4A75-9DEE-0CD62C8DBB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E0D034-9008-4A75-9DEE-0CD62C8DBB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E0D034-9008-4A75-9DEE-0CD62C8DBB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

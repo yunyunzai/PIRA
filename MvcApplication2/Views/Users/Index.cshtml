@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MvcApplication2.Models.UserProfile>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div class="content-wrapper">
+    <div class="float-left">
+        <nav>
+            <ul id="menu">
+                <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                 <li>@Html.ActionLink("User Management", "Index", "Users")</li>
+                <li id="vh"><a href="#">View History</a></li>
+            </ul>
+        </nav>
+    </div>
+<p>
+      @Html.ActionLink("Register New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+     
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActivated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActivated)
+        </td>
+        <td>
+            
+            
+                   </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+          
+        </td>
+    </tr>
+}
+
+</table>

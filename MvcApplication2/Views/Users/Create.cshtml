@@ -1,0 +1,73 @@
+﻿@model MvcApplication2.Models.UserProfile
+@{
+    List<MvcApplication2.ViewModels.Roles> vmRoles = ViewBag.ViewModelRoles;
+    List<MvcApplication2.ViewModels.UserGroup> vmGroups = ViewBag.ViewModelGroups;
+}
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>UserProfile</legend>
+
+        <div class="username-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="username-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+           <div class ="fname-label">
+            <label>First Name</label>
+        </div>
+        <div class="fname-field">
+            @Html.EditorFor(model=>model.FirstName)
+            @Html.ValidationMessageFor(model=>model.FirstName)
+        </div>
+        <div class="lname-label">
+
+            <label>Last Name</label>
+        </div>
+        <div class="lname-field">
+            @Html.EditorFor(model=>model.LastName)
+            @Html.ValidationMessageFor(model=>model.LastName)
+        </div>
+        <div class="activation-label">
+           <label>Activation Status</label>
+        </div>
+        <div class="activation-field">
+            @Html.EditorFor(model => model.IsActivated)
+            @Html.ValidationMessageFor(model => model.IsActivated)
+        </div>
+       
+        
+        <div class="email-label">
+            <label>Email</label>
+        </div>
+        <div class="email-field">
+            @Html.EditorFor(model=>model.Email)
+            @Html.ValidationMessageFor(model=>model.Email)
+        </div>
+
+     
+        <p>
+           
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

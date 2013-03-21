@@ -1,0 +1,86 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#tabs").tabs();
+            });
+        </script>
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>                        
+                        <ul id="menu">                            
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @TabFactory_create(User.Identity.Name, new string[] { "Admin","Editor","Viewer","Reporter"})
+                @RenderBody()
+            </section>
+        </div>
+        
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+
+@helper TabFactory_create (string username, string[] role)
+{
+
+    <p>Welcome, @username.</p>    
+     <div id="tabs">
+     <ul>
+      @for (int i=0;i<role.Length;i++)
+      {
+         <li><a href="@("#"+role[i])">@(role[i])</a></li>
+      }
+
+        </ul>
+
+      @for (int i=0;i<role.Length;i++)
+      {
+        <div id="@(role[i])">
+            <p>User interface for @(role[i]), This Panel contains UI components required to build the interface</p>
+          </div>
+      }
+
+  
+</div>
+    /*... code to make the page look nicer …*/ 
+}

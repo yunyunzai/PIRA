@@ -1,0 +1,47 @@
+﻿@model MvcApplication2.Models.UserProfile
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>UserProfile</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsActivated)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsActivated)
+    </div>
+    <div class ="usersinclass-label">
+      <label>Roles</label>
+    </div>
+    <div class="usersinclass-field">
+        <table>
+             <tr>
+        @foreach (var item in Model.UsersInRoles)
+        {
+           
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role.RoleName)
+                </td>
+                
+            
+        }
+                </tr>
+        </table>
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,101 @@
+﻿@model MvcApplication2.Models.Question
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Question</legend>
+
+        @Html.HiddenFor(model => model.QuestionId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QuestionContent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.QuestionContent)
+            @Html.ValidationMessageFor(model => model.QuestionContent)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Response)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Response)
+            @Html.ValidationMessageFor(model => model.Response)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Severity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Severity)
+            @Html.ValidationMessageFor(model => model.Severity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Probability)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Probability)
+            @Html.ValidationMessageFor(model => model.Probability)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ComputedImpact)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ComputedImpact)
+            @Html.ValidationMessageFor(model => model.ComputedImpact)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeTaken)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TimeTaken)
+            @Html.ValidationMessageFor(model => model.TimeTaken)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TumorTypeAbbreviate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TumorTypeAbbreviate)
+            @Html.ValidationMessageFor(model => model.TumorTypeAbbreviate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RequestId, "Request")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("RequestId", String.Empty)
+            @Html.ValidationMessageFor(model => model.RequestId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QuestionTypeAbbreviate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.QuestionTypeAbbreviate)
+            @Html.ValidationMessageFor(model => model.QuestionTypeAbbreviate)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

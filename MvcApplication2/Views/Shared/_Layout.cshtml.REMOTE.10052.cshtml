@@ -1,0 +1,145 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#tabs").tabs();
+            });
+        </script>
+        <meta name="viewport" content="width=device-width" />
+        
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>                        
+                        <ul id="menu">                            
+                            <li>@Html.ActionLink("HOME", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @TabFactory_create(User.Identity.Name, new string[] { "Admin","Editor","Viewer","Reporter"})
+                @RenderBody()
+            </section>
+        </div>
+        
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+
+@helper TabFactory_create (string username, string[] role)
+{
+
+    <p>Welcome, @username.</p>    
+     <div id="tabs">
+     <ul>
+      @for (int i=0;i<role.Length;i++)
+      {
+         <li><a href="@("#"+role[i])">@(role[i])</a></li>
+      }
+
+        </ul>
+
+      @for (int i=0;i<role.Length;i++)
+      {
+        <div id="@(role[i])">
+            @if(role[i].Equals("Reporter")){
+              @ReporterFactory_create(username);
+                
+            }
+          </div>
+      }
+
+  
+</div>
+    /*... code to make the page look nicer …*/ 
+}
+
+@helper ReporterFactory_create(string username)
+{
+    
+   <script type="text/javascript">
+       $(function () {
+           $("#fromDatePicker").datepicker();
+       });
+       $(function () {
+           $("#toDatePicker").datepicker();
+       });
+       $(input[name = averageTimePerRequests]).attr('checked')
+       $(input[name = totalNRequests]).attr('checked')
+   </script>
+  
+    <p>From: <input type="text" id="fromDatePicker" /></p>
+    <p>To: <input type="text" id="toDatePicker" /></p>
+    <p>Total number of requests: <input type="checkbox" name="totalNRequests" value="unchecked" /></p>
+    <p>Average time per request: <input type="checkbox" name="averageTimePerRequests" value="unchecked" /></p>
+    
+    //Get buttons for charts right here
+    //Better alternative is to directly connect to the Database
+  
+    <button id="button1" onClick="getTableChart()">Table</button>
+     <button id="button2" onclick="getLineChart()">Line Graph</button>
+     <button id="button3" onclick="getBarChart()">Bar Chart</button>
+    <button id="button4" onclick="getTurnaround()">Turnaround Chart</button>
+    
+    <script type="text/javascript">
+      
+        $(function getTableChart(){
+            ($("#button1").click(function () {
+                document.write("hey, it's a table graph!");
+            }))
+        })
+
+        $(function getLineChart(){
+            ($("#button2").click(function () {
+                document.write("hey, it's a line graph!");
+            }))
+        })
+        $(function getBarChart(){
+            ($("#button3").click(function () {
+                document.write("hey, it's a bar graph!");
+            }))
+        })
+        $(function getTurnaround(){
+            ($("#button4").click(function () {
+                document.write("hey, it's a turnaround graph!");
+            }))
+        })
+
+    </script>
+    
+}

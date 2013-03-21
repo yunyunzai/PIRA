@@ -1,0 +1,28 @@
+﻿@model MvcApplication2.Models.Keywords
+@{
+    ViewBag.Title = "Edit Keyword";
+}
+
+<h2>Edit Keyword</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Keyword</legend>
+
+            @Html.HiddenFor(model => model.Keyword)
+            &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Keyword)<br /><br />
+            @Html.LabelFor(model => model.IsActive)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;@Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive)
+       
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

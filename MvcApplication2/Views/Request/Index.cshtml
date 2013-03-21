@@ -1,0 +1,80 @@
+﻿@model IEnumerable<MvcApplication2.Models.Request>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalTimeSpent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Caller.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Caller.Name)             @*============edited==============*@
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)                   @*============edited==============*@
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.PatientId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalTimeSpent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Caller.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Caller.Name)     @*============edited==============*@
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)            @*============edited==============*@
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.PatientId)
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RequestId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RequestId }) |
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.RequestId })          ============removed==============*@
+        </td>
+    </tr>
+}
+
+</table>

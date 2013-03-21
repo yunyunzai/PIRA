@@ -1,0 +1,99 @@
+﻿@model MvcApplication2.Models.UserProfile
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<div class="content-wrapper">
+    <div class="float-left">
+        <nav>
+            <ul id="menu">
+                <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                 <li>@Html.ActionLink("User Management", "Index", "Users")</li>
+                <li id="vh"><a href="#">View History</a></li>
+            </ul>
+        </nav>
+    </div>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>UserProfile</legend>
+
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="username-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="username-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+
+        <div class="activationstatus-label">
+            @Html.LabelFor(model => model.IsActivated)
+        </div>
+        <div class="activationstatus-field">
+            @Html.EditorFor(model => model.IsActivated)
+            @Html.ValidationMessageFor(model => model.IsActivated)
+        </div>
+            <div class="email-label">
+            <label>Email</label>
+        </div>
+        <div class="email-field">
+            @Html.EditorFor(model=>model.Email)
+            @Html.ValidationMessageFor(model=>model.Email)
+        </div>
+    <div id ="roleSwitcher">
+        
+            @{
+    List<MvcApplication2.ViewModels.Roles> vmRoles = ViewBag.AllAssignedRoles;
+    List<MvcApplication2.ViewModels.UserGroup> vmGroups = ViewBag.AllAssignedGroups;
+        
+  if(vmRoles!=null){
+        foreach(var item in vmRoles){
+	        <label class="checkbox">
+	        <input type="checkbox" name="selectedRoles" value="@item.RoleId"
+	       	@(Html.Raw((item.IsAssigned)? "checked=\"checked\"": ""))
+                />
+			        @item.RoleName
+		        </label>
+
+                }
+                         
+                }
+    if (vmGroups != null)
+    {
+        foreach (var group in vmGroups)
+        {
+            <label class="checkbox">
+                <input type="checkbox" name="selectedGroups" value ="@group.Abbreviate"
+                      	@(Html.Raw((group.IsAssigned)? "checked=\"checked\"": ""))
+                    />
+                @group.Name
+            </label>
+
+        }
+
+
+    }
+            }
+	
+
+        
+            </div>
+    
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

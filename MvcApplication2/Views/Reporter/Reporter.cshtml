@@ -1,0 +1,159 @@
+﻿@model MvcApplication2.Models.ReporterPanelModel
+@{
+    ViewBag.Title = "Reporter";
+}
+
+<h2>Reporter</h2>
+<div class="Reporter">
+
+    @*   <form id="GenRepForm" onsubmit="javascript:generateReport()">
+       <style type="text/css">
+        .validationError {
+            border: solid 2px red;
+        }
+        .validationValid {
+            border:  solid 2px green;
+        }
+    </style>*@
+    <script type="text/javascript">
+        $(function () {
+            $("#fromDatePicker").datepicker();
+        });
+        $(function () {
+            $("#toDatePicker").datepicker();
+        });
+        //$(input[name = averageTimePerRequests]).attr('checked')
+        //$(input[name = totalNRequests]).attr('checked')
+    </script>
+
+    @using (Html.BeginForm("ExportToExcel", "Reporter"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div>
+            @Html.LabelFor(model => model.fromDate)
+            @Html.TextBoxFor(x => x.fromDate, new { id = "fromDatePicker" })
+        </div>  
+        
+        <div>
+            @Html.LabelFor(model => model.toDate)
+            @Html.TextBoxFor(x => x.toDate, new { id = "toDatePicker" })
+        </div>         
+        
+        <div style="display: inline">
+            @Html.EditorFor(x => x.totalNRequests)              
+            @Html.LabelFor(model => model.totalNRequests) 
+        </div>
+        
+        <div style="display: inline">
+            @Html.EditorFor(x => x.averageTimePerRequests) 
+            @Html.LabelFor(model => model.averageTimePerRequests)
+        </div>
+        
+        
+        @*
+        
+        List<SelectListItem> items = new List<SelectListItem>();
+        items.Add(new SelectListItem
+        {
+            Text = "Geographic Region",
+            Value = "1"
+        });
+        items.Add(new SelectListItem
+        {
+            Text = "Caller Type",
+            Value = "2",
+            Selected = true
+        });
+        items.Add(new SelectListItem
+        {
+            Text = "Tumour Group",
+            Value = "3"
+        });
+        
+        @Html.DropDownListFor(x => x.stratify,  new SelectList(items, "Value", "Text"))
+        
+        *@
+        
+        <div>
+            <input type="submit" value="Generate Report" />
+        </div> 
+    }
+
+
+    <!--
+<label>From: <input type="text" id="fromDatePicker" name="fromDatePicker" required title="Start date requires to be chosen"/></label>
+  <div style= "position:absolute; left: 500px; top: 60px">
+        <label>To: <input type="text" id="toDatePicker" required title="End date requires to be chosen" /></label></div>
+   
+    <p>Total number of requests   <input type="checkbox" name="totalNRequests" value="unchecked" /></p>
+    <p>Average time per request   <input type="checkbox" name="averageTimePerRequests" value="unchecked" /></p><br />
+   
+    <div style= "position:absolute; left: 500px; top: 120px">
+      <p>  Stratification       
+        <select name="stratify" required title="Stratification type needs to be chosen">
+            <option value="null" selected></option>
+            <option value="geographic region">Geographic Region</option>
+            <option value="caller type">Caller Type</option>
+            <option value="tumour group">Tumour Group</option>
+            </select><br /></p>
+        </div>
+
+    <div style= "position:absolute; left: 500px; top: 160px" >
+      <p>  Charts Types    
+        <select name="chart" >
+            <option value="null" selected></option>
+            <option value="table chart">Table</option>
+            <option value="line">Line</option>
+            <option value="bar chart">Bar</option>
+            <option value="turnaround">Turnaround</option>
+            </select><br /></p>
+        </div>
+      
+  <div style="position:absolute; left:340px; top:250px">
+
+      <script type="text/javascript">
+          $(function stayHomeFunc(link) {
+              var date = $('#fromDatePicker').datepicker('getDate');
+              var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
+              link.href += '?DatePicker=' + formattedDate;
+          })
+      </script>
+      
+        @Html.ActionLink("Export", "ExportToExcel", "Reporter")
+             @*<button id="gen" type="submit">Generate Report</button>*@
+            @Html.Partial("~/Views/Reporter/SaveFile.cshtml")
+          
+  </div>
+    </form>
+    <script type="text/javascript">
+        //Get graphs
+        $(function generateReport() {
+            var $myform = $("#GenRepForm");
+            
+
+            $("#gen").click(function () {
+           
+                if ($myform[0].checkValidity()) {
+                    $myform.submit();
+                    @{ 
+    //TODO
+    //Handle generation of report into word document.
+                        
+                    }
+                } 
+            })
+        })
+
+        
+    </script>
+
+  -->
+
+    <br />
+    <br />
+    <br />
+    <br />
+</div>
+

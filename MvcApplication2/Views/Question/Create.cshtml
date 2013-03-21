@@ -1,0 +1,212 @@
+﻿@model MvcApplication2.Models.Question
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create","Question"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Question</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QuestionContent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.QuestionContent)
+            @Html.ValidationMessageFor(model => model.QuestionContent)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Response)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Response)
+            @Html.ValidationMessageFor(model => model.Response)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Severity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Severity)
+            @Html.ValidationMessageFor(model => model.Severity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Probability)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Probability)
+            @Html.ValidationMessageFor(model => model.Probability)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ComputedImpact)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ComputedImpact)
+            @Html.ValidationMessageFor(model => model.ComputedImpact)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeTaken)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TimeTaken)
+            @Html.ValidationMessageFor(model => model.TimeTaken)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TumorGroup.TumorTypeAbbreviate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TumorGroup.TumorTypeAbbreviate)
+            @Html.ValidationMessageFor(model => model.TumorGroup.TumorTypeAbbreviate)
+        </div>
+
+@*        <div class="editor-label">
+            @Html.LabelFor(model => model.TumorGroup.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TumorGroup.Name)
+            @Html.ValidationMessageFor(model => model.TumorGroup.Name)
+        </div>*@
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.RequestId, "Request")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("RequestId", String.Empty)
+            @Html.ValidationMessageFor(model => model.RequestId)
+        </div>*@
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QType.QuestionTypeAbbreviate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.QType.QuestionTypeAbbreviate)
+            @Html.ValidationMessageFor(model => model.QType.QuestionTypeAbbreviate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QType.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.QType.Name)
+            @Html.ValidationMessageFor(model => model.QType.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.IsActive)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.IsActive)
+            @Html.ValidationMessageFor(model => model.Request.IsActive)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.TotalTimeSpent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.TotalTimeSpent)
+            @Html.ValidationMessageFor(model => model.Request.TotalTimeSpent)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Caller.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Caller.Name)
+            @Html.ValidationMessageFor(model => model.Request.Caller.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Caller.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Caller.Phone)
+            @Html.ValidationMessageFor(model => model.Request.Caller.Phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Patient.PatientId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Patient.PatientId)
+            @Html.ValidationMessageFor(model => model.Request.Patient.PatientId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Caller.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Caller.Email)
+            @Html.ValidationMessageFor(model => model.Request.Caller.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Caller.Region)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Caller.Region)
+            @Html.ValidationMessageFor(model => model.Request.Caller.Region)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Caller.TypeAbbreviate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Caller.TypeAbbreviate)
+            @Html.ValidationMessageFor(model => model.Request.Caller.TypeAbbreviate)
+        </div>
+
+         <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Patient.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Patient.Name)
+            @Html.ValidationMessageFor(model => model.Request.Patient.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Patient.AgencyID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Patient.AgencyID)
+            @Html.ValidationMessageFor(model => model.Request.Patient.AgencyID)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Patient.Age)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Patient.Age)
+            @Html.ValidationMessageFor(model => model.Request.Patient.Age)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Request.Patient.Gender)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Request.Patient.Gender)
+            @Html.ValidationMessageFor(model => model.Request.Patient.Gender)
+        </div>
+
+
+
+
+
+        
+
+            
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

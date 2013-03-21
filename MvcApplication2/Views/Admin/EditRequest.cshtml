@@ -1,0 +1,28 @@
+﻿@model MvcApplication2.Models.Request
+@{
+    ViewBag.Title = "Edit Request";
+}
+
+<h2>Activate/ De-activate Request</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Request</legend>
+
+            @Html.HiddenFor(model => model.RequestId)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.RequestId)<br /><br />
+            @Html.LabelFor(model => model.IsActive)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;@Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive)
+       
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

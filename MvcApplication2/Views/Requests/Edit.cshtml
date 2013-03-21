@@ -1,0 +1,175 @@
+﻿@model MvcApplication2.Models.Request
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Request</legend>
+
+        @Html.HiddenFor(model => model.RequestId)
+
+        @Html.HiddenFor(model => model.PatientId)
+        @Html.HiddenFor(model => model.Patient.PatientId)
+
+        @Html.HiddenFor(model => model.Name)
+        @Html.HiddenFor(model => model.Caller.Name)
+
+        @Html.HiddenFor(model => model.Phone)
+        @Html.HiddenFor(model => model.Caller.Phone)
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsActive)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TotalTimeSpent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TotalTimeSpent)
+            @Html.ValidationMessageFor(model => model.TotalTimeSpent)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name, "Caller Name")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone, "Caller Phone")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone, "Caller Phone")
+            @Html.ValidationMessageFor(model => model.Phone, "Caller Phone")
+        </div>
+       
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Caller.Email, "Caller Email")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Caller.Email, "Caller Email")
+            @Html.ValidationMessageFor(model => model.Caller.Email, "Caller Email")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Caller.Region, "Caller Region")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Caller.Region, "Caller Region")
+            @Html.ValidationMessageFor(model => model.Caller.Region, "Caller Region")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Caller.TypeAbbreviate, "Type")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Caller.TypeAbbreviate, "Type")
+            @Html.ValidationMessageFor(model => model.Caller.TypeAbbreviate, "Type")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Patient.PatientID, "Patient ID")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Patient.PatientID, "Patient ID")
+            @Html.ValidationMessageFor(model => model.Patient.PatientID, "Patient ID")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Patient.Name, "Patient Name")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Patient.Name, "Patient Name")
+            @Html.ValidationMessageFor(model => model.Patient.Name, "Patient Name")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Patient.AgencyID, "AgencyID")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Patient.AgencyID, "AgencyID")
+            @Html.ValidationMessageFor(model => model.Patient.AgencyID, "AgencyID")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Patient.Age, "Age")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Patient.Age, "Age")
+            @Html.ValidationMessageFor(model => model.Patient.Age, "Age")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Patient.Gender, "Gender")
+        </div>
+        <div>
+            @Html.EditorFor(model => model.Patient.Gender, "Gender")
+            @Html.ValidationMessageFor(model => model.Patient.Gender, "Gender")
+        </div>
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.IsActive)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TotalTimeSpent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TotalTimeSpent)
+            @Html.ValidationMessageFor(model => model.TotalTimeSpent)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name, "Caller")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Name", String.Empty)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PatientID, "Patient")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PatientID", String.Empty)
+            @Html.ValidationMessageFor(model => model.PatientID)
+        </div>*@
+
+        <p>            
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

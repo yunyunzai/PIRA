@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Admin/User Management";
+}
+<div class="fieldSet">
+<div id ="userId_div">
+    <p>User ID</p>
+    <input id="userId_text" type="text" /> <br />
+</div>
+<div id ="fname_div">
+    <p>First Name</p>
+    <input id="fname_text" type="text" /> <br />
+</div>
+
+<div id ="lname_div">
+    <p>Last Name</p>
+    <input id="lname_text" type="text" /> <br />
+</div>
+
+<div id ="pwd_div">
+    <p>Password</p>
+    <input id="pwd_text" type="password" /> <br />
+</div>
+<div id ="confpwd_div">
+    <p>Confirm Password</p>
+    <input id="confpwd_text" type="password" /> <br />
+</div>
+<div id ="email_div">
+    <p>Email</p>
+    <input id="email_text" type="text" /> 
+</div>
+    <p><input id="Checkbox1" type="checkbox" /> Activated   </p>
+
+</div>
+
+<div id ="roleSwitcher" style= "position:absolute; left: 500px; top: 120px">
+ 
+        <p> <input id="dispecialist" type="checkbox" /> DI Specialist    </p> 
+     
+    <p> <input id="viewer" type="checkbox" /> Viewer     </p>
+    <p> <input id="reporter" type="checkbox" /> Reporter      </p>
+    <p> <input id="admin" type="checkbox" /> Administrator    </p>  
+</div>
+
+<div class ="Groups" style="position:absolute; left: 500px; top: 400px">
+    <div id ="firstSet">    
+        <p>First Set, need model-controller interaction</p>
+    </div>
+    <div id ="AddRemove">
+         <input id="addButton" type="button" value="Add" /> 
+         <input id="removeButton" type="button" value="Remove" />
+    </div>
+    <div id ="secondSet">
+        <p>Second Set, need model-controller interaction</p>
+    </div>
+
+</div>

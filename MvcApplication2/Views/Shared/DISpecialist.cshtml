@@ -1,0 +1,304 @@
+﻿<script type="text/javascript">
+    function ChangeListBoxWidth(obj) {
+        obj.style.width = '';
+    }
+    function ResetListBoxWidth(obj, width) {
+        obj.style.width = width;
+    }
+</script>
+
+<script>
+    $(function () {
+        $("#newRequest").click(function () {
+            $("#dispecialist").hide();
+            $("#rborder").show();
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#back").click(function () {
+            $("#rborder").hide();
+            $("#dispecialist").show();
+        });
+    });
+</script>
+
+<!--Question-->
+<script>
+    var myEditor = new YAHOO.widget.SimpleEditor('msgpost', {
+        height: '100px',
+        width: '433px',
+        animate: true,
+        toolbar: {
+            buttons: [
+                {
+                    group: 'textstyle', label: 'Font Style',
+                    buttons: [
+                        { type: 'push', label: 'Bold', value: 'bold' },
+                        { type: 'push', label: 'Italic', value: 'italic' },
+                        { type: 'push', label: 'Underline', value: 'underline' },
+                        { type: 'separator' },
+                        {
+                            type: 'select', label: 'Arial', value: 'fontname', disabled: true,
+                            menu: [
+                                { text: 'Arial', checked: true },
+                                { text: 'Arial Black' },
+                                { text: 'Comic Sans MS' },
+                                { text: 'Courier New' },
+                                { text: 'Lucida Console' },
+                                { text: 'Tahoma' },
+                                { text: 'Times New Roman' },
+                                { text: 'Trebuchet MS' },
+                                { text: 'Verdana' }
+                            ]
+                        },
+                        { type: 'spin', label: '13', value: 'fontsize', range: [9, 75], disabled: true },
+                        { type: 'separator' },
+                        { type: 'color', label: 'Font Color', value: 'forecolor', disabled: true },
+                        { type: 'color', label: 'Background Color', value: 'backcolor', disabled: true }
+                    ]
+                }
+            ]
+        }
+    });
+    myEditor.render();
+</script>
+<!--Response-->
+<script>
+    var myEditor = new YAHOO.widget.SimpleEditor('response', {
+        height: '100px',
+        width: '420px',
+        animate: true,
+        toolbar: {
+            buttons: [
+                {
+                    group: 'textstyle', label: 'Font Style',
+                    buttons: [
+                        { type: 'push', label: 'Bold', value: 'bold' },
+                        { type: 'push', label: 'Italic', value: 'italic' },
+                        { type: 'push', label: 'Underline', value: 'underline' },
+                        { type: 'separator' },
+                        {
+                            type: 'select', label: 'Arial', value: 'fontname', disabled: true,
+                            menu: [
+                                { text: 'Arial', checked: true },
+                                { text: 'Arial Black' },
+                                { text: 'Comic Sans MS' },
+                                { text: 'Courier New' },
+                                { text: 'Lucida Console' },
+                                { text: 'Tahoma' },
+                                { text: 'Times New Roman' },
+                                { text: 'Trebuchet MS' },
+                                { text: 'Verdana' }
+                            ]
+                        },
+                        { type: 'spin', label: '13', value: 'fontsize', range: [9, 75], disabled: true },
+                        { type: 'separator' },
+                        { type: 'color', label: 'Font Color', value: 'forecolor', disabled: true },
+                        { type: 'color', label: 'Background Color', value: 'backcolor', disabled: true }
+                    ]
+                }
+            ]
+        }
+    });
+    myEditor.render();
+</script>
+
+
+<div id="dispecialist">
+    SEARCH BY: 
+    <select>
+        <option>RequestID</option>
+        <option>Keyword</option>
+    </select>
+    <input type="text" />
+    <button>Search</button>
+    <br />
+    <button id="newRequest">New Request</button>
+</div>
+
+<div id="rborder" hidden>
+
+    <p><b>&nbsp;&nbsp;Request Form</b></p>
+    <hr />
+    <ul id="request">
+        <li>Request ID: </li>
+        <li>User: </li>
+        <li>Date Created: </li>
+        <li>Date Completed: </li>
+        <li>Linked Requests: </li>
+    </ul>
+    <!--Caller-->
+    <div id="subrborderleft">
+        &nbsp;Caller
+           <br />
+        &nbsp;Name: 
+                <input type="text" style="width: 70px;" />
+        &nbsp;Phone:
+                 <input type="text" style="width: 70px;" />
+        &nbsp;Email:
+                 <input type="text" style="width: 70px;" />
+        <br />
+        &nbsp;Caller Type: 
+                <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+                    onblur="javascript:ResetListBoxWidth(this,50)">
+                    <option value="admin">Administrator</option>
+                    <option value="dietician">Dietician</option>
+                    <option value="drugCompany">Drug Company</option>
+                    <option value="familyMember">Family Member</option>
+                    <option value="familyPhys">Family Physician</option>
+                    <option value="generalPublic" selected>General Public</option>
+                    <option value="librarian">Librarian</option>
+                    <option value="naturopath">Naturopath</option>
+                    <option value="newsMedia">News Media</option>
+                    <option value="nurse">Nurse</option>
+                    <option value="oncologist">Oncologist</option>
+                    <option value="ohcp">Other Health Care Professional</option>
+                    <option value="oPhysician">Other Physicians</option>
+                    <option value="patient">Patient</option>
+                    <option value="pharmacist">Pharmacist</option>
+                    <option value="publicRelations">Public Relations</option>
+                    <option value="radiation">Radiation therapist</option>
+                    <option value="researcher">Researcher</option>
+                    <option value="socialWorker">Social Worker</option>
+                </select>
+        <br />
+        &nbsp;Geographic Location: 
+                <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+                    onblur="javascript:ResetListBoxWidth(this,50)">
+                    <option value="alberta" selected>Alberta</option>
+                    <option value="acc">Abbotsford Cancer Centre</option>
+                    <option value="bcnc">BC - Not Classified</option>
+                    <option value="cftsi">Centre For The Southern Interior</option>
+                    <option value="familyPhys">Fraser Health Region</option>
+                    <option value="fvc">Fraser Valley Centre</option>
+                    <option value="ihr">Interior Health Region</option>
+                    <option value="manitoba">Manitoba</option>
+                    <option value="newBrunswick">New Brunswick</option>
+                    <option value="newFoundland">New Foundland</option>
+                    <option value="nhr">Northern Health Region</option>
+                    <option value="ns">Nova Scotia</option>
+                    <option value="nt">Northwest Territories</option>
+                    <option value="nunavut">Nunavut</option>
+                    <option value="ontario">Ontario</option>
+                    <option value="aaeu">Africa, Asia, Europe, USA</option>
+                    <option value="pei">Prince Edward Island</option>
+                    <option value="quebec">Quebec</option>
+                    <option value="unknown">Not Classified/Unknown</option>
+                    <option value="vcc">Vancouver Cancer Centre</option>
+                    <option value="vcr">Vancouver Coastal Region</option>
+                    <option value="vic">Vancouver Island Centre</option>
+                    <option value="vir">Vancouver Island Region</option>
+                    <option value="yukon">Yukon</option>
+                </select>
+    </div>
+    <!--Patient-->
+    <div id="subrborderright">
+        &nbsp;Patient:
+            <br />
+        &nbsp;Name: 
+            <input type="text" style="width: 70px;" />
+        &nbsp;Agency ID:
+            <input type="text" style="width: 50px;" />
+        &nbsp;Age:
+            <input type="text" style="width: 50px;" />
+        <br />
+        &nbsp;Gender
+            <select name="Gender Type">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+    </div>
+    <!--Question-->
+    <div id="bottom">
+
+        <div class="yui-skin-sam" style="margin: 8px; float: left">
+         &nbsp;Question:
+        <textarea name="msgpost" id="msgpost"  cols="50" rows="10" onFocus="this.value=''; return false;">
+         
+        </textarea>
+
+        </div>
+        
+        <div class="yui-skin-sam" style="margin: 8px; float: right">
+        &nbsp;Response:
+        <textarea name="msgpost" id="response" cols="50" rows="10">
+        
+        </textarea>
+        </div>
+        
+        <br />
+        &nbsp;Tumour Group: 
+            <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+                onblur="javascript:ResetListBoxWidth(this,50)">
+                <option value="breasr" selected>Breast</option>
+                <option value="cns">Central Nervous System</option>
+                <option value="endocrine">Endocrine</option>
+                <option value="gastrointestinal">Gastrointestinal</option>
+                <option value="general">General</option>
+                <option value="gynaecology">Gynaecology</option>
+                <option value="genitourinary">Genitourinary</option>
+                <option value="han">Head and Neck</option>
+                <option value="leukemia">Leukemia</option>
+                <option value="lung">Lung</option>
+                <option value="lymphoma">Lymphoma</option>
+                <option value="melanoma">Melanoma</option>
+                <option value="mm">Multiple Myeloma</option>
+                <option value="ocular">Ocular</option>
+                <option value="pediatrics">Pediatrics</option>
+                <option value="pu">Primary Unknown</option>
+                <option value="sacroma">Sarcoma</option>
+                <option value="sc">Supportive Care</option>
+            </select>
+        &nbsp;Question Type
+            <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+                onblur="javascript:ResetListBoxWidth(this,50)">
+                <option value="ae" selected>Adverse Effects</option>
+                <option value="cam">CAM</option>
+                <option value="cfr">Coverage/Funding/Reimbursement</option>
+                <option value="da">Drug Administration</option>
+                <option value="dAvailability">Drug Availablity</option>
+                <option value="dd">Drug Dosing</option>
+                <option value="di">Drug Interactions</option>
+                <option value="other">Other</option>
+                <option value="ts">Therapy Selection</option>
+            </select>
+ 
+        <br />
+        &nbsp;Severity
+            <select>
+                <option value="major">Major</option>
+                <option value="moderate">Moderate</option>
+                <option value="minor">Minor</option>
+            </select>
+        &nbsp;&nbsp;&nbsp;Probability
+            <select>
+                <option value="certain">Certain</option>
+                <option value="probable">Probable</option>
+                <option value="possible">Possible</option>
+                <option value="unlikely">Unlikely</option>
+            </select>
+        &nbsp;&nbsp;&nbsp;Impact Score: 
+            &nbsp;&nbsp;&nbsp;Time Taken:
+                <input type="text" style="width: 50px;" />
+        &nbsp;Keywords:
+            <input type="text" style="width: 110px;" />
+        <br />
+        &nbsp;References:
+             <input type="text" style="width: 325px;" />
+        &nbsp;Follow Up:
+             <input type="text" style="width: 325px;" />
+
+    </div>
+    <div id="rbuttons">
+        <button>Remove Question</button>
+        <button>Add New Question</button>
+        <button id="back">BACK</button>
+        <button id="posb">SAVE</button>
+        <button id="posb">CANCEL</button>
+    </div>
+   
+    <div style="clear: both"></div>
+</div>

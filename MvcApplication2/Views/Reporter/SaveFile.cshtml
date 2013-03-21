@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "SaveFile";
+}
+
+<h2>SaveFile</h2>
+@using (Html.BeginForm("", "Reporter", FormMethod.Get, new {enctype="multipart/form-data"})){
+
+     <input type="file"/><br />
+     <input type="submit" name="Submit" id="Submit" value="Download" />
+}

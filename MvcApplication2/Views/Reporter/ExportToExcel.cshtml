@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "ExportToExcel";
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <input type="submit" value="Export" />
+}
