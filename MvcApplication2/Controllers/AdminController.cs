@@ -14,7 +14,7 @@ namespace MvcApplication2.Controllers
        
         //
         // GET: /Admin
-        private QuestionContext db = new QuestionContext();
+        private DISpecialistContext db = new DISpecialistContext();
         public ActionResult Admin(string searchString)
         {
             var key = from m in db.Keywords select m;

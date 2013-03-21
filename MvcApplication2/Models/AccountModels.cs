@@ -31,10 +31,10 @@ namespace MvcApplication2.Models
         [Column(Order = 0)]
        // [ForeignKey("UserId")]
       //  [Required]
-        public int UserId { get; set; }
+        public Int64 UserId { get; set; }
         [Key][Column(Order = 1)]
       //  [ForeignKey("RoleId")]
-        public int RoleId { get; set; }
+        public Int64 RoleId { get; set; }
         
         public virtual Roles Role { get; set; }
         public virtual UserProfile UserProfile { get; set; }
@@ -45,7 +45,7 @@ namespace MvcApplication2.Models
     {
         [Key]
         [Column(Order = 0)]
-        public int UserId { get; set; }
+        public Int64 UserId { get; set; }
 
         [Key]
         [Column(Order = 1)]
@@ -72,7 +72,7 @@ namespace MvcApplication2.Models
     public class Roles
     {
         [Key]
-        public int RoleId { get; set; }
+        public Int64 RoleId { get; set; }
      //   [Required]
         public string RoleName { get; set; }
     /*    [Required]
@@ -98,7 +98,7 @@ namespace MvcApplication2.Models
 
          [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public Int64 UserId { get; set; }
        // [Required(ErrorMessage="Please input a username")]
         public string UserName { get; set; }
        // [Required(ErrorMessage="Please specify the user's activation status")]

@@ -1,4 +1,8 @@
-﻿<script type="text/javascript">
+﻿@model MvcApplication2.Models.DISpecialistModel
+@{
+    ViewBag.Title = "DISpecialist";
+}
+<script type="text/javascript">
     function ChangeListBoxWidth(obj) {
         obj.style.width = '';
     }
@@ -106,8 +110,35 @@
     myEditor.render();
 </script>
 
+@using (Html.BeginForm("search", "DISpecialist"))
+{
+    @Html.Raw("<div>Search:</div><div>");
+    
+    List<SelectListItem> items = new List<SelectListItem>();
+    
+    items.Add(new SelectListItem
+    {
+        Text = "Keyword",
+        Value = "1",
+    });
+    items.Add(new SelectListItem
+    {
+        Text = "RequestID",
+        Value = "2"
+    });
+        
+    @Html.DropDownListFor(x => x.SearchModel.searchBy, new SelectList(items, "Value", "Text"))
 
-<div id="dispecialist">
+    @Html.EditorFor(x=> x.SearchModel.searchKey)
+
+    
+        <input type="submit" value="Search" />
+    
+    @Html.Raw("</div>");
+}
+
+
+@*<div id="dispecialist">
     SEARCH BY: 
     <select>
         <option>RequestID</option>
@@ -117,9 +148,8 @@
     <button>Search</button>
     <br />
     <button id="newRequest">New Request</button>
-</div>
-
-<div id="rborder" hidden>
+</div>*@
+@*<div id="rborder" hidden>
 
     <p><b>&nbsp;&nbsp;Request Form</b></p>
     <hr />
@@ -301,4 +331,4 @@
     </div>
    
     <div style="clear: both"></div>
-</div>
+</div>*@

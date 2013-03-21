@@ -29,11 +29,11 @@ namespace MvcApplication2.Models
             [Column(Order = 0)]
             //[ForeignKey("UserId")]
             [Required]
-            public int UserId { get; set; }
+            public Int64 UserId { get; set; }
             [Key]
             [Column(Order = 1)]
             //[ForeignKey("RoleId")]
-            public int RequestId { get; set; }
+            public Int64 RequestId { get; set; }
             public DateTime time { get; set; }
         }
 
@@ -45,11 +45,11 @@ namespace MvcApplication2.Models
             [Column(Order = 0)]
             //[ForeignKey("UserId")]
             [Required]
-            public int UserId { get; set; }
+            public Int64 UserId { get; set; }
             [Key]
             [Column(Order = 1)]
             //[ForeignKey("RoleId")]
-            public int PatientId { get; set; }
+            public Int64 PatientId { get; set; }
             public DateTime time { get; set; }
         }
 
@@ -61,11 +61,11 @@ namespace MvcApplication2.Models
             [Column(Order = 0)]
             //[ForeignKey("UserId")]
             [Required]
-            public int UserId { get; set; }
+            public Int64 UserId { get; set; }
             [Key]
             [Column(Order = 1)]
             //[ForeignKey("RoleId")]
-            public int RequestId { get; set; }
+            public Int64 RequestId { get; set; }
             public DateTime TimeCreated { get; set; }
         }
 
@@ -77,13 +77,13 @@ namespace MvcApplication2.Models
             [Column(Order = 0)]
             //[ForeignKey("UserId")]
             [Required]
-            public int UserID { get; set; }
+            public Int64 UserID { get; set; }
             [Key]
             [Column(Order = 1)]
             //[ForeignKey("RoleId")]
-            public int RequestID { get; set; }
+            public Int64 RequestID { get; set; }
             public DateTime CompletionTime { get; set; }
-            public virtual ICollection<Request> Requests { get; set; }
+           // public virtual ICollection<Request> Requests { get; set; }
         }
 
 

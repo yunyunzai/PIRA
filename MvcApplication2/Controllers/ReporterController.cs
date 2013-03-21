@@ -199,7 +199,7 @@ namespace MvcApplication2.Controllers
             
         }
 
-        private void logRequestExport(int reporterID, int requestID)
+        private void logRequestExport(int reporterID, long requestID)
         {
             LoggingContext lc = new LoggingContext();
             UserExportRequest r=new UserExportRequest();
@@ -244,7 +244,7 @@ namespace MvcApplication2.Controllers
             }
         }
 
-        private void logPatientExport(int reporterID, int patientID)
+        private void logPatientExport(int reporterID, long patientID)
         {
             LoggingContext lc = new LoggingContext();
             UserExportPatient r = new UserExportPatient();

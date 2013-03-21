@@ -152,7 +152,7 @@ namespace MvcApplication2.Controllers
                 .Where(i => i.UserId == UserId)
                 .Single();
           //  var allRoles = db.Roles;
-            var viewModel = new HashSet<int>();
+            var viewModel = new HashSet<long>();
            
             foreach (var role in user.UsersInRoles)
             {
@@ -309,7 +309,7 @@ namespace MvcApplication2.Controllers
                
               
                 var sel_roles = new HashSet<string>(selectedRoles);
-                var userRoles = new HashSet<int>(userprofile.UsersInRoles.Select(c => c.RoleId));
+                var userRoles = new HashSet<long>(userprofile.UsersInRoles.Select(c => c.RoleId));
                 foreach (var role in viewModelRole)
                 {
 

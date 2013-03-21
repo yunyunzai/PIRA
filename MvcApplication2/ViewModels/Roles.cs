@@ -7,7 +7,7 @@ namespace MvcApplication2.ViewModels
 {
     public class Roles
     {
-        public int RoleId { get; set; }
+        public long RoleId { get; set; }
         public string RoleName { get; set; }
         public Boolean IsSuperUser { get; set; }
         public Boolean IsAssigned { get; set; }

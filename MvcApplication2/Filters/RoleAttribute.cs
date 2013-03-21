@@ -20,7 +20,7 @@ namespace MvcApplication2.Filters
             //UsersInRoles ur=new UsersInRoles();
             //var userId = Membership.GetUser().ProviderUserKey;
             var userId = uc.UserProfiles.Where(a => a.UserName == HttpContext.Current.User.Identity.Name).First().UserId;
-            int[] roleIds = (from u in uc.UsersInRoles where u.UserId == userId select u.RoleId).ToArray();
+            long[] roleIds = (from u in uc.UsersInRoles where u.UserId == userId select u.RoleId).ToArray();
           
             foreach (string role in this.Roles.Split(','))
             {

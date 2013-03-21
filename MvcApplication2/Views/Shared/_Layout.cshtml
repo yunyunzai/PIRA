@@ -131,9 +131,9 @@
 
 @helper AdminFactory_create()
 {
-    <section>
-       @* @Html.Partial("_Admin")*@
-    </section>
+    @*<section>
+        @Html.Partial("~/Views/Admin/Admin.cshtml", new MvcApplication2.Models.Keywords())
+    </section>*@
 }
 @helper SearchBar_create(){    
  @*   
@@ -152,7 +152,8 @@
 
 @helper DI_SpecialistFactory_create(string username)
 {
-    @Html.Partial("DISpecialist")
+    @Html.Partial("~/Views/DISpecialist/DISpecialist.cshtml",new MvcApplication2.Models.DISpecialistModel())
+    //@Html.Partial("~/View/")
 }
 
 
@@ -190,6 +191,6 @@
 
 @helper ReporterFactory_create(string username)
 {
-    @Html.Partial("~/Views/Reporter/Reporter.cshtml")
+    @Html.Partial("~/Views/Reporter/Reporter.cshtml",new MvcApplication2.Models.ReporterPanelModel())
 }
 

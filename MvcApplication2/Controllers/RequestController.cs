@@ -11,7 +11,7 @@ namespace MvcApplication2.Controllers
 {
     public class RequestController : Controller
     {
-        private QuestionContext db = new QuestionContext();
+        private DISpecialistContext db = new DISpecialistContext();
 
         //
         // GET: /Request/
