@@ -20,7 +20,7 @@ namespace MvcApplication2.Controllers
         private static DISpecialistModel globalModel=new DISpecialistModel();
         public ActionResult DISpecialist()
         {
-            return View();
+            return View(globalModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -28,7 +28,7 @@ namespace MvcApplication2.Controllers
         public ActionResult create(DISpecialistModel m)
         {
             System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
-            m.editModel.isCreatingRequest = true;
+            m.isCreatingRequest = true;
             if (ModelState.IsValid)
             {
                 DISpecialistContext db = new DISpecialistContext();
@@ -78,7 +78,7 @@ namespace MvcApplication2.Controllers
                     if (patient == null)
                         r.PatientId = null;
                     else
-                        r.PatientId = m.editModel.patient.PatientId;                    
+                        r.PatientId = patient.First().PatientId;                    
                 }
                 else
                 {
@@ -130,10 +130,9 @@ namespace MvcApplication2.Controllers
                     key.Keyword = m.editModel.newKeyword.Keyword;
                     key.IsActive = true;
                     db.Keywords.Add(key);
-                    db.SaveChanges();
-
-                   
+                    db.SaveChanges();                   
                 }
+
                 // add reference if it does not exist in the db
                 var qk = from k in db.QuestionKeywords
                          where k.Keyword.Equals(m.editModel.newKeyword.Keyword)
@@ -148,7 +147,8 @@ namespace MvcApplication2.Controllers
                 db.SaveChanges();
 
                 // update reference tables
-                
+                if (m.editModel.newReference.ReferenceContent!=null)
+                {
                     // add reference content 
                     Reference reference = new Reference();
                     reference.ReferenceContent = m.editModel.newReference.ReferenceContent;
@@ -164,9 +164,9 @@ namespace MvcApplication2.Controllers
                     qrf.ReferenceId = reference.ReferenceId;
                     db.QuestionReferences.Add(qrf);
                 
-                db.SaveChanges();
-
-
+                    db.SaveChanges();
+                }
+                // logging
                 if (m.editModel.mode == null || !m.editModel.mode.Equals("edit"))
                 {
                     UserCreateRequest ucr = new UserCreateRequest();
@@ -176,11 +176,46 @@ namespace MvcApplication2.Controllers
                     db.UserCreateRequest.Add(ucr);
                 }
                 db.SaveChanges();
-                m.editModel.isCreatingRequest = false;
+                m.isCreatingRequest = false;
                 return View("DISpecialist", globalModel);
             }
     
             return View("DISpecialist",m);
+        }
+
+        public ActionResult edit(DISpecialistModel m, int rid)
+        {
+            //globalModel.editModel = newModel;
+            DISpecialistContext db = new DISpecialistContext();
+            m.isCreatingRequest = true;
+            m.editModel = new RequestViewModel();
+            System.Diagnostics.Debug.WriteLine(rid);
+            m.editModel.request=(from r in db.Requests
+                                where r.RequestId==rid
+                                select r).First();
+            m.editModel.caller = (from c in db.Callers
+                                   where c.Name.Equals(m.editModel.request.Name) && c.Phone.Equals(m.editModel.request.Phone)
+                                   select c).First();
+            m.editModel.patient = (from p in db.Patients
+                                   where p.PatientId == m.editModel.request.PatientId
+                                   select p).Count() == 0 ? null : (from p in db.Patients
+                                                                    where p.PatientId == m.editModel.request.PatientId
+                                                                    select p).First();
+            m.editModel.newQuestion = (from q in db.Questions
+                                       where q.RequestId == m.editModel.request.RequestId
+                                       select q).First();
+            System.Diagnostics.Debug.WriteLine(m.editModel.caller.Name);
+             //System.Diagnostics.Debug.WriteLine(m.editModel.request.RequestId);
+            System.Diagnostics.Debug.WriteLine(!m.isCreatingRequest);
+            globalModel = m;
+            return View("DISpecialist", globalModel);
+        }
+
+        public ActionResult cancel(DISpecialistModel m)
+        {
+            globalModel.editModel= new RequestViewModel();
+            globalModel.isCreatingRequest = false;
+            return View("DISpecialist", globalModel);
         }
 
         [HttpPost]
