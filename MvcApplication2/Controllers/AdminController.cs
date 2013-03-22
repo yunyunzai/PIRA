@@ -15,6 +15,7 @@ namespace MvcApplication2.Controllers
         //
         // GET: /Admin
         private DISpecialistContext db = new DISpecialistContext();
+        private LoggingContext dbl = new LoggingContext();
         public ActionResult Admin(string searchString)
         {
             var key = from m in db.Keywords select m;
@@ -51,20 +52,87 @@ namespace MvcApplication2.Controllers
 
         public ActionResult ViewHistory(String key)
         {
-            var rid = (from m in db.Requests
-                       join q in db.Questions on m.RequestId equals q.RequestId
-                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
-                       select m).Distinct().OrderByDescending(m => m.RequestId);
-            if (String.IsNullOrEmpty(key))
-                return View(rid);
+            var userViewRequest = db.UserViewRequest
+                .ToList();
+            var userCreateRequest = dbl.UserCreateRequest
+                .ToList();
+            var userCompleteRequest = dbl.UserCompleteRequest
+                .ToList();
+            var userEditRequest = dbl.UserEditRequests
+                .ToList();
 
-            rid = (from m in db.Requests
-                   join q in db.Questions on m.RequestId equals q.RequestId
-                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
-                   where qk.Keyword.Equals(key)
-                   select m).Distinct().OrderByDescending(m => m.RequestId);
+            var userExportRequest = dbl.UserExportRequests
+                .ToList();
 
-            return View(rid);
+            List<ViewModels.LoggingModel> logmodel = new List<ViewModels.LoggingModel>();
+            foreach (var ureq in userViewRequest)
+            {
+                logmodel.Add(new ViewModels.LoggingModel
+                {
+                    UserId = ureq.UserId,
+                    PatientId = Convert.ToInt64(0),
+                    RequestId = ureq.RequestId,
+                    time = ureq.ViewTime,
+                    Action = "Viewed request"
+
+                });
+            }
+
+            foreach (var creq in userCreateRequest)
+            {
+                logmodel.Add(new ViewModels.LoggingModel
+                {
+                    UserId = creq.UserId,
+                    PatientId = Convert.ToInt64(0),
+                    RequestId = creq.RequestId,
+                    time = creq.TimeCreated,
+                    Action = "Created request"
+
+                });
+            }
+
+            foreach (var compreq in userCompleteRequest)
+            {
+                logmodel.Add(new ViewModels.LoggingModel
+                {
+                    UserId = compreq.UserID,
+                    PatientId = Convert.ToInt64(0),
+                    RequestId = compreq.RequestID,
+                    time = compreq.CompletionTime,
+                    Action = "Completed request"
+                });
+            }
+
+            foreach (var edreq in userEditRequest)
+            {
+                logmodel.Add(new ViewModels.LoggingModel
+                {
+                    UserId = edreq.UserId,
+                    PatientId = Convert.ToInt64(0),
+                    RequestId = edreq.RequestId,
+                    time = edreq.FinishTime,
+                    Action = "Edited request"
+
+                });
+            }
+            foreach (var exreq in userExportRequest)
+            {
+                logmodel.Add(new ViewModels.LoggingModel
+                {
+                    UserId = exreq.UserId,
+                    PatientId = Convert.ToInt64(0),
+                    RequestId = exreq.RequestId,
+                    time = exreq.time,
+                    Action = "Exported request"
+
+                });
+
+            }
+            var sortedList = logmodel.OrderByDescending(si => si.time).ToList();
+            ViewBag.SortedList = sortedList;
+            
+
+            return View();
         }
 
         //

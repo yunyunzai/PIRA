@@ -18,7 +18,8 @@ namespace MvcApplication2.Models
             public DbSet<UserExportRequest> UserExportRequests { get; set; }
             public DbSet<UserExportPatient> UserExportPatients { get; set; }
             public DbSet<UserCreateRequest> UserCreateRequest { get; set; }
-            public DbSet<UserCompleteRequest> UserCompleteRequest { get; set; } 
+            public DbSet<UserCompleteRequest> UserCompleteRequest { get; set; }
+            public DbSet<UserEditRequest> UserEditRequests { get; set; }
         }
 
         [Table("UserExportRequest")]
