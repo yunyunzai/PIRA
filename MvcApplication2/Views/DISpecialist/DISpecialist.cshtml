@@ -107,10 +107,10 @@
     });
     myEditor.render();
 
-    
+
 </script>
-    @using (Html.BeginForm("filterRequestByKeyword", "DISpecialist"))
-    {
+@using (Html.BeginForm("filterRequestByKeyword", "DISpecialist"))
+{
         
     @Html.Raw("<div>Search:</div><div>");
 
@@ -129,56 +129,63 @@
         
     @Html.DropDownListFor(x => x.searchModel.searchBy, new SelectList(items, "Value", "Text"))
 
-    @Html.TextBoxFor(m=>m.searchModel.searchKey,new { id = "searchBar" })
+    @Html.TextBoxFor(m => m.searchModel.searchKey, new { id = "searchBar" })
     <input type="submit" value="Search" />
 
         
     @Html.Raw("</div>");
-    }
+}
 
 
 
-    @using (Html.BeginForm("view", "DISpecialist"))
-    {
-    @Html.Raw("<div>");
+@using (Html.BeginForm("view", "DISpecialist"))
+{
+    <div>
 
-
-
-                      if (Model != null && Model.requests != null)
-                      {
-    @Html.Raw(" <table   <tr>   <th>RequestId</th>   <th>PatientId</th>  <th>Time Created</th> <th>Created By</th> <th>Completed By</th> <th>Time Completed</th></tr>");
-                                                                                                                                                                       foreach (var item in Model.requests)
-                                                                                                                                                                       {
+        @if (Model != null && Model.requests != null)
+        {
+            <table>
+                <tr>
+                    <th>RequestId</th>
+                    <th>PatientId</th>
+                    <th>Time Created</th>
+                    <th>Created By</th>
+                    <th>Completed By</th>
+                    <th>Time Completed</th>
+                </tr>
+                @foreach (var item in Model.requests)
+                {
                 
-    @Html.Raw("<tr><td>");
-    @Html.DisplayFor(modelItem => item.request.RequestId)
-    @Html.Raw("</td>");
-    @Html.Raw("<td>");
-    @Html.DisplayFor(modelItem => item.patient.PatientId)
-    @Html.Raw("</td>");
-    @Html.Raw("<td>");
-    @Html.DisplayFor(modelItem => item.userCreateRequest.TimeCreated)
-    @Html.Raw("</td>");
-    @Html.Raw("<td>");
-    @Html.Label(item.createrProfile.FirstName + " " + item.createrProfile.LastName)
-    @Html.Raw("</td>");
-    @Html.Raw("<td>");
-    @Html.Label((item.completerProfile == null ? "" : item.completerProfile.FirstName) + " " + (item.completerProfile == null ? "" : item.completerProfile.LastName))
-    @Html.Raw("</td>");
-    @Html.Raw("<td>");
-    @Html.DisplayFor(modelItem => item.userCompleteRequest.CompletionTime)
-    @Html.Raw("</td>");
-    @Html.Raw("</td></tr>");
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.request.RequestId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.patient.PatientId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.userCreateRequest.TimeCreated)
+                        </td>
+                        <td>
+                            @Html.Label(item.createrProfile.FirstName + " " + item.createrProfile.LastName)
+                        </td>
+                        <td>
+                            @Html.Label((item.completerProfile == null ? "" : item.completerProfile.FirstName) + " " + (item.completerProfile == null ? "" : item.completerProfile.LastName))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.userCompleteRequest.CompletionTime)
+                        </td>
+                    </tr>
 
-                                                                                                                                                                       }
-    @Html.Raw("</table>") 
+                }
+            </table> 
      
-                      }
-     
-   
-    <input type="submit" value="View Request" />  
-    @Html.Raw("</div>");
-    }
+        }
+
+
+        <input type="submit" value="View Request" />
+    </div>
+}
 
 
 
@@ -195,30 +202,35 @@
     <button id="newRequest">New Request</button>
 </div>*@
 
+<button id="newRequest">New Request</button>
 
-@*<div id="rborder" hidden>
 
-    <p><b>&nbsp;&nbsp;Request Form</b></p>
-    <hr />
-    <ul id="request">
-        <li>Request ID: </li>
-        <li>User: </li>
-        <li>Date Created: </li>
-        <li>Date Completed: </li>
-        <li>Linked Requests: </li>
-    </ul>
-    <!--Caller-->
-    <div id="subrborderleft">
-        &nbsp;Caller
+
+<div id="rborder" hidden>
+    @using (Html.BeginForm("create", "DISpecialist"))
+    {
+
+        <p><b>&nbsp;&nbsp;Request Form</b></p>
+        <hr />
+        <ul id="request">
+            <li>Request ID: </li>
+            <li>User: </li>
+            <li>Date Created: </li>
+            <li>Date Completed: </li>
+            <li>Linked Requests: </li>
+        </ul>
+        <!--Caller-->
+        <div id="subrborderleft">
+            &nbsp;Caller
            <br />
-        &nbsp;Name: 
+            &nbsp;Name: 
                 <input type="text" style="width: 70px;" />
-        &nbsp;Phone:
+            &nbsp;Phone:
                  <input type="text" style="width: 70px;" />
-        &nbsp;Email:
+            &nbsp;Email:
                  <input type="text" style="width: 70px;" />
-        <br />
-        &nbsp;Caller Type: 
+            <br />
+            &nbsp;Caller Type: 
                 <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                     onblur="javascript:ResetListBoxWidth(this,50)">
                     <option value="admin">Administrator</option>
@@ -241,8 +253,8 @@
                     <option value="researcher">Researcher</option>
                     <option value="socialWorker">Social Worker</option>
                 </select>
-        <br />
-        &nbsp;Geographic Location: 
+            <br />
+            &nbsp;Geographic Location: 
                 <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                     onblur="javascript:ResetListBoxWidth(this,50)">
                     <option value="alberta" selected>Alberta</option>
@@ -270,44 +282,44 @@
                     <option value="vir">Vancouver Island Region</option>
                     <option value="yukon">Yukon</option>
                 </select>
-    </div>
-    <!--Patient-->
-    <div id="subrborderright">
-        &nbsp;Patient:
+        </div>
+        <!--Patient-->
+        <div id="subrborderright">
+            &nbsp;Patient:
             <br />
-        &nbsp;Name: 
+            &nbsp;Name: 
             <input type="text" style="width: 70px;" />
-        &nbsp;Agency ID:
+            &nbsp;Agency ID:
             <input type="text" style="width: 50px;" />
-        &nbsp;Age:
+            &nbsp;Age:
             <input type="text" style="width: 50px;" />
-        <br />
-        &nbsp;Gender
+            <br />
+            &nbsp;Gender
             <select name="Gender Type">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
-    </div>
-    <!--Question-->
-    <div id="bottom">
+        </div>
+        <!--Question-->
+        <div id="bottom">
 
-        <div class="yui-skin-sam" style="margin: 8px; float: left">
-         &nbsp;Question:
-        <textarea name="msgpost" id="msgpost"  cols="50" rows="10" onFocus="this.value=''; return false;">
+            <div class="yui-skin-sam" style="margin: 8px; float: left">
+                &nbsp;Question:
+        <textarea name="msgpost" id="msgpost" cols="50" rows="10" onfocus="this.value=''; return false;">
          
         </textarea>
 
-        </div>
-        
-        <div class="yui-skin-sam" style="margin: 8px; float: right">
-        &nbsp;Response:
+            </div>
+
+            <div class="yui-skin-sam" style="margin: 8px; float: right">
+                &nbsp;Response:
         <textarea name="msgpost" id="response" cols="50" rows="10">
         
         </textarea>
-        </div>
-        
-        <br />
-        &nbsp;Tumour Group: 
+            </div>
+
+            <br />
+            &nbsp;Tumour Group: 
             <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                 onblur="javascript:ResetListBoxWidth(this,50)">
                 <option value="breasr" selected>Breast</option>
@@ -329,7 +341,7 @@
                 <option value="sacroma">Sarcoma</option>
                 <option value="sc">Supportive Care</option>
             </select>
-        &nbsp;Question Type
+            &nbsp;Question Type
             <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                 onblur="javascript:ResetListBoxWidth(this,50)">
                 <option value="ae" selected>Adverse Effects</option>
@@ -342,43 +354,44 @@
                 <option value="other">Other</option>
                 <option value="ts">Therapy Selection</option>
             </select>
- 
-        <br />
-        &nbsp;Severity
+
+            <br />
+            &nbsp;Severity
             <select>
                 <option value="major">Major</option>
                 <option value="moderate">Moderate</option>
                 <option value="minor">Minor</option>
             </select>
-        &nbsp;&nbsp;&nbsp;Probability
+            &nbsp;&nbsp;&nbsp;Probability
             <select>
                 <option value="certain">Certain</option>
                 <option value="probable">Probable</option>
                 <option value="possible">Possible</option>
                 <option value="unlikely">Unlikely</option>
             </select>
-        &nbsp;&nbsp;&nbsp;Impact Score: 
+            &nbsp;&nbsp;&nbsp;Impact Score: 
             &nbsp;&nbsp;&nbsp;Time Taken:
                 <input type="text" style="width: 50px;" />
-        &nbsp;Keywords:
+            &nbsp;Keywords:
             <input type="text" style="width: 110px;" />
-        <br />
-        &nbsp;References:
+            <br />
+            &nbsp;References:
              <input type="text" style="width: 325px;" />
-        &nbsp;Follow Up:
+            &nbsp;Follow Up:
              <input type="text" style="width: 325px;" />
 
-    </div>
-    <div id="rbuttons">
-        <button>Remove Question</button>
-        <button>Add New Question</button>
-        <button id="back">BACK</button>
-        <button id="posb">SAVE</button>
-        <button id="posb">CANCEL</button>
-    </div>
+        </div>
+        <div id="rbuttons">
+            <button>Remove Question</button>
+            <button>Add New Question</button>
+            <button id="back">BACK</button>
+            <button id="save">SAVE</button>
+            <button id="cancel">CANCEL</button>
+        </div>
    
-    <div style="clear: both"></div>
-</div>*@
+        <div style="clear: both"></div>
+    }
+</div>
 
 
 @section Scripts {
