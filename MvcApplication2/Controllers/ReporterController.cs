@@ -61,12 +61,12 @@ namespace MvcApplication2.Controllers
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine("Oops! Something went wrong." + ex.Message);
-                    return View(m);
+                    return new EmptyResult();
                 }
             }
             else
                 // If we got this far, something failed, redisplay form
-                return View(m);
+                return new EmptyResult();
         }
 
         

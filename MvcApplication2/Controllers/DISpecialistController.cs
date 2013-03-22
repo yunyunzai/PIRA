@@ -22,6 +22,14 @@ namespace MvcApplication2.Controllers
             return View();
         }
 
+        public ActionResult create(DISpecialistModel m)
+        {
+            DISpecialistContext db = new DISpecialistContext();
+            db.Callers.Add(m.editModel.caller);
+            
+            
+            return View("DISpecialist", globalModel);
+        }
 
         [HttpPost]
         public ActionResult view(DISpecialistModel m)
