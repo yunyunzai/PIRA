@@ -248,6 +248,7 @@ namespace MvcApplication2.Models
     {
         public SearchModel searchModel{ get; set; }
         public List<RequestViewModel> requests { get; set; }
+        public RequestViewModel editModel { get; set; }
     }
 
     public class SearchModel
@@ -266,7 +267,14 @@ namespace MvcApplication2.Models
         public CallerType callerType { get; set; }
         public UserCreateRequest userCreateRequest { get; set; }
         public UserCompleteRequest userCompleteRequest { get; set; }
-        
+
+        public Question newQuestion { get; set; }
+        public QuestionType newQuestionType { get; set; }
+        //public List<QuestionKeyword> questionKeyword { get; set; }
+        public Keywords newKeyword { get; set; }
+        //public QuestionReference questionReference { get; set; }
+        public Reference newReference { get; set; }
+        public TumorGroup tumorGroup { get; set; }
     }
    
 }

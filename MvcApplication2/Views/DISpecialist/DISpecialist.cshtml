@@ -224,14 +224,112 @@
             &nbsp;Caller
            <br />
             &nbsp;Name: 
-                <input type="text" style="width: 70px;" />
+                @Html.TextBoxFor(m => m.editModel.caller.Name, new { style = "width: 70px;" })
+            @*<input type="text" style="width: 70px;" />*@
             &nbsp;Phone:
-                 <input type="text" style="width: 70px;" />
+                @Html.TextBoxFor(m => m.editModel.caller.Phone, new { style = "width: 70px;" })
+            @*<input type="text" style="width: 70px;" />*@
             &nbsp;Email:
-                 <input type="text" style="width: 70px;" />
+                @Html.TextBoxFor(m => m.editModel.caller.Email, new { style = "width: 70px;" })
+            @*<input type="text" style="width: 70px;" />*@
             <br />
             &nbsp;Caller Type: 
-                <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+            @{List<SelectListItem> items=new List<SelectListItem>();
+              items.Add(new SelectListItem
+              {
+                  Text = "Administrator",
+                  Value = "Administrator"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Dietician",
+                  Value = "Dietician"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Drug Company",
+                  Value = "Drug Company"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Family Member",
+                  Value = "Family Member"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Family Physician",
+                  Value = "Family Physician"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "General Public",
+                  Value = "General Public",
+                  Selected = true
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Librarian",
+                  Value = "Librarian"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Naturopath",
+                  Value = "Naturopath"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "News Media",
+                  Value = "News Media"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Nurse",
+                  Value = "Nurse"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Oncologist",
+                  Value = "Oncologist"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Other Health Care Professional",
+                  Value = "Other Health Care Professional"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Other Physicians",
+                  Value = "Other Physicians"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Patient",
+                  Value = "Patient"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Pharmacist",
+                  Value = "Pharmacist"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Public Relations",
+                  Value = "Public Relations"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Researcher",
+                  Value = "Researcher"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Social Worker",
+                  Value = "Social Worker"
+              });
+              
+              @Html.DropDownListFor(m => m.editModel.caller.TypeAbbreviate, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            
+              }
+               @* <select size="1" id="D1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                     onblur="javascript:ResetListBoxWidth(this,50)">
                     <option value="admin">Administrator</option>
                     <option value="dietician">Dietician</option>
@@ -252,10 +350,134 @@
                     <option value="radiation">Radiation therapist</option>
                     <option value="researcher">Researcher</option>
                     <option value="socialWorker">Social Worker</option>
-                </select>
+                </select>*@
+            
             <br />
             &nbsp;Geographic Location: 
-                <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+            @{items=new List<SelectListItem>();
+              items.Add(new SelectListItem
+              {
+                  Text = "Alberta",
+                  Value = "Alberta"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Abbotsford Cancer",
+                  Value = "Abbotsford Cancer"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "BC - Not Classified",
+                  Value = "BC - Not Classified"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Centre For The Southern Interior",
+                  Value = "Centre For The Southern Interior"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Fraser Health Region",
+                  Value = "Fraser Health Region"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Fraser Valley Centre",
+                  Value = "Fraser Valley Centre"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Interior Health Region",
+                  Value = "Interior Health Region"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Manitoba",
+                  Value = "Manitoba"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "New Brunswick",
+                  Value = "New Brunswick"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Newfoundland",
+                  Value = "Newfoundland"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Northern Health Region",
+                  Value = "Northern Health Region"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Nova Scotia",
+                  Value = "Nova Scotia"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Northwest Territories",
+                  Value = "Northwest Territories"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Nunavut",
+                  Value = "Nunavut"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Ontario",
+                  Value = "Ontario"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Africa, Asia, Europe, USA",
+                  Value = "Africa, Asia, Europe, USA"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Prince Edward Island",
+                  Value = "Prince Edward Island"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Quebec",
+                  Value = "Quebec"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Not Classified",
+                  Value = "Not Classified"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Vancouver Cancer Centre",
+                  Value = "Vancouver Cancer Centre"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Vancouver Coastal Region",
+                  Value = "Vancouver Coastal Region"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Vancouver Island Centre",
+                  Value = "Vancouver Island Centre"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Vancouver Island Region",
+                  Value = "Vancouver Island Region"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Yukon",
+                  Value = "Yukon"
+              });
+              @Html.DropDownListFor(m => m.editModel.caller.Region, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            
+              }
+               @* <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                     onblur="javascript:ResetListBoxWidth(this,50)">
                     <option value="alberta" selected>Alberta</option>
                     <option value="acc">Abbotsford Cancer Centre</option>
@@ -281,68 +503,239 @@
                     <option value="vic">Vancouver Island Centre</option>
                     <option value="vir">Vancouver Island Region</option>
                     <option value="yukon">Yukon</option>
-                </select>
+                </select>*@
         </div>
+        
+        
+        
         <!--Patient-->
         <div id="subrborderright">
             &nbsp;Patient:
             <br />
             &nbsp;Name: 
-            <input type="text" style="width: 70px;" />
+            @Html.TextBoxFor(m => m.editModel.patient.Name, new {style="width: 70px;" })
+            @*<input type="text" style="width: 70px;" />*@
             &nbsp;Agency ID:
-            <input type="text" style="width: 50px;" />
+            @Html.TextBoxFor(m => m.editModel.patient.AgencyID, new {style="width: 50px;" })
+            @*<input type="text" style="width: 50px;" />*@
             &nbsp;Age:
-            <input type="text" style="width: 50px;" />
+            @Html.TextBoxFor(m => m.editModel.patient.Age, new {style="width: 50px;" })
+            @*<input type="text" style="width: 50px;" />*@
             <br />
             &nbsp;Gender
-            <select name="Gender Type">
+            @{
+                items = new List<SelectListItem>();
+              items.Add(new SelectListItem
+              {
+                  Text = "Male",
+                  Value = "Male"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Female",
+                  Value = "Female"
+              });
+              @Html.DropDownListFor(m => m.editModel.patient.Gender, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            
+            }
+            @*<select name="Gender Type">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
-            </select>
+            </select>*@
         </div>
+        
+        
+        
         <!--Question-->
         <div id="bottom">
 
             <div class="yui-skin-sam" style="margin: 8px; float: left">
                 &nbsp;Question:
-        <textarea name="msgpost" id="msgpost" cols="50" rows="10" onfocus="this.value=''; return false;">
-         
-        </textarea>
+      @*  <textarea name="msgpost" id="msgpost" cols="50" rows="10" onfocus="this.value=''; return false;">
+            </textarea>*@
+         @Html.TextAreaFor(m => m.editModel.newQuestion.QuestionContent, new { name="msgpost",id="msgpost",cols="50",rows="10"})
+        
 
             </div>
 
             <div class="yui-skin-sam" style="margin: 8px; float: right">
                 &nbsp;Response:
-        <textarea name="msgpost" id="response" cols="50" rows="10">
+        @*<textarea name="msgpost" id="response" cols="50" rows="10">
         
-        </textarea>
+        </textarea>*@
+        @Html.TextAreaFor(m => m.editModel.newQuestion.Response, new { name = "msgpost", id = "response", cols = "50", rows = "10" })
             </div>
+
+
 
             <br />
             &nbsp;Tumour Group: 
-            <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+
+            @{items=new List<SelectListItem>();
+              items.Add(new SelectListItem
+              {
+                  Text = "Breast",
+                  Value = "br"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Central Nervous System",
+                  Value = "cns"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Endocrine",
+                  Value = "endo"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Gastrointestinal",
+                  Value = "gi"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "General",
+                  Value = "gen"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Gynaecology",
+                  Value = "gu"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Genitourinary",
+                  Value = "go"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Head and Neck",
+                  Value = "h&n"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Leukemia",
+                  Value = "leu"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Lung",
+                  Value = "lu"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Lymphoma",
+                  Value = "ly"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Melanoma",
+                  Value = "me"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Multiple Myeloma",
+                  Value = "mm"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Ocular",
+                  Value = "oc"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Pediatrics",
+                  Value = "ped"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Primary Unknown",
+                  Value = "pu"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Sarcoma",
+                  Value = "sa"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Supportive Care",
+                  Value = "supp"
+              });
+              @Html.DropDownListFor(m => m.editModel.tumorGroup.TumorTypeAbbreviate, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            
+              }
+            @*<select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                 onblur="javascript:ResetListBoxWidth(this,50)">
-                <option value="breasr" selected>Breast</option>
+                <option value="br" selected>Breast</option>
                 <option value="cns">Central Nervous System</option>
-                <option value="endocrine">Endocrine</option>
-                <option value="gastrointestinal">Gastrointestinal</option>
-                <option value="general">General</option>
-                <option value="gynaecology">Gynaecology</option>
-                <option value="genitourinary">Genitourinary</option>
-                <option value="han">Head and Neck</option>
-                <option value="leukemia">Leukemia</option>
-                <option value="lung">Lung</option>
-                <option value="lymphoma">Lymphoma</option>
-                <option value="melanoma">Melanoma</option>
+                <option value="endo">Endocrine</option>
+                <option value="gi">Gastrointestinal</option>
+                <option value="gen">General</option>
+                <option value="gu">Gynaecology</option>
+                <option value="go">Genitourinary</option>
+                <option value="h&n">Head and Neck</option>
+                <option value="leu">Leukemia</option>
+                <option value="lu">Lung</option>
+                <option value="ly">Lymphoma</option>
+                <option value="me">Melanoma</option>
                 <option value="mm">Multiple Myeloma</option>
-                <option value="ocular">Ocular</option>
-                <option value="pediatrics">Pediatrics</option>
+                <option value="oc">Ocular</option>
+                <option value="ped">Pediatrics</option>
                 <option value="pu">Primary Unknown</option>
-                <option value="sacroma">Sarcoma</option>
-                <option value="sc">Supportive Care</option>
-            </select>
+                <option value="sa">Sarcoma</option>
+                <option value="supp">Supportive Care</option>
+            </select>*@
+
+
             &nbsp;Question Type
-            <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
+            @{items=new List<SelectListItem>();
+              items.Add(new SelectListItem
+              {
+                  Text = "Adverse Effects",
+                  Value = "a/e"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "CAM",
+                  Value = "cam"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Coverage/Funding/Reimbursement",
+                  Value = "cost"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Drug Administration",
+                  Value = "admin"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Drug Availablity",
+                  Value = "avail"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Drug Dosing",
+                  Value = "dose"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Drug Interactions",
+                  Value = "di"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Other",
+                  Value = "other"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Therapy Selection",
+                  Value = "ther"
+              });              
+              @Html.DropDownListFor(m => m.editModel.newQuestion.QuestionTypeAbbreviate, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            
+              }
+            @*<select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                 onblur="javascript:ResetListBoxWidth(this,50)">
                 <option value="ae" selected>Adverse Effects</option>
                 <option value="cam">CAM</option>
@@ -353,38 +746,88 @@
                 <option value="di">Drug Interactions</option>
                 <option value="other">Other</option>
                 <option value="ts">Therapy Selection</option>
-            </select>
+            </select>*@
 
             <br />
             &nbsp;Severity
-            <select>
+             @{items=new List<SelectListItem>();
+              items.Add(new SelectListItem
+              {
+                  Text = "Major",
+                  Value = "Major"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Moderate",
+                  Value = "Moderate"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Minor",
+                  Value = "Minor"
+              });             
+                           
+              @Html.DropDownListFor(m => m.editModel.newQuestion.Severity, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            
+             }
+
+            @*<select>
                 <option value="major">Major</option>
                 <option value="moderate">Moderate</option>
                 <option value="minor">Minor</option>
-            </select>
+            </select>*@
+
             &nbsp;&nbsp;&nbsp;Probability
-            <select>
+            @{items=new List<SelectListItem>();
+              items.Add(new SelectListItem
+              {
+                  Text = "Certain",
+                  Value = "Certain"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Probable",
+                  Value = "Probable"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Possible",
+                  Value = "Possible"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Unlikely",
+                  Value = "Unlikely"
+              });        
+              @Html.DropDownListFor(m => m.editModel.newQuestion.Probability, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            
+             }
+            @*<select>
                 <option value="certain">Certain</option>
                 <option value="probable">Probable</option>
                 <option value="possible">Possible</option>
                 <option value="unlikely">Unlikely</option>
-            </select>
+            </select>*@
             &nbsp;&nbsp;&nbsp;Impact Score: 
+                @Html.TextBoxFor(m => m.editModel.newQuestion.ComputedImpact, new { readOnly = true,style="width: 50px"  })
             &nbsp;&nbsp;&nbsp;Time Taken:
-                <input type="text" style="width: 50px;" />
+                @Html.TextBoxFor(m => m.editModel.newQuestion.TimeTaken, new { style="width: 50px" }) minutes <br>
+                @*<input type="text" style="width: 50px;" />*@
             &nbsp;Keywords:
-            <input type="text" style="width: 110px;" />
-            <br />
+                @Html.TextBoxFor(m => m.editModel.newKeyword, new { style="width: 110px"})
+            @*<input type="text" style="width: 110px;" />*@
+            
             &nbsp;References:
-             <input type="text" style="width: 325px;" />
+            @Html.TextBoxFor(m => m.editModel.newReference.ReferenceContent, new { style="width: 325px"})
+             @*<input type="text" style="width: 325px;" />*@
+            @*
             &nbsp;Follow Up:
-             <input type="text" style="width: 325px;" />
+            @Html.TextBoxFor(m => m.editModel.newKeyword, new { style="width: 110px"})
+             <input type="text" style="width: 325px;" />*@
 
         </div>
         <div id="rbuttons">
             <button>Remove Question</button>
             <button>Add New Question</button>
-            <button id="back">BACK</button>
+            <button id ="back" >BACK</button>
             <button id="save">SAVE</button>
             <button id="cancel">CANCEL</button>
         </div>
