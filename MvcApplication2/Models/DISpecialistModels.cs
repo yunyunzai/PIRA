@@ -67,7 +67,7 @@ namespace MvcApplication2.Models
         [System.ComponentModel.DisplayName("Activation")]
         public bool IsActive { get; set; }
         [System.ComponentModel.DisplayName("Time Spent")]
-        public int TotalTimeSpent { get; set; }
+        public int? TotalTimeSpent { get; set; }
         [System.ComponentModel.DisplayName("Caller Name")]
         public string Name { get; set; }
         [System.ComponentModel.DisplayName("Caller Phone")]
@@ -84,8 +84,8 @@ namespace MvcApplication2.Models
         [Editable(true)]
         public Int64 PatientId { get; set; }
         public string Name { get; set; }
-        public int AgencyID { get; set; }
-        public int Age { get; set; }
+        public int? AgencyID { get; set; }
+        public int? Age { get; set; }
         public string Gender { get; set; }
         //public virtual ICollection<Request> Requests { get; set; }
     }
@@ -134,17 +134,19 @@ namespace MvcApplication2.Models
         public Int64 QuestionId { get; set; }
         [Column(TypeName = "text")]
         [MaxLength(3000)]
+        [Required]
         public string QuestionContent { get; set; }
         // [Required]
         [Column(TypeName = "text")]
         [MaxLength(3000)]
         public string Response { get; set; }
-        //[Required]
+        [Required]
         public string Severity { get; set; }
-        //[Required]
+        [Required]
         public string Probability { get; set; }
-        public int ComputedImpact { get; set; }
-        public int TimeTaken { get; set; }
+        
+        public int? ComputedImpact { get; set; }
+        public int? TimeTaken { get; set; }
         //[Required]
         public string TumorTypeAbbreviate { get; set; }
         //[Required]
@@ -275,6 +277,9 @@ namespace MvcApplication2.Models
         //public QuestionReference questionReference { get; set; }
         public Reference newReference { get; set; }
         public TumorGroup tumorGroup { get; set; }
+
+        public bool isCreatingRequest { get; set; }
+        public string mode { get; set; }
     }
    
 }
