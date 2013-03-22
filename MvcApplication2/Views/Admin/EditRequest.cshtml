@@ -10,8 +10,13 @@
     <fieldset>
         <legend>Request</legend>
 
+            @Html.LabelFor(model => model.RequestId)<br />
             @Html.HiddenFor(model => model.RequestId)<br />
             &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.RequestId)<br /><br />
+            @Html.HiddenFor(model => model.Name)
+            @Html.HiddenFor(model => model.PatientId)
+            @Html.HiddenFor(model => model.Phone)
+            @Html.HiddenFor(model => model.TotalTimeSpent)
             @Html.LabelFor(model => model.IsActive)<br />
             &nbsp;&nbsp;&nbsp;&nbsp;@Html.EditorFor(model => model.IsActive)
             @Html.ValidationMessageFor(model => model.IsActive)

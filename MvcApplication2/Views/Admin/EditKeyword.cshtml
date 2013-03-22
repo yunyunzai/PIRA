@@ -9,7 +9,8 @@
 
     <fieldset>
         <legend>Keyword</legend>
-
+            
+            @Html.LabelFor(model => model.Keyword)
             @Html.HiddenFor(model => model.Keyword)
             &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Keyword)<br /><br />
             @Html.LabelFor(model => model.IsActive)<br />

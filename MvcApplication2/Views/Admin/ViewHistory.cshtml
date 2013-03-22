@@ -4,8 +4,20 @@
     List<MvcApplication2.ViewModels.LoggingModel> allReq = ViewBag.SortedList;
     MvcApplication2.Models.UsersContext db = new MvcApplication2.Models.UsersContext();
 }
-
+<div class="content-wrapper">
+    <div class="float-left">
+        <nav>
+            <ul id="menu">
+                <li>@Html.ActionLink("Keyword Management", "Admin", "Admin")</li>
+                <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                 <li>@Html.ActionLink("User Management", "Index", "Users")</li>
+                 <li>@Html.ActionLink("View History", "ViewHistory", "Admin")</li>
+            </ul>
+        </nav>
+    </div>
+</div><br /><br /><br /><hr />
 <h2>ViewHistory</h2>
+<div style="height: 400px; overflow-y:scroll;">
 <table>
     <tr>
         <td>
@@ -56,3 +68,4 @@
 
 
 </table>
+    </div>
