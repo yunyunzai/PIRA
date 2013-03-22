@@ -106,7 +106,33 @@ namespace MvcApplication2.Controllers
                         User.Identity.Name + " ] not found.");
                 }
                 System.Diagnostics.Debug.WriteLine("Logged in user name: " + user.UserName);
-                return RedirectToLocal(returnUrl);
+                int userID = int.Parse(user.ProviderUserKey.ToString());
+                UsersContext uc = new UsersContext();
+                var info = from table1 in uc.UserProfiles
+                           join table2 in uc.UsersInRoles on table1.UserId equals table2.UserId
+                           join table3 in uc.Roles on table2.RoleId equals table3.RoleId
+                           select new { table1.UserId, table2.RoleId, table3.RoleName };
+                var roleAdmin = new List<String>();
+                var roleDI = new List<String>();
+                var roleRep = new List<String>();
+                foreach (var i in info)
+                {
+                    if (i.UserId == userID)
+                    {
+                        if (i.RoleName == "Admin")
+                            roleAdmin.Add(i.RoleName);
+                        if (i.RoleName == "DISpecialist")
+                            roleDI.Add(i.RoleName);
+                        if (i.RoleName == "Reporter")
+                            roleRep.Add(i.RoleName);
+                    }
+                }
+                if (roleAdmin.Contains("Admin"))
+                    return RedirectToAction("Admin", "Admin");
+                if (!roleAdmin.Contains("Admin") && roleDI.Contains("DISpecialist"))
+                    return RedirectToAction("DISpecialist", "DISpecialist");
+                if (!roleAdmin.Contains("Admin") && !roleDI.Contains("DISpecialist") && roleRep.Contains("Reporter"))
+                    return RedirectToAction("Reporter", "Reporter");
             }
 
             // If we got this far, something failed, redisplay form

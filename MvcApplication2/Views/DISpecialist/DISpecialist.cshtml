@@ -149,17 +149,39 @@
         
     @Html.Raw("</div>");
 }
+<style>
+    div#resultList {
+        height:300px;
+        overflow-y:scroll;
+        width:880px;
+    }
+    td {
+        width:160px;
+
+    }
+    th {
+        width: 135px;
+        font:bold;
+    }
 
 
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#scrollBorder tr:even").css("background-color", "#C6E2FF");
+        $("#scrollBorder tr:odd").css("background-color", "#EFF1F1");
+
+
+    });
+</script>
 
 @using (Html.BeginForm("view", "DISpecialist"))
 {
-    <div>
+    <div id="header">
+        <table>
 
-        @if (Model != null && Model.requests != null)
-        {
-            <table>
-                <tr>
+            <tr>
                     <th>RequestId</th>
                     <th>PatientId</th>
                     <th>Time Created</th>
@@ -167,6 +189,17 @@
                     <th>Completed By</th>
                     <th>Time Completed</th>
                 </tr>
+
+            </table>
+        </div>
+    
+    
+    <div id="resultList">
+
+        @if (Model != null && Model.requests != null)
+        {
+            <table id="scrollBorder">
+                
                 @foreach (var item in Model.requests)
                 {
                 

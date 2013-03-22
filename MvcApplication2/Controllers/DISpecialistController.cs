@@ -15,6 +15,7 @@ using System.Web.Security;
 
 namespace MvcApplication2.Controllers
 {
+    [Authorize]
     public class DISpecialistController : Controller
     {
         private static DISpecialistModel globalModel=new DISpecialistModel();

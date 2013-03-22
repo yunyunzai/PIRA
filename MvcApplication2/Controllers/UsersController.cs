@@ -244,46 +244,47 @@ namespace MvcApplication2.Controllers
                    // IsAssigned = false
                 });
             }
-
-            var sel_groups = new HashSet<string>(selectedGroups);
-
-            var userGroups = new HashSet<string>(user.UserBelongsGroup.Select(c => c.Abbreviate));
-            foreach (var g in viewModelGroup)
+            if (selectedGroups != null)
             {
-                if (sel_groups.Contains(g.Abbreviate))
-                {
-                    if (!userGroups.Contains(g.Abbreviate))
-                    {
-                        UserBelongsGroup ubg = new UserBelongsGroup
-                        {
-                            Abbreviate = g.Abbreviate,
-                            UserId = user.UserId
-                        };
-                        db.UserBelongsGroup.Add(ubg);
-                        db.SaveChanges();
+                var sel_groups = new HashSet<string>(selectedGroups);
 
-                    }
-                    else
+                var userGroups = new HashSet<string>(user.UserBelongsGroup.Select(c => c.Abbreviate));
+                foreach (var g in viewModelGroup)
+                {
+                    if (sel_groups.Contains(g.Abbreviate))
                     {
-                        if (userGroups.Contains(g.Abbreviate))
+                        if (!userGroups.Contains(g.Abbreviate))
                         {
-                            var usersInGroups = from p in db.UserBelongsGroup
-                                                where p.UserId == user.UserId
-                                                where p.Abbreviate == g.Abbreviate
-                                                select p;
-                            foreach (var group in usersInGroups)
+                            UserBelongsGroup ubg = new UserBelongsGroup
                             {
-                                db.UserBelongsGroup.Attach(group);
-                                db.UserBelongsGroup.Remove(group);
-                            }
+                                Abbreviate = g.Abbreviate,
+                                UserId = user.UserId
+                            };
+                            db.UserBelongsGroup.Add(ubg);
                             db.SaveChanges();
 
                         }
+                        else
+                        {
+                            if (userGroups.Contains(g.Abbreviate))
+                            {
+                                var usersInGroups = from p in db.UserBelongsGroup
+                                                    where p.UserId == user.UserId
+                                                    where p.Abbreviate == g.Abbreviate
+                                                    select p;
+                                foreach (var group in usersInGroups)
+                                {
+                                    db.UserBelongsGroup.Attach(group);
+                                    db.UserBelongsGroup.Remove(group);
+                                }
+                                db.SaveChanges();
 
+                            }
+
+                        }
                     }
                 }
             }
-
         }
 
         private void EditUserRoles(int UserId, string[] selectedRoles)
@@ -306,8 +307,10 @@ namespace MvcApplication2.Controllers
                         IsAssigned = false
                     });
                 }
-               
-              
+
+                if (selectedRoles != null)
+                {
+                
                 var sel_roles = new HashSet<string>(selectedRoles);
                 var userRoles = new HashSet<long>(userprofile.UsersInRoles.Select(c => c.RoleId));
                 foreach (var role in viewModelRole)
@@ -334,26 +337,26 @@ namespace MvcApplication2.Controllers
                                                where p.UserId == UserId
                                                where p.RoleId == role.RoleId
                                                select p;
-                           
+
                             foreach (var uir in usersInRoles)
                             {
                                 db.UsersInRoles.Attach(uir);
                                 db.UsersInRoles.Remove(uir);
-                                
-                                
+
+
                             }
                             db.SaveChanges();
-                           
+
                         }
 
                     }
-                    
-                   
-                    
-                    
-                   
-                
 
+
+
+
+
+
+                }
             }
         }
 
