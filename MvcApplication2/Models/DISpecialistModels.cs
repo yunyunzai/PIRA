@@ -50,7 +50,7 @@ namespace MvcApplication2.Models
     public class Keywords
     {
         [Key, Column(Order = 1)]
-        //[Required]
+        [Required]
         [Display(Name = "Keyword")]
         public string Keyword { get; set; }
         //[Required]
@@ -251,6 +251,7 @@ namespace MvcApplication2.Models
         public SearchModel searchModel{ get; set; }
         public List<RequestViewModel> requests { get; set; }
         public RequestViewModel editModel { get; set; }
+        public bool isCreatingRequest { get; set; }
     }
 
     public class SearchModel
@@ -278,7 +279,7 @@ namespace MvcApplication2.Models
         public Reference newReference { get; set; }
         public TumorGroup tumorGroup { get; set; }
 
-        public bool isCreatingRequest { get; set; }
+        
         public string mode { get; set; }
     }
    

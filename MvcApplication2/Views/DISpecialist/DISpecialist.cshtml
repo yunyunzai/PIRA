@@ -12,6 +12,9 @@
 <script>
     $(function () {
         $("#newRequest").click(function () {
+            @*@{
+                       
+                Model.editModel = new MvcApplication2.Models.RequestViewModel();}*@
             $("#dispecialist").hide();
             $("#rborder").show();
         });
@@ -222,6 +225,15 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.userCompleteRequest.CompletionTime)
                         </td>
+                        <td>
+                            @{int a = 2; }
+                            @*@{string name = "edit" + item.request.RequestId;}
+                            @{string cname = "#"+name;}*@
+                            @*<button  id="edit<%= item.request.RequestId %>">Edit</button>*@
+                            @Html.ActionLink("edit", "edit", new { rid=item.request.RequestId})
+                            @*("Edit", "create", "DISpecialist", null, new { id="edit"+item.request.RequestId})*@
+                        </td>
+                        
                     </tr>
 
                 }
@@ -252,7 +264,7 @@
 <button id="newRequest">New Request</button>
 
 
-@{if (Model == null || Model.editModel == null || Model.editModel.isCreatingRequest == null || !Model.editModel.isCreatingRequest)
+@{if (Model == null || Model.editModel == null ||  !Model.isCreatingRequest)
   {
       @Html.Raw("<div id=\"rborder\" hidden>");
   }
@@ -904,9 +916,9 @@
             <button>Remove Question</button>
             <button>Add New Question</button>
             
-            <button id ="back" >BACK</button>
+            @Html.ActionLink("Cancel","cancel")
             <input id = "save" type="submit"  value="SAVE" />
-            <button id="cancel">CANCEL</button>
+            @*<button id="cancel">CANCEL</button>*@
         </div>
    
         <div style="clear: both"></div>
