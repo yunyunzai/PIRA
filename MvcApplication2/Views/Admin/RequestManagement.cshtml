@@ -2,7 +2,18 @@
 @{
     
 }
-
+<div class="content-wrapper">
+    <div class="float-left">
+        <nav>
+            <ul id="menu">
+                <li>@Html.ActionLink("Keyword Management", "Admin", "Admin")</li>
+                <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                 <li>@Html.ActionLink("User Management", "Index", "Users")</li>
+                 <li>@Html.ActionLink("View History", "ViewHistory", "Admin")</li>
+            </ul>
+        </nav>
+    </div>
+</div><br /><br /><br /><hr />
 <h2>Request Management</h2>
 
 <div id="request_management" style="position:relative;">
