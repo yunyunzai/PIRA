@@ -238,93 +238,108 @@
               items.Add(new SelectListItem
               {
                   Text = "Administrator",
-                  Value = "Administrator"
+                  Value = "admin"
               });
               items.Add(new SelectListItem
               {
                   Text = "Dietician",
-                  Value = "Dietician"
+                  Value = "rdn"
               });
               items.Add(new SelectListItem
               {
                   Text = "Drug Company",
-                  Value = "Drug Company"
+                  Value = "drug go"
               });
               items.Add(new SelectListItem
               {
                   Text = "Family Member",
-                  Value = "Family Member"
+                  Value = "family"
               });
               items.Add(new SelectListItem
               {
                   Text = "Family Physician",
-                  Value = "Family Physician"
+                  Value = "gp"
               });
               items.Add(new SelectListItem
               {
                   Text = "General Public",
-                  Value = "General Public",
+                  Value = "pub",
                   Selected = true
               });
               items.Add(new SelectListItem
               {
                   Text = "Librarian",
-                  Value = "Librarian"
+                  Value = "lib"
               });
               items.Add(new SelectListItem
               {
                   Text = "Naturopath",
-                  Value = "Naturopath"
+                  Value = "nd"
               });
               items.Add(new SelectListItem
               {
                   Text = "News Media",
-                  Value = "News Media"
+                  Value = "media"
               });
               items.Add(new SelectListItem
               {
                   Text = "Nurse",
-                  Value = "Nurse"
+                  Value = "rn"
               });
               items.Add(new SelectListItem
               {
                   Text = "Oncologist",
-                  Value = "Oncologist"
+                  Value = "onc"
               });
               items.Add(new SelectListItem
               {
                   Text = "Other Health Care Professional",
-                  Value = "Other Health Care Professional"
+                  Value = "hcp"
               });
               items.Add(new SelectListItem
               {
                   Text = "Other Physicians",
-                  Value = "Other Physicians"
+                  Value = "other dr"
               });
               items.Add(new SelectListItem
               {
                   Text = "Patient",
-                  Value = "Patient"
+                  Value = "patient"
               });
               items.Add(new SelectListItem
               {
                   Text = "Pharmacist",
-                  Value = "Pharmacist"
+                  Value = "rx"
               });
               items.Add(new SelectListItem
               {
                   Text = "Public Relations",
-                  Value = "Public Relations"
+                  Value = "pr"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Radiation Therapist",
+                  Value = "rt"
               });
               items.Add(new SelectListItem
               {
                   Text = "Researcher",
-                  Value = "Researcher"
+                  Value = "research"
               });
               items.Add(new SelectListItem
               {
                   Text = "Social Worker",
-                  Value = "Social Worker"
+                  Value = "sw"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Student",
+                  Value = "student"
+              });
+              items.Add(new SelectListItem
+              {
+                  Text = "Unknown",
+                  Value = "other"
               });
               
               @Html.DropDownListFor(m => m.editModel.caller.TypeAbbreviate, items, new { size="1",name="D1",style="width: 140px",onclick="javascript:ChangeListBoxWidth(this);"}) ;            

@@ -25,9 +25,16 @@ namespace MvcApplication2.Controllers
         public ActionResult create(DISpecialistModel m)
         {
             DISpecialistContext db = new DISpecialistContext();
+            var caller = from c in db.Callers
+                         where c.Name == m.editModel.caller.Name && c.Phone == m.editModel.caller.Phone
+                         select c;
+            if (caller.Count() != 0)
+                db.Callers.Remove(caller.First());
             db.Callers.Add(m.editModel.caller);
             
             
+            db.SaveChanges();
+            System.Diagnostics.Debug.WriteLine("123");
             return View("DISpecialist", globalModel);
         }
 
