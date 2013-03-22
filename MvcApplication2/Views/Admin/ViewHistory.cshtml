@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MvcApplication2.ViewModels.LoggingModel>
+@{
+    ViewBag.Title = "ViewHistory";
+    List<MvcApplication2.ViewModels.LoggingModel> allReq = ViewBag.SortedList;
+    MvcApplication2.Models.UsersContext db = new MvcApplication2.Models.UsersContext();
+}
+
+<h2>ViewHistory</h2>
+<table>
+    <tr>
+        <td>
+           <label>User Action</label>
+        </td>
+
+        <td>
+            <label>USER ID</label>
+        </td>
+
+        <td>
+            <label>USER NAME</label>
+        </td>
+        <td>
+            <label>REQUEST ID</label>
+        </td>
+        <td>
+            <label>TIME</label>
+        </td>
+        </tr>
+        @{
+            
+            foreach(var req in allReq){
+                <tr>
+                     <td>
+                        @Html.DisplayFor(modelElem=>req.Action)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelElem => req.UserId)
+                    </td>
+                    <td>
+                        <p>@db.UserProfiles.Where(i=>i.UserId == req.UserId).Single().UserName</p>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelElem => req.RequestId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelElem=>req.time)
+                    </td>
+                   
+                    </tr>
+                
+            }
+            
+        }
+   
+
+
+
+</table>
