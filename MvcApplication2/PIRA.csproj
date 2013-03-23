@@ -349,7 +349,6 @@
     <Content Include="Views\Request\Edit.cshtml" />
     <Content Include="Views\Request\Delete.cshtml" />
     <Content Include="Views\Admin\ViewHistory.cshtml" />
-    <Content Include="Views\Account\InvalidAccess.cshtml" />
     <Content Include="Views\Admin\FieldManagement.cshtml" />
     <Content Include="Views\Admin\TumorGroup.cshtml" />
     <Content Include="Views\Admin\QuestionType.cshtml" />
@@ -360,6 +359,8 @@
     <Content Include="Views\Admin\DeleteTumorGroup.cshtml" />
     <Content Include="Views\Admin\DeleteQuestionType.cshtml" />
     <Content Include="Views\Admin\DeleteUserGroup.cshtml" />
+    <Content Include="Views\Viewer\Viewer.cshtml" />
+    <Content Include="Views\Account\InvalidAccess.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
