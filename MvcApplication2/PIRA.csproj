@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ReporterController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\ViewerController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\RoleAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -348,6 +349,7 @@
     <Content Include="Views\Request\Edit.cshtml" />
     <Content Include="Views\Request\Delete.cshtml" />
     <Content Include="Views\Admin\ViewHistory.cshtml" />
+    <Content Include="Views\Account\InvalidAccess.cshtml" />
     <Content Include="Views\Admin\FieldManagement.cshtml" />
     <Content Include="Views\Admin\TumorGroup.cshtml" />
     <Content Include="Views\Admin\QuestionType.cshtml" />

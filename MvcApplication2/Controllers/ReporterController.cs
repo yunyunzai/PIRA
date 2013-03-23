@@ -10,10 +10,14 @@ using System.Xml.Serialization;
 using NPOI.HSSF.EventModel;
 using OfficeOpenXml;
 using MvcApplication2.Models;
+using MvcApplication2.Filters;
 using OfficeOpenXml.Drawing.Chart;
+
 
 namespace MvcApplication2.Controllers
 {
+    [Authorize]
+    [Role(Roles="Reporter")]
     public class ReporterController : Controller
     {
         //
