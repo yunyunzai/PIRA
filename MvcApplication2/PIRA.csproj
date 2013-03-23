@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ReporterController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\ViewerController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\RoleAttribute.cs" />
     <Compile Include="Global.asax.cs">
