@@ -12,10 +12,12 @@ namespace MvcApplication2.Controllers
     public class AdminController : Controller
     {
        
-        //
-        // GET: /Admin
+        
         private DISpecialistContext db = new DISpecialistContext();
         private LoggingContext dbl = new LoggingContext();
+        private UsersContext dbUser = new UsersContext();
+        //
+        // GET: /Admin
         public ActionResult Admin(string searchString)
         {
             var key = from m in db.Keywords select m;
@@ -133,6 +135,170 @@ namespace MvcApplication2.Controllers
             
 
             return View();
+        }
+
+        public ActionResult FieldManagement()
+        {
+            return View();
+        }
+
+        public ActionResult TumorGroup(string searchString)
+        {
+            var key = from m in db.TumorGroups select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+        
+        public ActionResult AddTumorGroup()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddTumorGroup(TumorGroup model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.TumorGroups.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("TumorGroup");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteTumorGroup(string Abbreviate)
+        {
+            TumorGroup TumorGroup = db.TumorGroups.Find(Abbreviate);
+            if (TumorGroup == null)
+            {
+                return HttpNotFound();
+            }
+            return View(TumorGroup);
+        }
+
+
+        [HttpPost, ActionName("DeleteTumorGroup")]
+        public ActionResult DeleteTumorGroup2(string Abbreviate)
+        {
+            TumorGroup userprofile = db.TumorGroups.Find(Abbreviate);
+            db.TumorGroups.Remove(userprofile);
+            db.SaveChanges();
+            return RedirectToAction("TumorGroup");
+        }
+
+        public ActionResult QuestionType(string searchString)
+        {
+            var key = from m in db.QuestionTypes select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+
+        public ActionResult AddQuestionType()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddQuestionType(QuestionType model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.QuestionTypes.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("QuestionType");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteQuestionType(string id)
+        {
+            QuestionType userprofile = db.QuestionTypes.Find(id);
+            if (userprofile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userprofile);
+        }
+
+
+        [HttpPost, ActionName("DeleteQuestionType")]
+        public ActionResult DeleteQuestionType2(string id)
+        {
+            QuestionType userprofile = db.QuestionTypes.Find(id);
+            db.QuestionTypes.Remove(userprofile);
+            db.SaveChanges();
+            return RedirectToAction("QuestionType");
+        }
+
+        public ActionResult UserGroup(string searchString)
+        {
+            var key = from m in dbUser.UserGroup select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+
+        public ActionResult AddUserGroup()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddUserGroup(UserGroup model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                dbUser.UserGroup.Add(model);
+                dbUser.SaveChanges();
+                return RedirectToAction("UserGroup");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteUserGroup(string Abbreviate)
+        {
+            UserGroup userprofile = dbUser.UserGroup.Find(Abbreviate);
+            if (userprofile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userprofile);
+        }
+
+
+        [HttpPost, ActionName("DeleteUserGroup")]
+        public ActionResult DeleteUserGroup2(string Abbreviate)
+        {
+            UserGroup userprofile = dbUser.UserGroup.Find(Abbreviate);
+            dbUser.UserGroup.Remove(userprofile);
+            dbUser.SaveChanges();
+            return RedirectToAction("UserGroup");
         }
 
         //

@@ -1,0 +1,27 @@
+﻿@model MvcApplication2.Models.TumorGroup
+
+
+<h2>Add Tumor Group</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Tumor Group</legend>
+
+            @Html.LabelFor(model => model.Name)
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+            @Html.LabelFor(model => model.TumorTypeAbbreviate)
+            @Html.EditorFor(model => model.TumorTypeAbbreviate)
+            @Html.ValidationMessageFor(model => model.TumorTypeAbbreviate)
+       
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,7 +1,20 @@
-﻿@model IEnumerable<MvcApplication2.Models.Request>
+﻿@model IEnumerable<MvcApplication2.Models.TumorGroup>
 @{
-    
+    ViewBag.Title = "Tumor_Group";
 }
+<script>
+  $(function() {
+      var availableTags = [@foreach(var i in Model){
+                               <text>"@i.Name",</text>
+                           }
+      ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+
+
 <div class="content-wrapper">
     <div class="float-left">
         <nav>
@@ -15,15 +28,15 @@
         </nav>
     </div>
 </div><br /><br /><br /><hr />
-<h2>Request Management</h2>
 
-<div id="request_management" style="position:relative;">
+    <div id="keyword_management" >
+    @Html.ActionLink("Add New Tumor Group", "AddTumorGroup")
     @using (Html.BeginForm())
     {    
-         <p> Request: @Html.TextBox("key") &nbsp;  
-         <input type="submit" value="Filter" /></p> 
+         <div class="ui-widget"> Tumor Group: @Html.TextBox("SearchString", "", new { id = "tags" }) &nbsp;  
+         <input type="submit" value="Filter" /></div> 
     } 
-    <div style="height: 400px; overflow-y:scroll;">
+        <div style="height: 400px; overflow-y:scroll;">
     <table style="border: 1px solid #e3e3e3;
 	background-color: #f2f2f2;
         width: 100%;
@@ -36,15 +49,14 @@
 	font-style: normal;
 	font-weight: normal;
 	text-align: left;
-	text-shadow: white 1px 1px 1px;">Request ID</th>
+	text-shadow: white 1px 1px 1px;">Name</th>
                <th style="font-size: 17px;
 	line-height: 20px;
 	font-style: normal;
 	font-weight: normal;
 	text-align: left;
-	text-shadow: white 1px 1px 1px;">Active</th>
+	text-shadow: white 1px 1px 1px;">Abbreviate</th>
            </tr>
-        
    @foreach (var item in Model)
    {
        
@@ -52,28 +64,24 @@
             <td style="line-height: 20px;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
-	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.RequestId)</td>
+	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.Name)</td>
             <td style="line-height: 20px;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
-	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.IsActive)</td>
+	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.TumorTypeAbbreviate)</td>
+               
             <td style="line-height: 20px;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
-	border-top: 1px solid #fff;">@*@foreach(var q in item.Questions){
-                                  foreach (var k in q.Keywords)
-                                  {
-                                      Html.DisplayFor(key => k.Keyword);
-                                  }
-                              }*@
-            </td>
-            <td style="line-height: 20px;
-	font-size: 14px;
-	border-bottom: 1px solid #fff;
-	border-top: 1px solid #fff;">@Html.ActionLink("Edit", "EditRequest", new { id = item.RequestId })</td>
+	border-top: 1px solid #fff;">@Html.ActionLink("Delete", "DeleteTumorGroup", new { Abbreviate = item.TumorTypeAbbreviate })</td>
            </tr>
        
    }
         </table>
+            </div>
         </div>
-        </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

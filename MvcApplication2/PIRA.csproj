@@ -201,6 +201,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\LoggingModels.cs" />
     <Compile Include="Models\ReporterModels.cs" />
     <Compile Include="Models\RequestModels.cs" />
@@ -347,6 +348,16 @@
     <Content Include="Views\Request\Edit.cshtml" />
     <Content Include="Views\Request\Delete.cshtml" />
     <Content Include="Views\Admin\ViewHistory.cshtml" />
+    <Content Include="Views\Admin\FieldManagement.cshtml" />
+    <Content Include="Views\Admin\TumorGroup.cshtml" />
+    <Content Include="Views\Admin\QuestionType.cshtml" />
+    <Content Include="Views\Admin\UserGroup.cshtml" />
+    <Content Include="Views\Admin\AddTumorGroup.cshtml" />
+    <Content Include="Views\Admin\AddQuestionType.cshtml" />
+    <Content Include="Views\Admin\AddUserGroup.cshtml" />
+    <Content Include="Views\Admin\DeleteTumorGroup.cshtml" />
+    <Content Include="Views\Admin\DeleteQuestionType.cshtml" />
+    <Content Include="Views\Admin\DeleteUserGroup.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
