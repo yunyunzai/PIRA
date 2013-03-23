@@ -5,10 +5,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using MvcApplication2.Models;
+using MvcApplication2.Filters;
 
 namespace MvcApplication2.Controllers
 {
+    [Authorize]
+    [Role(Roles="Reporter")]
     public class RequestController : Controller
     {
         private DISpecialistContext db = new DISpecialistContext();

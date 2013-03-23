@@ -164,7 +164,25 @@ namespace MvcApplication2.Controllers
             ListAllGroups();
             return View(rm);
         }
-      
+
+
+
+
+        [Authorize]
+        public ActionResult InvalidAccess()
+        {
+
+
+            return View();
+        }
+
+
+
+
+
+
+
+
         //
         // POST: /Account/Register
 

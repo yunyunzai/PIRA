@@ -347,6 +347,7 @@
     <Content Include="Views\Request\Edit.cshtml" />
     <Content Include="Views\Request\Delete.cshtml" />
     <Content Include="Views\Admin\ViewHistory.cshtml" />
+    <Content Include="Views\Account\InvalidAccess.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

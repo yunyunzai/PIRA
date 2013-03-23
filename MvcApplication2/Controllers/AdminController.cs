@@ -9,6 +9,8 @@ using System.Data;
 using System.Data.SqlClient;
 namespace MvcApplication2.Controllers
 {
+    [Authorize]
+    [Role(Roles="Admin")]
     public class AdminController : Controller
     {
        

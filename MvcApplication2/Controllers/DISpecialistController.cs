@@ -16,6 +16,7 @@ using System.Web.Security;
 namespace MvcApplication2.Controllers
 {
     [Authorize]
+    [Role(Roles = "DISpecialist")]
     public class DISpecialistController : Controller
     {
         private static DISpecialistModel globalModel=new DISpecialistModel();
@@ -183,6 +184,11 @@ namespace MvcApplication2.Controllers
     
             return View("DISpecialist",m);
         }
+
+
+
+
+
 
         public ActionResult edit(DISpecialistModel m, int rid)
         {
