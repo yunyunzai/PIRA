@@ -1,0 +1,85 @@
+﻿@model IEnumerable<MvcApplication2.Models.CallerType>
+
+<script>
+  $(function() {
+      var availableTags = [@foreach(var i in Model){
+                               <text>"@i.Name",</text>
+                           }
+      ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+
+
+<div class="content-wrapper">
+    <div class="float-left">
+        <nav>
+            <ul id="menu">
+                <li>@Html.ActionLink("Keyword Management", "Admin", "Admin")</li>
+                <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                <li>@Html.ActionLink("Field Management", "FieldManagement", "Admin")</li>
+                 <li>@Html.ActionLink("User Management", "Index", "Users")</li>
+                 <li>@Html.ActionLink("View History", "ViewHistory", "Admin")</li>
+            </ul>
+        </nav>
+    </div>
+</div><br /><br /><br /><hr />
+
+    <div >
+    @Html.ActionLink("Add New Caller Type", "AddCallerType")
+    @using (Html.BeginForm())
+    {    
+         <div class="ui-widget"> Question Type: @Html.TextBox("SearchString", "", new { id = "tags" }) &nbsp;  
+         <input type="submit" value="Filter" /></div> 
+    } 
+        <div style="height: 400px; overflow-y:scroll;">
+    <table style="border: 1px solid #e3e3e3;
+	background-color: #f2f2f2;
+        width: 100%;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;">
+           <tr>
+               <th style="font-size: 17px;
+	line-height: 20px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
+	text-shadow: white 1px 1px 1px;">Name</th>
+               <th style="font-size: 17px;
+	line-height: 20px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
+	text-shadow: white 1px 1px 1px;">Abbreviate</th>
+           </tr>
+   @foreach (var item in Model)
+   {
+       
+           <tr>
+            <td style="line-height: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.Name)</td>
+            <td style="line-height: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.TypeAbbreviate)</td>
+               
+            <td style="line-height: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;">@Html.ActionLink("Delete", "DeleteCallerType", new { id = item.TypeAbbreviate })</td>
+           </tr>
+       
+   }
+        </table>
+            </div>
+        </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,26 @@
+﻿@model MvcApplication2.Models.CallerType
+
+<h3>Are you sure you want to delete this caller type?</h3>
+<fieldset>
+    <legend></legend>
+
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.Name)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.TypeAbbreviate)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TypeAbbreviate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Cancel", "CallerType")
+    </p>
+}

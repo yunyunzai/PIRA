@@ -360,6 +360,9 @@
     <Content Include="Views\Admin\DeleteTumorGroup.cshtml" />
     <Content Include="Views\Admin\DeleteQuestionType.cshtml" />
     <Content Include="Views\Admin\DeleteUserGroup.cshtml" />
+    <Content Include="Views\Admin\AddCallerType.cshtml" />
+    <Content Include="Views\Admin\DeleteCallerType.cshtml" />
+    <Content Include="Views\Admin\CallerType.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

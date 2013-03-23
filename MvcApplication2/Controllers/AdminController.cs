@@ -58,17 +58,68 @@ namespace MvcApplication2.Controllers
 
         public ActionResult ViewHistory(String key)
         {
-            var userViewRequest = db.UserViewRequest
-                .ToList();
-            var userCreateRequest = dbl.UserCreateRequest
-                .ToList();
-            var userCompleteRequest = dbl.UserCompleteRequest
-                .ToList();
-            var userEditRequest = dbl.UserEditRequests
-                .ToList();
+            var userViewRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserViewRequest on m.RequestId equals uv.RequestId
+                                   select uv).ToList();
+            var userCreateRequest = (from m in db.Requests
+                                     join q in db.Questions on m.RequestId equals q.RequestId
+                                     join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                     join uv in db.UserCreateRequest on m.RequestId equals uv.RequestId
+                                     select uv).ToList();
+            var userCompleteRequest = (from m in db.Requests
+                                       join q in db.Questions on m.RequestId equals q.RequestId
+                                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                       join uv in db.UserCompleteRequest on m.RequestId equals uv.RequestID
+                                       select uv).ToList();
+            var userEditRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserEditRequest on m.RequestId equals uv.RequestId
+                                   select uv).ToList();
 
-            var userExportRequest = dbl.UserExportRequests
-                .ToList();
+            var userExportRequest = (from m in db.Requests
+                                     join q in db.Questions on m.RequestId equals q.RequestId
+                                     join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                     join uv in db.UserExportRequests on m.RequestId equals uv.RequestId
+                                     select uv).ToList();
+
+            if (!String.IsNullOrEmpty(key))
+            {
+                userViewRequest = (from m in db.Requests
+                       join q in db.Questions on m.RequestId equals q.RequestId
+                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                       join uv in db.UserViewRequest on m.RequestId equals uv.RequestId
+                       where qk.Keyword.Equals(key)
+                       select uv).ToList();
+                userCreateRequest = (from m in db.Requests
+                                     join q in db.Questions on m.RequestId equals q.RequestId
+                                     join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                     join uv in db.UserCreateRequest on m.RequestId equals uv.RequestId
+                                     where qk.Keyword.Equals(key)
+                                     select uv).ToList();
+                userCompleteRequest = (from m in db.Requests
+                                       join q in db.Questions on m.RequestId equals q.RequestId
+                                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                       join uv in db.UserCompleteRequest on m.RequestId equals uv.RequestID
+                                       where qk.Keyword.Equals(key)
+                                       select uv).ToList();
+                userEditRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserEditRequest on m.RequestId equals uv.RequestId
+                                   where qk.Keyword.Equals(key)
+                                   select uv).ToList();
+                userExportRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserExportRequests on m.RequestId equals uv.RequestId
+                                   where qk.Keyword.Equals(key)
+                                   select uv).ToList();
+            }
+            
+            
 
             List<ViewModels.LoggingModel> logmodel = new List<ViewModels.LoggingModel>();
             foreach (var ureq in userViewRequest)
@@ -303,6 +354,59 @@ namespace MvcApplication2.Controllers
             dbUser.UserGroup.Remove(userprofile);
             dbUser.SaveChanges();
             return RedirectToAction("UserGroup");
+        }
+
+        public ActionResult CallerType(string searchString)
+        {
+            var key = from m in db.Callertypes select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+
+        public ActionResult AddCallerType()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddCallerType(CallerType model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.Callertypes.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("CallerType");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteCallerType(string id)
+        {
+            CallerType userprofile = db.Callertypes.Find(id);
+            if (userprofile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userprofile);
+        }
+
+
+        [HttpPost, ActionName("DeleteCallerType")]
+        public ActionResult DeleteCallerType2(string id)
+        {
+            CallerType userprofile = db.Callertypes.Find(id);
+            db.Callertypes.Remove(userprofile);
+            db.SaveChanges();
+            return RedirectToAction("CallerType");
         }
 
         //

@@ -37,6 +37,7 @@ namespace MvcApplication2.Models
         public DbSet<UserCreateRequest> UserCreateRequest { get; set; }
         public DbSet<UserEditRequest> UserEditRequest { get; set; }
         public DbSet<UserProfile> Users{ get; set; }
+        public DbSet<UserExportRequest> UserExportRequests { get; set; }
 
 
 
@@ -57,6 +58,7 @@ namespace MvcApplication2.Models
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }
     }
+
 
     [Table("Request")]
     public class Request
