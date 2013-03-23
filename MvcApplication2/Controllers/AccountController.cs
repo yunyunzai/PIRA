@@ -33,6 +33,7 @@ namespace MvcApplication2.Controllers
         public ActionResult Login(string returnUrl)
         {
             //
+            
             ViewBag.ReturnUrl = returnUrl;
             return View();
             
@@ -107,11 +108,17 @@ namespace MvcApplication2.Controllers
                 }
                 System.Diagnostics.Debug.WriteLine("Logged in user name: " + user.UserName);
                 int userID = int.Parse(user.ProviderUserKey.ToString());
+                if (!CheckUserActivation(userID))
+                {
+                    ModelState.AddModelError("", "User "+userID+" is no longer activated");
+                    return View(model);
+                }
                 UsersContext uc = new UsersContext();
                 var info = from table1 in uc.UserProfiles
                            join table2 in uc.UsersInRoles on table1.UserId equals table2.UserId
                            join table3 in uc.Roles on table2.RoleId equals table3.RoleId
                            select new { table1.UserId, table2.RoleId, table3.RoleName };
+                
                 var roleAdmin = new List<String>();
                 var roleDI = new List<String>();
                 var roleRep = new List<String>();
@@ -524,6 +531,20 @@ namespace MvcApplication2.Controllers
             RemoveLoginSuccess,
         }
 
+
+        private bool CheckUserActivation(int id)
+        {
+            var userprofile = db.UserProfiles
+                .Single(i => i.UserId == id);
+
+           bool? actStatus = userprofile.IsActivated;
+           if (actStatus == true)
+           {
+               
+               return false;
+           }
+           else return true;
+        }
         private void UpdateUserGroups(string[] selectedGroups, int id)
         {
             var userprofile = db.UserProfiles
