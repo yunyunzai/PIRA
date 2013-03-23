@@ -1,6 +1,8 @@
-﻿@model MvcApplication2.Models.Keywords
+@model MvcApplication2.Models.Keywords
 @{
     ViewBag.Title = "Edit Keyword";
+    string keyID = ViewBag.keyID;
+    int isActive = Convert.ToInt16(ViewBag.keyIsActive);
 }
 
 <h2>Edit Keyword</h2>
@@ -9,20 +11,25 @@
 
     <fieldset>
         <legend>Keyword</legend>
-            
-            @Html.LabelFor(model => model.Keyword)
+
             @Html.HiddenFor(model => model.Keyword)
-            &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Keyword)<br /><br />
-            @Html.LabelFor(model => model.IsActive)<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;@Html.EditorFor(model => model.IsActive)
-            @Html.ValidationMessageFor(model => model.IsActive)
-       
+        <label>Keyword:</label>
+        <input type="text" name="keyID" value="@keyID" />
+
+        <label>Activation Status</label>
+        <input type="checkbox" name="activationStatus" value="@isActive"
+                @(Html.Raw((isActive==1)? "checked=\"checked\"": ""))
+                />
 
         <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>
 }
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
