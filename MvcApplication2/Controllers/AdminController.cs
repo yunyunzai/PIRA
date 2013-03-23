@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,8 +9,6 @@ using System.Data;
 using System.Data.SqlClient;
 namespace MvcApplication2.Controllers
 {
-    [Authorize]
-    [Role(Roles="Admin")]
     public class AdminController : Controller
     {
        
@@ -30,6 +28,10 @@ namespace MvcApplication2.Controllers
             
             return View(key);
         }
+        //GET: /Admin
+      
+        
+
 
         public ActionResult RequestManagement(String key)
         {
@@ -166,28 +168,54 @@ namespace MvcApplication2.Controllers
 
         public ActionResult EditKeyword(String key)
         {
-            Keywords keyword = db.Keywords.Find(key);
+            Keywords keyword = db.Keywords.Where(i => i.Keyword == key).Single();
             if (keyword == null)
             {
                 return HttpNotFound();
             }
-            return View(keyword);
+            ViewBag.keyID = keyword.Keyword;
+            ViewBag.keyIsActive = keyword.IsActive;
+            return View();
         }
 
         //
         // POST: /Edit Keyword
 
         [HttpPost]
-        public ActionResult EditKeyword(String key, Keywords keyword)
+        public ActionResult EditKeyword(String key, FormCollection collection)
         {
-            keyword = db.Keywords.Find(key);
+
+            Keywords keyword = db.Keywords.Where(i => i.Keyword == key).Single();
             if (ModelState.IsValid)
             {
                 db.Entry(keyword).State = EntityState.Modified;
                 db.SaveChanges();
+               
+                bool flag = false;
+                if (Convert.ToInt16(collection["activationStatus"]) == 1)
+                {
+                    flag = true;
+
+                }
+                
+               
+                Keywords k = new Keywords
+                {
+                    Keyword = collection["keyID"],
+                    IsActive = flag
+
+                };
+                db.Keywords.Add(k);
+              //  db.Entry(keyword).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+                db.Keywords.Attach(keyword);
+                db.Keywords.Remove(keyword);
+                db.SaveChanges();
                 return RedirectToAction("Admin");
             }
-            return View(keyword);
+            return View();
         }
 
         //
