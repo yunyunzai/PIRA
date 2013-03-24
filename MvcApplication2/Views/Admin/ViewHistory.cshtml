@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MvcApplication2.ViewModels.LoggingModel>
 @{
-    ViewBag.Title = "ViewHistory";
+    ViewBag.Title = "View History";
     List<MvcApplication2.ViewModels.LoggingModel> allReq = ViewBag.SortedList;
     MvcApplication2.Models.UsersContext db = new MvcApplication2.Models.UsersContext();
 }
@@ -10,13 +10,19 @@
             <ul id="menu">
                 <li>@Html.ActionLink("Keyword Management", "Admin", "Admin")</li>
                 <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                <li>@Html.ActionLink("Field Management", "FieldManagement", "Admin")</li>
                  <li>@Html.ActionLink("User Management", "Index", "Users")</li>
                  <li>@Html.ActionLink("View History", "ViewHistory", "Admin")</li>
             </ul>
         </nav>
     </div>
 </div><br /><br /><br /><hr />
-<h2>ViewHistory</h2>
+<h2>View History</h2>
+@using (Html.BeginForm())
+    {    
+         <p> Request Keyword: @Html.TextBox("key") &nbsp;  
+         <input type="submit" value="Filter" /></p> 
+    } 
 <div style="height: 400px; overflow-y:scroll;">
 <table>
     <tr>

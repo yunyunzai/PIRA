@@ -19,6 +19,7 @@
             <ul id="menu">
                 <li>@Html.ActionLink("Keyword Management", "Admin", "Admin")</li>
                 <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
+                <li>@Html.ActionLink("Field Management", "FieldManagement", "Admin")</li>
                  <li>@Html.ActionLink("User Management", "Index", "Users")</li>
                  <li>@Html.ActionLink("View History", "ViewHistory", "Admin")</li>
             </ul>
@@ -78,31 +79,6 @@
             </div>
         </div>
 
-
-<div class="UserManagement" hidden>
-    <br />
-    <br />
-    <hr />
-    <label>User ID </label>
-    <form >
-        <select name="user">
-            <option value="new user" selected>New User</option>
-        </select><br />
-    </form>   
-    <section>
-        @*@Html.Partial("_Admin_UM")*@
-    </section>
-</div>
-<div class="ViewHistory" hidden>
-    <br />
-    <br />
-    <hr />
-    <form>
-        <input type="text" name="history_search_box" />&nbsp;
-        <input type="button" name="history_search_button" value="View"/>
-        <input type="button" name="export" value="Export" style="position:relative; left:25px;" />
-    </form>
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -1,0 +1,26 @@
+﻿@model MvcApplication2.Models.UserGroup
+
+<h2>Add User Group</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>User Group</legend>
+
+            @Html.LabelFor(model => model.Name)
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+            @Html.LabelFor(model => model.Abbreviate)
+            @Html.EditorFor(model => model.Abbreviate)
+            @Html.ValidationMessageFor(model => model.Abbreviate)
+       
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

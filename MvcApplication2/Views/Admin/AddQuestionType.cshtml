@@ -1,0 +1,26 @@
+﻿@model MvcApplication2.Models.QuestionType
+
+<h2>Add Question Type</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Question Type</legend>
+
+            @Html.LabelFor(model => model.Name)
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+            @Html.LabelFor(model => model.QuestionTypeAbbreviate)
+            @Html.EditorFor(model => model.QuestionTypeAbbreviate)
+            @Html.ValidationMessageFor(model => model.QuestionTypeAbbreviate)
+       
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

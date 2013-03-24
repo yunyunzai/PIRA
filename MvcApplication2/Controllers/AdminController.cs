@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,16 +6,19 @@ using System.Web.Mvc;
 using MvcApplication2.Filters;
 using MvcApplication2.Models;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 namespace MvcApplication2.Controllers
 {
     public class AdminController : Controller
     {
        
-        //
-        // GET: /Admin
+        
         private DISpecialistContext db = new DISpecialistContext();
         private LoggingContext dbl = new LoggingContext();
+        private UsersContext dbUser = new UsersContext();
+        //
+        // GET: /Admin
         public ActionResult Admin(string searchString)
         {
             var key = from m in db.Keywords select m;
@@ -28,6 +31,10 @@ namespace MvcApplication2.Controllers
             
             return View(key);
         }
+        //GET: /Admin
+      
+        
+
 
         public ActionResult RequestManagement(String key)
         {
@@ -52,17 +59,68 @@ namespace MvcApplication2.Controllers
 
         public ActionResult ViewHistory(String key)
         {
-            var userViewRequest = db.UserViewRequest
-                .ToList();
-            var userCreateRequest = dbl.UserCreateRequest
-                .ToList();
-            var userCompleteRequest = dbl.UserCompleteRequest
-                .ToList();
-            var userEditRequest = dbl.UserEditRequests
-                .ToList();
+            var userViewRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserViewRequest on m.RequestId equals uv.RequestId
+                                   select uv).ToList();
+            var userCreateRequest = (from m in db.Requests
+                                     join q in db.Questions on m.RequestId equals q.RequestId
+                                     join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                     join uv in db.UserCreateRequest on m.RequestId equals uv.RequestId
+                                     select uv).ToList();
+            var userCompleteRequest = (from m in db.Requests
+                                       join q in db.Questions on m.RequestId equals q.RequestId
+                                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                       join uv in db.UserCompleteRequest on m.RequestId equals uv.RequestID
+                                       select uv).ToList();
+            var userEditRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserEditRequest on m.RequestId equals uv.RequestId
+                                   select uv).ToList();
 
-            var userExportRequest = dbl.UserExportRequests
-                .ToList();
+            var userExportRequest = (from m in db.Requests
+                                     join q in db.Questions on m.RequestId equals q.RequestId
+                                     join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                     join uv in db.UserExportRequests on m.RequestId equals uv.RequestId
+                                     select uv).ToList();
+
+            if (!String.IsNullOrEmpty(key))
+            {
+                userViewRequest = (from m in db.Requests
+                       join q in db.Questions on m.RequestId equals q.RequestId
+                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                       join uv in db.UserViewRequest on m.RequestId equals uv.RequestId
+                       where qk.Keyword.Equals(key)
+                       select uv).ToList();
+                userCreateRequest = (from m in db.Requests
+                                     join q in db.Questions on m.RequestId equals q.RequestId
+                                     join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                     join uv in db.UserCreateRequest on m.RequestId equals uv.RequestId
+                                     where qk.Keyword.Equals(key)
+                                     select uv).ToList();
+                userCompleteRequest = (from m in db.Requests
+                                       join q in db.Questions on m.RequestId equals q.RequestId
+                                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                       join uv in db.UserCompleteRequest on m.RequestId equals uv.RequestID
+                                       where qk.Keyword.Equals(key)
+                                       select uv).ToList();
+                userEditRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserEditRequest on m.RequestId equals uv.RequestId
+                                   where qk.Keyword.Equals(key)
+                                   select uv).ToList();
+                userExportRequest = (from m in db.Requests
+                                   join q in db.Questions on m.RequestId equals q.RequestId
+                                   join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                                   join uv in db.UserExportRequests on m.RequestId equals uv.RequestId
+                                   where qk.Keyword.Equals(key)
+                                   select uv).ToList();
+            }
+            
+            
 
             List<ViewModels.LoggingModel> logmodel = new List<ViewModels.LoggingModel>();
             foreach (var ureq in userViewRequest)
@@ -135,6 +193,223 @@ namespace MvcApplication2.Controllers
             return View();
         }
 
+        public ActionResult FieldManagement()
+        {
+            return View();
+        }
+
+        public ActionResult TumorGroup(string searchString)
+        {
+            var key = from m in db.TumorGroups select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+        
+        public ActionResult AddTumorGroup()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddTumorGroup(TumorGroup model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.TumorGroups.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("TumorGroup");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteTumorGroup(string Abbreviate)
+        {
+            TumorGroup TumorGroup = db.TumorGroups.Find(Abbreviate);
+            if (TumorGroup == null)
+            {
+                return HttpNotFound();
+            }
+            return View(TumorGroup);
+        }
+
+
+        [HttpPost, ActionName("DeleteTumorGroup")]
+        public ActionResult DeleteTumorGroup2(string Abbreviate)
+        {
+            TumorGroup userprofile = db.TumorGroups.Find(Abbreviate);
+            db.TumorGroups.Remove(userprofile);
+            db.SaveChanges();
+            return RedirectToAction("TumorGroup");
+        }
+
+        public ActionResult QuestionType(string searchString)
+        {
+            var key = from m in db.QuestionTypes select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+
+        public ActionResult AddQuestionType()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddQuestionType(QuestionType model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.QuestionTypes.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("QuestionType");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteQuestionType(string id)
+        {
+            QuestionType userprofile = db.QuestionTypes.Find(id);
+            if (userprofile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userprofile);
+        }
+
+
+        [HttpPost, ActionName("DeleteQuestionType")]
+        public ActionResult DeleteQuestionType2(string id)
+        {
+            QuestionType userprofile = db.QuestionTypes.Find(id);
+            db.QuestionTypes.Remove(userprofile);
+            db.SaveChanges();
+            return RedirectToAction("QuestionType");
+        }
+
+        public ActionResult UserGroup(string searchString)
+        {
+            var key = from m in dbUser.UserGroup select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+
+        public ActionResult AddUserGroup()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddUserGroup(UserGroup model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                dbUser.UserGroup.Add(model);
+                dbUser.SaveChanges();
+                return RedirectToAction("UserGroup");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteUserGroup(string Abbreviate)
+        {
+            UserGroup userprofile = dbUser.UserGroup.Find(Abbreviate);
+            if (userprofile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userprofile);
+        }
+
+
+        [HttpPost, ActionName("DeleteUserGroup")]
+        public ActionResult DeleteUserGroup2(string Abbreviate)
+        {
+            UserGroup userprofile = dbUser.UserGroup.Find(Abbreviate);
+            dbUser.UserGroup.Remove(userprofile);
+            dbUser.SaveChanges();
+            return RedirectToAction("UserGroup");
+        }
+
+        public ActionResult CallerType(string searchString)
+        {
+            var key = from m in db.Callertypes select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                key = key.Where(s => s.Name.Contains(searchString));
+            }
+
+
+            return View(key);
+        }
+
+
+        public ActionResult AddCallerType()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AddCallerType(CallerType model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.Callertypes.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("CallerType");
+            }
+            return View();
+        }
+
+        public ActionResult DeleteCallerType(string id)
+        {
+            CallerType userprofile = db.Callertypes.Find(id);
+            if (userprofile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userprofile);
+        }
+
+
+        [HttpPost, ActionName("DeleteCallerType")]
+        public ActionResult DeleteCallerType2(string id)
+        {
+            CallerType userprofile = db.Callertypes.Find(id);
+            db.Callertypes.Remove(userprofile);
+            db.SaveChanges();
+            return RedirectToAction("CallerType");
+        }
+
         //
         // Get: /Keyword
 
@@ -164,28 +439,45 @@ namespace MvcApplication2.Controllers
 
         public ActionResult EditKeyword(String key)
         {
-            Keywords keyword = db.Keywords.Find(key);
+            Keywords keyword = db.Keywords.Where(i => i.Keyword == key).Single();
             if (keyword == null)
             {
                 return HttpNotFound();
             }
-            return View(keyword);
+            ViewBag.keyID = keyword.Keyword;
+            ViewBag.keyIsActive = keyword.IsActive;
+            return View();
         }
 
         //
         // POST: /Edit Keyword
 
         [HttpPost]
-        public ActionResult EditKeyword(String key, Keywords keyword)
+        public ActionResult EditKeyword(String key, FormCollection collection)
         {
-            keyword = db.Keywords.Find(key);
+
+           
             if (ModelState.IsValid)
             {
-                db.Entry(keyword).State = EntityState.Modified;
+             //   db.Entry(keyword).State = EntityState.Modified;
+             //   db.SaveChanges();
+               
+                bool flag = false;
+                if (Convert.ToInt16(collection["activationStatus"]) == 1)
+                {
+                    flag = true;
+
+                }
+                
+                            
+
+                Keywords k1 = db.Keywords.Single(dbk => dbk.Keyword == key);
+                k1.Keyword = key;
+                k1.IsActive = flag;
                 db.SaveChanges();
                 return RedirectToAction("Admin");
             }
-            return View(keyword);
+            return View();
         }
 
         //
