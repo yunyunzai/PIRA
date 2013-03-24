@@ -8,22 +8,6 @@
         obj.style.width = width;
     }
 </script>
-<script>
-    $(function () {
-        var availableTags = [@if (Model != null && Model.requests != null)
-        {
-            foreach(var i in Model.requests){
-                if(i != null && i.newKeyword != null){
-                               <text>"@i.newKeyword.Keyword",</text>
-        }
-                           }
-        }
-      ];
-      $("#tags").autocomplete({
-          source: availableTags
-      });
-  });
-  </script>
 
 <script>
     $(function () {
@@ -276,11 +260,11 @@
     <br />
     <button id="newRequest">New Request</button>
 </div>*@
-@Html.ActionLink("New Request", "create")
+
 @*<button id="newRequest">New Request</button>*@
 
 
-@{if (Model == null || !Model.isEditorOpen)
+@{if (Model == null || Model.editModel == null ||  !Model.isCreatingRequest)
   {
       @Html.Raw("<div id=\"rborder\" hidden>");
   }
@@ -291,7 +275,7 @@
 
     
     
-    @using (Html.BeginForm("requestSave", "DISpecialist"))
+    @using (Html.BeginForm("create", "DISpecialist"))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -335,7 +319,7 @@
               items.Add(new SelectListItem
               {
                   Text = "Drug Company",
-                  Value = "drug_go"
+                  Value = "drug go"
               });
               items.Add(new SelectListItem
               {
@@ -386,7 +370,7 @@
               items.Add(new SelectListItem
               {
                   Text = "Other Physicians",
-                  Value = "other_dr"
+                  Value = "other dr"
               });
               items.Add(new SelectListItem
               {
@@ -654,9 +638,9 @@
                 &nbsp;Question:
       @*  <textarea name="msgpost" id="msgpost" cols="50" rows="10" onfocus="this.value=''; return false;">
             </textarea>*@
-         @Html.TextAreaFor(m => m.editModel.newQuestion.QuestionContent, new { name = "msgpost", id = "msgpost", cols = "50", rows = "10" })
-        @* @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })*@
-                
+        @* @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { name = "msgpost", id = "msgpost", cols = "50", rows = "10" })*@
+         @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })
+
             </div>
 
             <div class="yui-skin-sam" style="margin: 8px; float: right">
@@ -665,8 +649,8 @@
         
         </textarea>*@
 
-        @Html.TextAreaFor(m => m.editModel.newQuestion.Response, new { name = "msgpost", id = "response", cols = "50", rows = "10" })
-@*                @Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })*@
+        @*@Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { name = "msgpost", id = "response", cols = "50", rows = "10" })*@
+                @Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })
             </div>
                 </div>
 
@@ -814,7 +798,7 @@
               });
               items.Add(new SelectListItem
               {
-                  Text = "Drug Availability",
+                  Text = "Drug Availablity",
                   Value = "avail"
               });
               items.Add(new SelectListItem
@@ -879,7 +863,7 @@
                 <option value="moderate">Moderate</option>
                 <option value="minor">Minor</option>
             </select>*@
-            
+
             &nbsp;&nbsp;&nbsp;Probability
             @{items = new List<SelectListItem>();
               items.Add(new SelectListItem

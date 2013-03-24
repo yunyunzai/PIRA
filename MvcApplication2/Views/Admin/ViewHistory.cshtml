@@ -4,6 +4,17 @@
     List<MvcApplication2.ViewModels.LoggingModel> allReq = ViewBag.SortedList;
     MvcApplication2.Models.UsersContext db = new MvcApplication2.Models.UsersContext();
 }
+<script>
+  $(function() {
+      var availableTags = [@foreach(var i in allReq){
+                               <text>"@i.RequestId",</text>
+                           }
+      ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
 <div class="content-wrapper">
     <div class="float-left">
         <nav>
@@ -20,8 +31,8 @@
 <h2>View History</h2>
 @using (Html.BeginForm())
     {    
-         <p> Request Keyword: @Html.TextBox("key") &nbsp;  
-         <input type="submit" value="Filter" /></p> 
+         <div class="ui-widget"> Request Keyword: @Html.TextBox("id", "", new { id = "tags" }) &nbsp;  
+         <input type="submit" value="Filter" /></div> 
     } 
 <div style="height: 400px; overflow-y:scroll;">
 <table>

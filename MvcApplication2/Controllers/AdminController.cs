@@ -42,22 +42,32 @@ namespace MvcApplication2.Controllers
             var rid = (from m in db.Requests
                       join q in db.Questions on m.RequestId equals q.RequestId
                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
-                       select m).Distinct().OrderByDescending(m => m.RequestId);
-            if (String.IsNullOrEmpty(key))
+                       select new{m,q,qk}).Distinct().OrderByDescending(m => m.m.RequestId);
+            if (!String.IsNullOrEmpty(key))
             {
-                
-                return View(rid);
+                rid = (from m in db.Requests
+                       join q in db.Questions on m.RequestId equals q.RequestId
+                       join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
+                       where qk.Keyword.Equals(key)
+                       select new{m,q,qk}).Distinct().OrderByDescending(m => m.m.RequestId);
             }
-            rid = (from m in db.Requests
-                  join q in db.Questions on m.RequestId equals q.RequestId
-                  join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
-                  where qk.Keyword.Equals(key)
-                  select m).Distinct().OrderByDescending(m=>m.RequestId);
-                       
-            return View(rid);
+            
+            List<AdminRequestModel> Request = new List<AdminRequestModel>();
+            foreach (var ureq in rid)
+            {
+
+                Request.Add(new AdminRequestModel
+                {
+                    RequestId = ureq.m.RequestId,
+                    IsActive = ureq.m.IsActive,
+                    Keyword = ureq.qk.Keyword
+
+                });
+            }
+            return View(Request);
         }
 
-        public ActionResult ViewHistory(String key)
+        public ActionResult ViewHistory(int id = 0)
         {
             var userViewRequest = (from m in db.Requests
                                    join q in db.Questions on m.RequestId equals q.RequestId
@@ -86,37 +96,37 @@ namespace MvcApplication2.Controllers
                                      join uv in db.UserExportRequests on m.RequestId equals uv.RequestId
                                      select uv).ToList();
 
-            if (!String.IsNullOrEmpty(key))
+            if (id != 0)
             {
                 userViewRequest = (from m in db.Requests
                        join q in db.Questions on m.RequestId equals q.RequestId
                        join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
                        join uv in db.UserViewRequest on m.RequestId equals uv.RequestId
-                       where qk.Keyword.Equals(key)
+                       where m.RequestId == id
                        select uv).ToList();
                 userCreateRequest = (from m in db.Requests
                                      join q in db.Questions on m.RequestId equals q.RequestId
                                      join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
                                      join uv in db.UserCreateRequest on m.RequestId equals uv.RequestId
-                                     where qk.Keyword.Equals(key)
+                                     where m.RequestId == id
                                      select uv).ToList();
                 userCompleteRequest = (from m in db.Requests
                                        join q in db.Questions on m.RequestId equals q.RequestId
                                        join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
                                        join uv in db.UserCompleteRequest on m.RequestId equals uv.RequestID
-                                       where qk.Keyword.Equals(key)
+                                       where m.RequestId == id
                                        select uv).ToList();
                 userEditRequest = (from m in db.Requests
                                    join q in db.Questions on m.RequestId equals q.RequestId
                                    join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
                                    join uv in db.UserEditRequest on m.RequestId equals uv.RequestId
-                                   where qk.Keyword.Equals(key)
+                                   where m.RequestId == id
                                    select uv).ToList();
                 userExportRequest = (from m in db.Requests
                                    join q in db.Questions on m.RequestId equals q.RequestId
                                    join qk in db.QuestionKeywords on q.QuestionId equals qk.QuestionId
                                    join uv in db.UserExportRequests on m.RequestId equals uv.RequestId
-                                   where qk.Keyword.Equals(key)
+                                     where m.RequestId == id
                                    select uv).ToList();
             }
             
