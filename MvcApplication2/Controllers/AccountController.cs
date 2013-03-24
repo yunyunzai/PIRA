@@ -113,10 +113,10 @@ namespace MvcApplication2.Controllers
                     ModelState.AddModelError("", "User " + userID + " is no longer activated");
                     return View(model);
                 }
-                if (user.LastPasswordChangedDate.Date.AddDays(42) < DateTime.Now.Date)
-                {
-                    return RedirectToAction("Manage","Account",ManageMessageId.PasswordExpired);
-                }
+                //if (user.LastPasswordChangedDate.Date.AddDays(42) < DateTime.Now.Date)
+                //{
+                //    return RedirectToAction("Manage","Account",ManageMessageId.PasswordExpired);
+                //}
                 else
                 {
                     UsersContext uc = new UsersContext();

@@ -19,7 +19,7 @@
             $("#rborder").show();
         });
     });
-    
+
 </script>
 
 <script>
@@ -28,7 +28,7 @@
             $("#rborder").hide();
             $("#dispecialist").show();
         });
-    });    
+    });
 </script>
 
 <!--Question-->
@@ -37,7 +37,7 @@
         height: '100px',
         width: '433px',
         animate: false,
-        handleSubmit: true ,
+        handleSubmit: true,
         toolbar: {
             buttons: [
                 {
@@ -83,7 +83,7 @@
         height: '100px',
         width: '420px',
         animate: false,
-        handleSubmit: true ,
+        handleSubmit: true,
         toolbar: {
             buttons: [
                 {
@@ -126,7 +126,13 @@
     //});
 
 </script>
-@using (Html.BeginForm("filterRequestByKeyword", "DISpecialist"))
+
+@{
+    ViewBag.Title = "Viewer";
+}
+
+<h2>Viewer</h2>
+@using (Html.BeginForm("filterRequestByKeyword", "Viewer"))
 {
         
     @Html.Raw("<div>Search:</div><div>");
@@ -179,8 +185,8 @@
     });
 </script>
 
-@using (Html.BeginForm("view", "DISpecialist"))
-{
+@*@using (Html.BeginForm("view", "Viewer"))
+{*@
     <div id="header">
         <table>
 
@@ -230,7 +236,7 @@
                             @*@{string name = "edit" + item.request.RequestId;}
                             @{string cname = "#"+name;}*@
                             @*<button  id="edit<%= item.request.RequestId %>">Edit</button>*@
-                            @Html.ActionLink("edit", "edit", new { rid=item.request.RequestId})
+                            @Html.ActionLink("view", "Details", new { rid=item.request.RequestId})
                             @*("Edit", "create", "DISpecialist", null, new { id="edit"+item.request.RequestId})*@
                         </td>
                         
@@ -242,29 +248,11 @@
         }
 
   </div>
-        <input type="submit" value="View Request" />
+        @*<input type="submit" value="View Request" />
   
-}
+}*@
 
-
-
-
-@*<div id="dispecialist">
-    SEARCH BY: 
-    <select>
-        <option>RequestID</option>
-        <option>Keyword</option>
-    </select>
-    <input type="text" />
-    <button>Search</button>
-    <br />
-    <button id="newRequest">New Request</button>
-</div>*@
-
-@*<button id="newRequest">New Request</button>*@
-
-
-@{if (Model == null || Model.editModel == null ||  !Model.isCreatingRequest)
+@{if (Model == null || Model.editModel == null)
   {
       @Html.Raw("<div id=\"rborder\" hidden>");
   }
@@ -295,13 +283,13 @@
             &nbsp;Caller
            <br />
             &nbsp;Name: 
-                @Html.TextBoxFor(m => m.editModel.caller.Name, new { style = "width: 70px;" })
+                @Html.TextBoxFor(m => m.editModel.caller.Name, new { readOnly = true, style = "width: 70px;" })
             @*<input type="text" style="width: 70px;" />*@
             &nbsp;Phone:
-                @Html.TextBoxFor(m => m.editModel.caller.Phone, new { style = "width: 70px;" })
+                @Html.TextBoxFor(m => m.editModel.caller.Phone, new {readOnly = true, style = "width: 70px;" })
             @*<input type="text" style="width: 70px;" />*@
             &nbsp;Email:
-                @Html.TextBoxFor(m => m.editModel.caller.Email, new { style = "width: 70px;" })
+                @Html.TextBoxFor(m => m.editModel.caller.Email, new {readOnly = true, style = "width: 70px;" })
             @*<input type="text" style="width: 70px;" />*@
             <br />
             &nbsp;Caller Type: 
@@ -319,7 +307,7 @@
               items.Add(new SelectListItem
               {
                   Text = "Drug Company",
-                  Value = "drug go"
+                  Value = "drug_go"
               });
               items.Add(new SelectListItem
               {
@@ -370,7 +358,7 @@
               items.Add(new SelectListItem
               {
                   Text = "Other Physicians",
-                  Value = "other dr"
+                  Value = "other_dr"
               });
               items.Add(new SelectListItem
               {
@@ -413,7 +401,7 @@
                   Value = "other"
               });
               
-              @Html.DropDownListFor(m => m.editModel.caller.TypeAbbreviate, items, new { size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
+              @Html.DropDownListFor(m => m.editModel.caller.TypeAbbreviate, items, new {disabled = "disabled",  size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
               }
                @* <select size="1" id="D1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                     onblur="javascript:ResetListBoxWidth(this,50)">
@@ -561,7 +549,7 @@
                   Text = "Yukon",
                   Value = "Yukon"
               });
-              @Html.DropDownListFor(m => m.editModel.caller.Region, items, new { size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
+              @Html.DropDownListFor(m => m.editModel.caller.Region, items, new { disabled = "disabled", size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
               }
                @* <select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                     onblur="javascript:ResetListBoxWidth(this,50)">
@@ -599,29 +587,30 @@
             &nbsp;Patient:
             <br />
             &nbsp;Name: 
-            @Html.TextBoxFor(m => m.editModel.patient.Name, new { style = "width: 70px;" })
+            @Html.TextBoxFor(m => m.editModel.patient.Name, new { readOnly = true, style = "width: 70px;" })
             @*<input type="text" style="width: 70px;" />*@
             &nbsp;Agency ID:
-            @Html.TextBoxFor(m => m.editModel.patient.AgencyID, new { style = "width: 50px;" })
+            @Html.TextBoxFor(m => m.editModel.patient.AgencyID, new {readOnly = true, style = "width: 50px;" })
             @*<input type="text" style="width: 50px;" />*@
             &nbsp;Age:
-            @Html.TextBoxFor(m => m.editModel.patient.Age, new { style = "width: 50px;" })
+            @Html.TextBoxFor(m => m.editModel.patient.Age, new { readOnly = true, style = "width: 50px;" })
             @*<input type="text" style="width: 50px;" />*@
             <br />
             &nbsp;Gender
             @{
-                                                                                                                                                                                      items = new List<SelectListItem>();
-                                                                                                                                                                                      items.Add(new SelectListItem
-                                                                                                                                                                                      {
-                                                                                                                                                                                          Text = "Male",
-                                                                                                                                                                                          Value = "Male"
-                                                                                                                                                                                      });
-                                                                                                                                                                                      items.Add(new SelectListItem
-                                                                                                                                                                                      {
-                                                                                                                                                                                          Text = "Female",
-                                                                                                                                                                                          Value = "Female"
-                                                                                                                                                                                      });
-              @Html.DropDownListFor(m => m.editModel.patient.Gender, items, new { size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
+        items = new List<SelectListItem>();
+        items = new List<SelectListItem>();
+        items.Add(new SelectListItem
+        {
+            Text = "Male",
+            Value = "Male"
+        });
+        items.Add(new SelectListItem
+        {
+            Text = "Female",
+            Value = "Female"
+        });
+              @Html.DropDownListFor(m => m.editModel.patient.Gender, items, new { disabled = "disabled", size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
             }
             @*<select name="Gender Type">
                 <option value="male">Male</option>
@@ -635,22 +624,22 @@
         <div id="bottom">
             <div>
             <div class="yui-skin-sam" style="margin: 8px; float: left">
-                &nbsp;Question:
+                &nbsp;Question:<br>
       @*  <textarea name="msgpost" id="msgpost" cols="50" rows="10" onfocus="this.value=''; return false;">
             </textarea>*@
-        @* @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { name = "msgpost", id = "msgpost", cols = "50", rows = "10" })*@
-         @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })
-
+         @Html.TextAreaFor(m => m.editModel.newQuestion.QuestionContent, new { /*name = "msgpost", id = "msgpost", wrap="hard", cols = "30", rows = "10" , */style="width: 430px; height: 70px", readOnly = true})
+        @* @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })*@
+                
             </div>
 
             <div class="yui-skin-sam" style="margin: 8px; float: right">
-                &nbsp;Response:
+                &nbsp;Response:<br>
         @*<textarea name="msgpost" id="response" cols="50" rows="10">
         
         </textarea>*@
 
-        @*@Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { name = "msgpost", id = "response", cols = "50", rows = "10" })*@
-                @Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })
+        @Html.TextAreaFor(m => m.editModel.newQuestion.Response, new {/*name = "msgpost", id = "response", cols = "50", rows = "10"*/style="width: 430px; height: 70px", readOnly = true })
+@*                @Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })*@
             </div>
                 </div>
 
@@ -749,7 +738,7 @@
                   Text = "Supportive Care",
                   Value = "supp"
               });
-              @Html.DropDownListFor(m => m.editModel.newQuestion.TumorTypeAbbreviate, items, new { size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
+              @Html.DropDownListFor(m => m.editModel.newQuestion.TumorTypeAbbreviate, items, new { disabled = "disabled",size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
               }
             @*<select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                 onblur="javascript:ResetListBoxWidth(this,50)">
@@ -798,7 +787,7 @@
               });
               items.Add(new SelectListItem
               {
-                  Text = "Drug Availablity",
+                  Text = "Drug Availability",
                   Value = "avail"
               });
               items.Add(new SelectListItem
@@ -821,7 +810,7 @@
                   Text = "Therapy Selection",
                   Value = "ther"
               });              
-              @Html.DropDownListFor(m => m.editModel.newQuestion.QuestionTypeAbbreviate, items, new { size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
+              @Html.DropDownListFor(m => m.editModel.newQuestion.QuestionTypeAbbreviate, items, new { disabled = "disabled", size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
               }
             @*<select size="1" name="D1" style="width: 140px" onclick="javascript:ChangeListBoxWidth(this);"
                 onblur="javascript:ResetListBoxWidth(this,50)">
@@ -855,7 +844,7 @@
                    Value = "Minor"
                });             
                            
-              @Html.DropDownListFor(m => m.editModel.newQuestion.Severity, items, new { size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
+              @Html.DropDownListFor(m => m.editModel.newQuestion.Severity, items, new { disabled = "disabled", size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
              }
 
             @*<select>
@@ -863,7 +852,7 @@
                 <option value="moderate">Moderate</option>
                 <option value="minor">Minor</option>
             </select>*@
-
+            
             &nbsp;&nbsp;&nbsp;Probability
             @{items = new List<SelectListItem>();
               items.Add(new SelectListItem
@@ -886,7 +875,7 @@
                   Text = "Unlikely",
                   Value = "Unlikely"
               });        
-              @Html.DropDownListFor(m => m.editModel.newQuestion.Probability, items, new { size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
+              @Html.DropDownListFor(m => m.editModel.newQuestion.Probability, items, new { disabled ="disabled",size = "1", name = "D1", style = "width: 140px", onclick = "javascript:ChangeListBoxWidth(this);" }) ;            
              }
             @*<select>
                 <option value="certain">Certain</option>
@@ -897,14 +886,14 @@
             &nbsp;&nbsp;&nbsp;Impact Score: 
                 @Html.TextBoxFor(m => m.editModel.newQuestion.ComputedImpact, new { readOnly = true, style = "width: 50px" })
             &nbsp;&nbsp;&nbsp;Time Taken:
-                @Html.TextBoxFor(m => m.editModel.newQuestion.TimeTaken, new { style = "width: 50px" }) minutes <br>
+                @Html.TextBoxFor(m => m.editModel.newQuestion.TimeTaken, new { readOnly = true, style = "width: 50px" }) minutes <br>
                 @*<input type="text" style="width: 50px;" />*@
             &nbsp;Keywords:
-                @Html.TextBoxFor(m => m.editModel.newKeyword.Keyword, new { style = "width: 110px" })
+                @Html.TextBoxFor(m => m.editModel.newKeyword.Keyword, new {readOnly = true, style = "width: 110px" })
             @*<input type="text" style="width: 110px;" />*@
             
             &nbsp;References:
-            @Html.TextBoxFor(m => m.editModel.newReference.ReferenceContent, new { style = "width: 325px" })
+            @Html.TextBoxFor(m => m.editModel.newReference.ReferenceContent, new {readOnly = true, style = "width: 325px" })
              @*<input type="text" style="width: 325px;" />*@
             @*
             &nbsp;Follow Up:
@@ -913,19 +902,14 @@
 
         </div>
         <div id="rbuttons">
-            <button>Remove Question</button>
-            <button>Add New Question</button>
+            @*<button>Back</button>*@
+            <input type="button" value="Back" />
+            @*<button>Add New Question</button>
             
             @Html.ActionLink("Cancel","cancel")
             <input id = "save" type="submit"  value="SAVE" />
-            @*<button id="cancel">CANCEL</button>*@
+            <button id="cancel">CANCEL</button>*@
         </div>
    
         <div style="clear: both"></div>
     }
-
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

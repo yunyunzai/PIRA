@@ -230,7 +230,7 @@ namespace MvcApplication2.Controllers
             return View("DISpecialist", globalModel);
         }
 
-        [HttpPost]
+        //[HttpPost]
         public ActionResult view(DISpecialistModel m)
         {
 
