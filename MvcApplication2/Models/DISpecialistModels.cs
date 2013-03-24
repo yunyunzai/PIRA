@@ -115,7 +115,7 @@ namespace MvcApplication2.Models
         [System.ComponentModel.DisplayName("Caller Region")]
         public string Region { get; set; }
 
-         [MaxLength(10, ErrorMessage = "The {0} must be less than 10 characters")]
+        // [MaxLength(100, ErrorMessage = "The {0} must be less than 10 characters")]
         [System.ComponentModel.DisplayName("Caller Type")]
         public string TypeAbbreviate { get; set; }
     }
