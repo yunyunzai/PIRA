@@ -25,13 +25,14 @@ namespace MvcApplication2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public ActionResult createSave(DISpecialistModel m)
+        //[ValidateInput(true)]
+        public ActionResult requestSave(DISpecialistModel m)
         {
-            System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
+            System.Diagnostics.Debug.WriteLine(globalModel.editModel.request.RequestId);
            
             if (ModelState.IsValid)
             {
+                System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
                 DISpecialistContext db = new DISpecialistContext();
 
                 // Updating Caller table
@@ -91,7 +92,7 @@ namespace MvcApplication2.Controllers
                     if (patient==null)
                         r.PatientId = null;
                     else
-                        r.PatientId= m.editModel.patient.PatientId;
+                        r.PatientId = patient.First().PatientId;    
                     
                     db.Requests.Add(r);
                 }
@@ -181,8 +182,8 @@ namespace MvcApplication2.Controllers
                 globalModel.editModel = new RequestViewModel();
                 return View("DISpecialist", globalModel);
             }
-    
-            return View("DISpecialist",m);
+            //System.Diagnostics.Debug.WriteLine(globalModel.editModel.newQuestion.QuestionContent);
+            return View("DISpecialist", globalModel);
         }
 
 
@@ -197,9 +198,9 @@ namespace MvcApplication2.Controllers
         {
             //globalModel.editModel = newModel;
             DISpecialistContext db = new DISpecialistContext();
-            m.isEditorOpen = true;
+            
             m.editModel = new RequestViewModel();
-            System.Diagnostics.Debug.WriteLine(rid);
+            //System.Diagnostics.Debug.WriteLine(rid);
             m.editModel.request=(from r in db.Requests
                                 where r.RequestId==rid
                                 select r).First();
@@ -218,6 +219,7 @@ namespace MvcApplication2.Controllers
              //System.Diagnostics.Debug.WriteLine(m.editModel.request.RequestId);
             
             globalModel.editModel = m.editModel;
+            globalModel.isEditorOpen = true;
             return View("DISpecialist", globalModel);
         }
 
