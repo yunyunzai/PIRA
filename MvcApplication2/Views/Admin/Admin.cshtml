@@ -71,7 +71,20 @@
             <td style="line-height: 20px;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
-	border-top: 1px solid #fff;">@Html.ActionLink("Edit", "EditKeyword", new { key = item.Keyword })</td>
+	border-top: 1px solid #fff;"> @{
+       bool flag = item.IsActive;
+       if (flag==true)
+       {
+                
+                        @Html.ActionLink("Deactivate", "DeactivateKeyword", new { abbr = item.Keyword})
+       }
+       else
+       {
+                        @Html.ActionLink("Activate", "ActivateKeyword", new { abbr = item.Keyword})
+       }
+               
+                    
+                }</td>
            </tr>
        
    }

@@ -320,7 +320,7 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Admin\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -357,12 +357,19 @@
     <Content Include="Views\Admin\AddTumorGroup.cshtml" />
     <Content Include="Views\Admin\AddQuestionType.cshtml" />
     <Content Include="Views\Admin\AddUserGroup.cshtml" />
-    <Content Include="Views\Admin\DeleteTumorGroup.cshtml" />
-    <Content Include="Views\Admin\DeleteQuestionType.cshtml" />
     <Content Include="Views\Admin\DeleteUserGroup.cshtml" />
     <Content Include="Views\Admin\AddCallerType.cshtml" />
-    <Content Include="Views\Admin\DeleteCallerType.cshtml" />
+    <Content Include="Views\Admin\DeactivateCallerType.cshtml" />
     <Content Include="Views\Admin\CallerType.cshtml" />
+    <Content Include="Views\Admin\ActivateCallerType.cshtml" />
+    <Content Include="Views\Admin\ActivateTumorGroup.cshtml" />
+    <Content Include="Views\Admin\DeactivateTumorGroup.cshtml" />
+    <Content Include="Views\Admin\ActivateQuestionType.cshtml" />
+    <Content Include="Views\Admin\DeactivateQuestionType.cshtml" />
+    <Content Include="Views\Admin\ActivateUserGroup.cshtml" />
+    <Content Include="Views\Admin\DeactivateUserGroup.cshtml" />
+    <Content Include="Views\Admin\ActivateKeyword.cshtml" />
+    <Content Include="Views\Admin\DeactivateKeyword.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

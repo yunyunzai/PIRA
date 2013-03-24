@@ -1,0 +1,19 @@
+﻿@model MvcApplication2.Models.Keywords
+<h3>Change activation status</h3>
+<fieldset>
+    <legend></legend>
+
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.Keyword)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Keyword)
+    </div>
+
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" name="deactivateKe" value="Deactivate" /> |
+        @Html.ActionLink("Cancel", "Admin")
+    </p>
+}
