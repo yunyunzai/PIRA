@@ -260,11 +260,11 @@
     <br />
     <button id="newRequest">New Request</button>
 </div>*@
+@Html.ActionLink("New Request", "create")
+@*<button id="newRequest">New Request</button>*@
 
-<button id="newRequest">New Request</button>
 
-
-@{if (Model == null || Model.editModel == null ||  !Model.isCreatingRequest)
+@{if (Model == null || !Model.isEditorOpen)
   {
       @Html.Raw("<div id=\"rborder\" hidden>");
   }
@@ -275,7 +275,7 @@
 
     
     
-    @using (Html.BeginForm("create", "DISpecialist"))
+    @using (Html.BeginForm("requestSave", "DISpecialist"))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -319,7 +319,7 @@
               items.Add(new SelectListItem
               {
                   Text = "Drug Company",
-                  Value = "drug go"
+                  Value = "drug_go"
               });
               items.Add(new SelectListItem
               {
@@ -370,7 +370,7 @@
               items.Add(new SelectListItem
               {
                   Text = "Other Physicians",
-                  Value = "other dr"
+                  Value = "other_dr"
               });
               items.Add(new SelectListItem
               {
@@ -638,9 +638,9 @@
                 &nbsp;Question:
       @*  <textarea name="msgpost" id="msgpost" cols="50" rows="10" onfocus="this.value=''; return false;">
             </textarea>*@
-        @* @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { name = "msgpost", id = "msgpost", cols = "50", rows = "10" })*@
-         @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })
-
+         @Html.TextAreaFor(m => m.editModel.newQuestion.QuestionContent, new { name = "msgpost", id = "msgpost", cols = "50", rows = "10" })
+        @* @Html.TextBoxFor(m => m.editModel.newQuestion.QuestionContent, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })*@
+                
             </div>
 
             <div class="yui-skin-sam" style="margin: 8px; float: right">
@@ -649,8 +649,8 @@
         
         </textarea>*@
 
-        @*@Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { name = "msgpost", id = "response", cols = "50", rows = "10" })*@
-                @Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })
+        @Html.TextAreaFor(m => m.editModel.newQuestion.Response, new { name = "msgpost", id = "response", cols = "50", rows = "10" })
+@*                @Html.TextBoxFor(m => m.editModel.newQuestion.Response, new { style = "width: 350px; height: 100px;cols: 50; rows:10" })*@
             </div>
                 </div>
 
@@ -798,7 +798,7 @@
               });
               items.Add(new SelectListItem
               {
-                  Text = "Drug Availablity",
+                  Text = "Drug Availability",
                   Value = "avail"
               });
               items.Add(new SelectListItem
@@ -863,7 +863,7 @@
                 <option value="moderate">Moderate</option>
                 <option value="minor">Minor</option>
             </select>*@
-
+            
             &nbsp;&nbsp;&nbsp;Probability
             @{items = new List<SelectListItem>();
               items.Add(new SelectListItem

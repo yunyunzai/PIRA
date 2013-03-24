@@ -37,6 +37,8 @@ namespace MvcApplication2.Models
         public DbSet<UserCreateRequest> UserCreateRequest { get; set; }
         public DbSet<UserEditRequest> UserEditRequest { get; set; }
         public DbSet<UserProfile> Users{ get; set; }
+        public DbSet<UserExportRequest> UserExportRequests { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
 
 
 
@@ -57,6 +59,7 @@ namespace MvcApplication2.Models
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }
     }
+
 
     [Table("Request")]
     public class Request
@@ -113,7 +116,7 @@ namespace MvcApplication2.Models
         [System.ComponentModel.DisplayName("Caller Region")]
         public string Region { get; set; }
 
-         [MaxLength(10, ErrorMessage = "The {0} must be less than 10 characters")]
+        // [MaxLength(100, ErrorMessage = "The {0} must be less than 10 characters")]
         [System.ComponentModel.DisplayName("Caller Type")]
         public string TypeAbbreviate { get; set; }
     }
@@ -124,6 +127,7 @@ namespace MvcApplication2.Models
         [Key]
         public string TypeAbbreviate { get; set; }
         public string Name { get; set; }
+        public Int16 IsActive { get; set; }
     }
 
     [Table("Question")]
@@ -188,6 +192,7 @@ namespace MvcApplication2.Models
         public string QuestionTypeAbbreviate { get; set; }
         // [Required]
         public string Name { get; set; }
+        public Int16 IsActive { get; set; }
     }
 
     [Table("Reference")]
@@ -214,6 +219,7 @@ namespace MvcApplication2.Models
         public string TumorTypeAbbreviate { get; set; }
         // [Required]
         public string Name { get; set; }
+        public Int16 IsActive { get; set; }
     }
 
 
@@ -251,7 +257,7 @@ namespace MvcApplication2.Models
         public SearchModel searchModel{ get; set; }
         public List<RequestViewModel> requests { get; set; }
         public RequestViewModel editModel { get; set; }
-        public bool isCreatingRequest { get; set; }
+        public bool isEditorOpen { get; set; }
     }
 
     public class SearchModel
@@ -278,9 +284,6 @@ namespace MvcApplication2.Models
         //public QuestionReference questionReference { get; set; }
         public Reference newReference { get; set; }
         public TumorGroup tumorGroup { get; set; }
-
-        
-        public string mode { get; set; }
     }
    
 }

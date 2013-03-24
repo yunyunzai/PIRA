@@ -15,8 +15,6 @@ using System.Web.Security;
 
 namespace MvcApplication2.Controllers
 {
-    [Authorize]
-    [Role(Roles = "DISpecialist")]
     public class DISpecialistController : Controller
     {
         private static DISpecialistModel globalModel=new DISpecialistModel();
@@ -24,15 +22,17 @@ namespace MvcApplication2.Controllers
         {
             return View(globalModel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public ActionResult create(DISpecialistModel m)
+        //[ValidateInput(true)]
+        public ActionResult requestSave(DISpecialistModel m)
         {
-            System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
-            m.isCreatingRequest = true;
+            System.Diagnostics.Debug.WriteLine(globalModel.editModel.request.RequestId);
+           
             if (ModelState.IsValid)
             {
+                System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
                 DISpecialistContext db = new DISpecialistContext();
 
                 // Updating Caller table
@@ -55,7 +55,7 @@ namespace MvcApplication2.Controllers
                 if (m.editModel.patient.Name != null && m.editModel.patient.AgencyID != null)
                 {
                     patient = from p in db.Patients
-                                  where p.Name == m.editModel.patient.Name && p.AgencyID == m.editModel.patient.AgencyID && p.Gender == m.editModel.patient.Gender
+                                  where p.Name.Equals(m.editModel.patient.Name) && p.AgencyID == m.editModel.patient.AgencyID && p.Gender.Equals( m.editModel.patient.Gender)
                                   select p;
                     if (patient.Count() != 0)
                     {
@@ -92,32 +92,32 @@ namespace MvcApplication2.Controllers
                     if (patient==null)
                         r.PatientId = null;
                     else
-                        r.PatientId= m.editModel.patient.PatientId;
-
+                        r.PatientId = patient.First().PatientId;    
+                    
                     db.Requests.Add(r);
                 }
                 db.SaveChanges();
 
                 // Updating Question table
-                Question q=null;
-                if (m.editModel.mode!=null &&m.editModel.mode.Equals("edit"))
-                {
-                    q = (from qs in db.Questions
-                             where qs.QuestionId == m.editModel.newQuestion.QuestionId
-                             select qs).First();
-                    q.QuestionContent = m.editModel.newQuestion.QuestionContent;
-                    q.Response = m.editModel.newQuestion.Response;
-                    q.Severity = m.editModel.newQuestion.Severity;
-                    q.Probability= m.editModel.newQuestion.Probability;                    
-                    q.TumorTypeAbbreviate = m.editModel.newQuestion.TumorTypeAbbreviate;
-                    q.QuestionTypeAbbreviate = m.editModel.newQuestion.QuestionTypeAbbreviate;
-                }
-                else
-                {
-                    q = m.editModel.newQuestion;
+                //Question q=null;
+                //if (m.editModel.mode!=null &&m.editModel.mode.Equals("edit"))
+                //{
+                //    q = (from qs in db.Questions
+                //             where qs.QuestionId == m.editModel.newQuestion.QuestionId
+                //             select qs).First();
+                //    q.QuestionContent = m.editModel.newQuestion.QuestionContent;
+                //    q.Response = m.editModel.newQuestion.Response;
+                //    q.Severity = m.editModel.newQuestion.Severity;
+                //    q.Probability= m.editModel.newQuestion.Probability;                    
+                //    q.TumorTypeAbbreviate = m.editModel.newQuestion.TumorTypeAbbreviate;
+                //    q.QuestionTypeAbbreviate = m.editModel.newQuestion.QuestionTypeAbbreviate;
+                //}
+                //else
+                //{
+                Question q = m.editModel.newQuestion;
                     q.RequestId = r.RequestId;
                     db.Questions.Add(q);
-                }
+                //}
 
                 db.SaveChanges();
 
@@ -169,34 +169,38 @@ namespace MvcApplication2.Controllers
                     db.SaveChanges();
                 }
                 // logging
-                if (m.editModel.mode == null || !m.editModel.mode.Equals("edit"))
-                {
+                //if (m.editModel.mode == null || !m.editModel.mode.Equals("edit"))
+                //{
                     UserCreateRequest ucr = new UserCreateRequest();
                     ucr.RequestId = r.RequestId;
                     ucr.UserId = int.Parse(Membership.GetUser().ProviderUserKey.ToString());
                     ucr.TimeCreated = DateTime.Now;
                     db.UserCreateRequest.Add(ucr);
-                }
+                //}
                 db.SaveChanges();
-                m.isCreatingRequest = false;
+                globalModel.isEditorOpen = false;
+                globalModel.editModel = new RequestViewModel();
                 return View("DISpecialist", globalModel);
             }
-    
-            return View("DISpecialist",m);
+            //System.Diagnostics.Debug.WriteLine(globalModel.editModel.newQuestion.QuestionContent);
+            return View("DISpecialist", globalModel);
         }
 
 
-
-
-
+        public ActionResult create(DISpecialistModel m)
+        {
+            globalModel.editModel = new RequestViewModel();
+            globalModel.isEditorOpen = true;
+            return View("DISpecialist", globalModel);
+        }
 
         public ActionResult edit(DISpecialistModel m, int rid)
         {
             //globalModel.editModel = newModel;
             DISpecialistContext db = new DISpecialistContext();
-            m.isCreatingRequest = true;
+            
             m.editModel = new RequestViewModel();
-            System.Diagnostics.Debug.WriteLine(rid);
+            //System.Diagnostics.Debug.WriteLine(rid);
             m.editModel.request=(from r in db.Requests
                                 where r.RequestId==rid
                                 select r).First();
@@ -213,15 +217,16 @@ namespace MvcApplication2.Controllers
                                        select q).First();
             System.Diagnostics.Debug.WriteLine(m.editModel.caller.Name);
              //System.Diagnostics.Debug.WriteLine(m.editModel.request.RequestId);
-            System.Diagnostics.Debug.WriteLine(!m.isCreatingRequest);
-            globalModel = m;
+            
+            globalModel.editModel = m.editModel;
+            globalModel.isEditorOpen = true;
             return View("DISpecialist", globalModel);
         }
 
         public ActionResult cancel(DISpecialistModel m)
         {
             globalModel.editModel= new RequestViewModel();
-            globalModel.isCreatingRequest = false;
+            globalModel.isEditorOpen = false;
             return View("DISpecialist", globalModel);
         }
 

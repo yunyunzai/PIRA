@@ -33,6 +33,7 @@ namespace MvcApplication2.Controllers
         public ActionResult Login(string returnUrl)
         {
             //
+            
             ViewBag.ReturnUrl = returnUrl;
             return View();
             
@@ -49,92 +50,104 @@ namespace MvcApplication2.Controllers
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 // TESTING sql query to add garbage user into UserProfile table
-               /* SqlConnection conn=null;
-                try
-                {
-                    conn = new SqlConnection("server=yunyunzai;database=PIRADatabase;Integrated Security=SSPI;");
+                /* SqlConnection conn=null;
+                 try
+                 {
+                     conn = new SqlConnection("server=yunyunzai;database=PIRADatabase;Integrated Security=SSPI;");
                     
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.CommandText = "SET IDENTITY_INSERT UserProfile ON ";
-                    cmd.Connection = conn;
-                    conn.Open();
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
+                     SqlCommand cmd = new SqlCommand();
+                     cmd.CommandText = "SET IDENTITY_INSERT UserProfile ON ";
+                     cmd.Connection = conn;
+                     conn.Open();
+                     cmd.Prepare();
+                     cmd.ExecuteNonQuery();
 
-                    cmd = new SqlCommand();
-                    cmd.CommandText = "insert into UserProfile(UserId,UserName,IsActive) values(@UserId,@UserName,@IsActive)";
-                    SqlParameter id = new SqlParameter();
-                    id.SqlDbType = SqlDbType.Int;
-                    id.ParameterName = "@UserId";
-                    id.Value = 67;
-                    SqlParameter name = new SqlParameter();
-                    name.SqlDbType = SqlDbType.NVarChar;
-                    name.ParameterName = "@UserName";
-                    name.Size = 56;
-                    name.Value = "lololol";
-                    SqlParameter isActive = new SqlParameter();
-                    isActive.SqlDbType = SqlDbType.Bit;
-                    isActive.ParameterName = "@IsActive";
-                    isActive.Value = true;
+                     cmd = new SqlCommand();
+                     cmd.CommandText = "insert into UserProfile(UserId,UserName,IsActive) values(@UserId,@UserName,@IsActive)";
+                     SqlParameter id = new SqlParameter();
+                     id.SqlDbType = SqlDbType.Int;
+                     id.ParameterName = "@UserId";
+                     id.Value = 67;
+                     SqlParameter name = new SqlParameter();
+                     name.SqlDbType = SqlDbType.NVarChar;
+                     name.ParameterName = "@UserName";
+                     name.Size = 56;
+                     name.Value = "lololol";
+                     SqlParameter isActive = new SqlParameter();
+                     isActive.SqlDbType = SqlDbType.Bit;
+                     isActive.ParameterName = "@IsActive";
+                     isActive.Value = true;
 
-                    cmd.Parameters.Add(id);
-                    cmd.Parameters.Add(name);
-                    cmd.Parameters.Add(isActive);
-                    cmd.Connection = conn;
-                    //conn.Open();
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
+                     cmd.Parameters.Add(id);
+                     cmd.Parameters.Add(name);
+                     cmd.Parameters.Add(isActive);
+                     cmd.Connection = conn;
+                     //conn.Open();
+                     cmd.Prepare();
+                     cmd.ExecuteNonQuery();
 
-                    cmd = new SqlCommand();
-                    cmd.CommandText = "SET IDENTITY_INSERT UserProfile OFF ";
-                    cmd.Connection = conn;
-                    cmd.Prepare();
-                    cmd.ExecuteNonQuery();
-                }
-                finally
-                {
-                    if (conn != null)
-                    {
-                        conn.Close();
-                    }
-                }*/
+                     cmd = new SqlCommand();
+                     cmd.CommandText = "SET IDENTITY_INSERT UserProfile OFF ";
+                     cmd.Connection = conn;
+                     cmd.Prepare();
+                     cmd.ExecuteNonQuery();
+                 }
+                 finally
+                 {
+                     if (conn != null)
+                     {
+                         conn.Close();
+                     }
+                 }*/
                 // TESTING CODE to get logged in user name
                 MembershipUser user = Membership.GetUser(model.UserName);
                 if (user == null)
                 {
-                    throw new InvalidOperationException("User [" + 
+                    throw new InvalidOperationException("User [" +
                         User.Identity.Name + " ] not found.");
                 }
                 System.Diagnostics.Debug.WriteLine("Logged in user name: " + user.UserName);
                 int userID = int.Parse(user.ProviderUserKey.ToString());
-                UsersContext uc = new UsersContext();
-                var info = from table1 in uc.UserProfiles
-                           join table2 in uc.UsersInRoles on table1.UserId equals table2.UserId
-                           join table3 in uc.Roles on table2.RoleId equals table3.RoleId
-                           select new { table1.UserId, table2.RoleId, table3.RoleName };
-                var roleAdmin = new List<String>();
-                var roleDI = new List<String>();
-                var roleRep = new List<String>();
-                foreach (var i in info)
+                if (!CheckUserActivation(userID))
                 {
-                    if (i.UserId == userID)
-                    {
-                        if (i.RoleName == "Admin")
-                            roleAdmin.Add(i.RoleName);
-                        if (i.RoleName == "DISpecialist")
-                            roleDI.Add(i.RoleName);
-                        if (i.RoleName == "Reporter")
-                            roleRep.Add(i.RoleName);
-                    }
+                    ModelState.AddModelError("", "User " + userID + " is no longer activated");
+                    return View(model);
                 }
-                if (roleAdmin.Contains("Admin"))
-                    return RedirectToAction("Admin", "Admin");
-                if (!roleAdmin.Contains("Admin") && roleDI.Contains("DISpecialist"))
-                    return RedirectToAction("DISpecialist", "DISpecialist");
-                if (!roleAdmin.Contains("Admin") && !roleDI.Contains("DISpecialist") && roleRep.Contains("Reporter"))
-                    return RedirectToAction("Reporter", "Reporter");
-            }
+                if (user.LastPasswordChangedDate.Date.AddDays(42) < DateTime.Now.Date)
+                {
+                    return RedirectToAction("Manage","Account",ManageMessageId.PasswordExpired);
+                }
+                else
+                {
+                    UsersContext uc = new UsersContext();
+                    var info = from table1 in uc.UserProfiles
+                               join table2 in uc.UsersInRoles on table1.UserId equals table2.UserId
+                               join table3 in uc.Roles on table2.RoleId equals table3.RoleId
+                               select new { table1.UserId, table2.RoleId, table3.RoleName };
 
+                    var roleAdmin = new List<String>();
+                    var roleDI = new List<String>();
+                    var roleRep = new List<String>();
+                    foreach (var i in info)
+                    {
+                        if (i.UserId == userID)
+                        {
+                            if (i.RoleName == "Admin")
+                                roleAdmin.Add(i.RoleName);
+                            if (i.RoleName == "DISpecialist")
+                                roleDI.Add(i.RoleName);
+                            if (i.RoleName == "Reporter")
+                                roleRep.Add(i.RoleName);
+                        }
+                    }
+                    if (roleAdmin.Contains("Admin"))
+                        return RedirectToAction("Admin", "Admin");
+                    if (!roleAdmin.Contains("Admin") && roleDI.Contains("DISpecialist"))
+                        return RedirectToAction("DISpecialist", "DISpecialist");
+                    if (!roleAdmin.Contains("Admin") && !roleDI.Contains("DISpecialist") && roleRep.Contains("Reporter"))
+                        return RedirectToAction("Reporter", "Reporter");
+                }
+            }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);
@@ -307,6 +320,7 @@ namespace MvcApplication2.Controllers
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                : message == ManageMessageId.PasswordExpired ? "Your password expired. Please change it."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -522,8 +536,23 @@ namespace MvcApplication2.Controllers
             ChangePasswordSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
+            PasswordExpired,
         }
 
+
+        private bool CheckUserActivation(int id)
+        {
+            var userprofile = db.UserProfiles
+                .Single(i => i.UserId == id);
+
+           bool? actStatus = userprofile.IsActivated;
+           if (actStatus == true)
+           {
+               
+               return true;
+           }
+           else return false;
+        }
         private void UpdateUserGroups(string[] selectedGroups, int id)
         {
             var userprofile = db.UserProfiles

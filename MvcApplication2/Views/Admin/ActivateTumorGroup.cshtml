@@ -1,0 +1,25 @@
+﻿@model MvcApplication2.Models.TumorGroup
+<h3>Change activation status</h3>
+<fieldset>
+    <legend></legend>
+
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.Name)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.TumorTypeAbbreviate)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TumorTypeAbbreviate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" name="activateCallerType" value="Activate" /> |
+        @Html.ActionLink("Cancel", "CallerType")
+    </p>
+}
