@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MvcApplication2.Filters;
 using MvcApplication2.Models;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 namespace MvcApplication2.Controllers
 {
@@ -455,11 +456,11 @@ namespace MvcApplication2.Controllers
         public ActionResult EditKeyword(String key, FormCollection collection)
         {
 
-            Keywords keyword = db.Keywords.Where(i => i.Keyword == key).Single();
+           
             if (ModelState.IsValid)
             {
-                db.Entry(keyword).State = EntityState.Modified;
-                db.SaveChanges();
+             //   db.Entry(keyword).State = EntityState.Modified;
+             //   db.SaveChanges();
                
                 bool flag = false;
                 if (Convert.ToInt16(collection["activationStatus"]) == 1)
@@ -468,20 +469,11 @@ namespace MvcApplication2.Controllers
 
                 }
                 
-               
-                Keywords k = new Keywords
-                {
-                    Keyword = collection["keyID"],
-                    IsActive = flag
+                            
 
-                };
-                db.Keywords.Add(k);
-              //  db.Entry(keyword).State = EntityState.Modified;
-                db.SaveChanges();
-
-
-                db.Keywords.Attach(keyword);
-                db.Keywords.Remove(keyword);
+                Keywords k1 = db.Keywords.Single(dbk => dbk.Keyword == key);
+                k1.Keyword = key;
+                k1.IsActive = flag;
                 db.SaveChanges();
                 return RedirectToAction("Admin");
             }
