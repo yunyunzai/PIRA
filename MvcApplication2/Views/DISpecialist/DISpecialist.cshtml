@@ -11,6 +11,22 @@
 
 <script>
     $(function () {
+        var availableTags = [
+            @if (Model != null && Model.editModel != null && Model.editModel.newKeywords != null)
+                             {
+                                 foreach(string i in Model.editModel.newKeywords){
+                                <text>"@i",</text>
+        }
+                           }
+      ];
+        $("#searchBar").autocomplete({
+          source: availableTags
+      });
+  });
+  </script>
+
+<script>
+    $(function () {
         $("#removeQuestion").click(function () {
             Model.numQuestion--;
                     });
@@ -160,8 +176,8 @@
         
     @Html.DropDownListFor(x => x.searchModel.searchBy, new SelectList(items, "Value", "Text"))
 
-    @Html.TextBoxFor(m => m.searchModel.searchKey, new { id = "searchBar" })
-    <input type="submit" value="Search" />
+    <div class="ui-widget">@Html.TextBoxFor(m => m.searchModel.searchKey, new { id = "searchBar" })
+    <input type="submit" value="Search" /></div>
 
         
     @Html.Raw("</div>");
@@ -633,12 +649,12 @@
         
         <div id="rbuttons">
             
-            @Html.ActionLink("Remove Question", "removeQuestion")
+            @Html.ActionLink("Remove Question", "removeQuestion", "", new { style="background-color:#e3e3e3; border:1px"})
 
-            @Html.ActionLink("Add New Question", "addQuestion")
+            @Html.ActionLink("Add New Question", "addQuestion", "", new { style="background-color:#e3e3e3"})
             
             
-            @Html.ActionLink("Cancel", "cancel")
+            @Html.ActionLink("Cancel", "cancel", "", new { style="background-color:#e3e3e3"})
             <input id = "save" type="submit"  value="SAVE" />
             @*<button id="cancel">CANCEL</button>*@
         </div>
