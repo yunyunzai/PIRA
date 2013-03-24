@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MvcApplication2.ViewModels.LoggingModel>
 @{
-    ViewBag.Title = "ViewHistory";
+    ViewBag.Title = "View History";
     List<MvcApplication2.ViewModels.LoggingModel> allReq = ViewBag.SortedList;
     MvcApplication2.Models.UsersContext db = new MvcApplication2.Models.UsersContext();
 }
@@ -17,7 +17,12 @@
         </nav>
     </div>
 </div><br /><br /><br /><hr />
-<h2>ViewHistory</h2>
+<h2>View History</h2>
+@using (Html.BeginForm())
+    {    
+         <p> Request Keyword: @Html.TextBox("key") &nbsp;  
+         <input type="submit" value="Filter" /></p> 
+    } 
 <div style="height: 400px; overflow-y:scroll;">
 <table>
     <tr>
