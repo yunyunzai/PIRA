@@ -47,7 +47,8 @@ namespace MvcApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            
+            if (ModelState.IsValid&&Membership.ValidateUser(model.UserName,model.Password))
             {
                 // TESTING sql query to add garbage user into UserProfile table
                 /* SqlConnection conn=null;
@@ -113,12 +114,13 @@ namespace MvcApplication2.Controllers
                     ModelState.AddModelError("", "User " + userID + " is no longer activated");
                     return View(model);
                 }
-                if (user.LastPasswordChangedDate.Date.AddDays(42) < DateTime.Now.Date)
+                else if (WebSecurity.GetPasswordChangedDate(user.UserName).Date.AddDays(42) < DateTime.Now.Date)
                 {
                     return RedirectToAction("Manage","Account",ManageMessageId.PasswordExpired);
                 }
                 else
                 {
+                    WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe);
                     UsersContext uc = new UsersContext();
                     var info = from table1 in uc.UserProfiles
                                join table2 in uc.UsersInRoles on table1.UserId equals table2.UserId
@@ -217,6 +219,12 @@ namespace MvcApplication2.Controllers
                     //Calls helper methods which manually update the relevant tables using navigation properties
                     UpdateUserRoles(selectedRoles, WebSecurity.GetUserId(model.UserName));
                     UpdateUserGroups(selectedGroups, WebSecurity.GetUserId(model.UserName));
+
+                   // WebSecurity.
+
+
+                   // UpdateUserPasswordHistory(WebSecurity.GetUserId(model.UserName),Membership.);
+                    
                     //No need to log in on registration.
                    // WebSecurity.Login(model.UserName, model.Password);
                   
