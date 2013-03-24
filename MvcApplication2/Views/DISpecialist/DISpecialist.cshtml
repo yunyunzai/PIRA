@@ -227,11 +227,11 @@
     <br />
     <button id="newRequest">New Request</button>
 </div>*@
+@Html.ActionLink("New Request", "create")
+@*<button id="newRequest">New Request</button>*@
 
-<button id="newRequest">New Request</button>
 
-
-@{if (Model == null || Model.editModel == null ||  !Model.isCreatingRequest)
+@{if (Model == null || !Model.isEditorOpen)
   {
       @Html.Raw("<div id=\"rborder\" hidden>");
   }

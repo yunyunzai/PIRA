@@ -251,7 +251,7 @@ namespace MvcApplication2.Models
         public SearchModel searchModel{ get; set; }
         public List<RequestViewModel> requests { get; set; }
         public RequestViewModel editModel { get; set; }
-        public bool isCreatingRequest { get; set; }
+        public bool isEditorOpen { get; set; }
     }
 
     public class SearchModel
@@ -278,9 +278,6 @@ namespace MvcApplication2.Models
         //public QuestionReference questionReference { get; set; }
         public Reference newReference { get; set; }
         public TumorGroup tumorGroup { get; set; }
-
-        
-        public string mode { get; set; }
     }
    
 }
