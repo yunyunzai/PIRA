@@ -28,156 +28,231 @@ namespace MvcApplication2.Controllers
         //[ValidateInput(true)]
         public ActionResult requestSave(DISpecialistModel m)
         {
-            System.Diagnostics.Debug.WriteLine(globalModel.editModel.request.RequestId);
+            System.Diagnostics.Debug.WriteLine(globalModel.editModel.request==null);
            
             if (ModelState.IsValid)
             {
                 System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
                 DISpecialistContext db = new DISpecialistContext();
 
-                // Updating Caller table
-                var caller = from c in db.Callers
-                             where c.Name == m.editModel.caller.Name && c.Phone == m.editModel.caller.Phone
+                // Updating Caller table 
+                Caller caller = null; 
+                var callers = from c in db.Callers
+                             where c.Name.Equals(m.editModel.caller.Name) && c.Phone.Equals(m.editModel.caller.Phone)
                              select c;
-                if (caller.Count() != 0)
+                // if this caller exists in the database, update his/her info                               
+                if (callers.Count() != 0)
                 {
-                    Caller c = caller.First();
-                    c.Email = m.editModel.caller.Email == null ? c.Email : m.editModel.caller.Email;
-                    c.Region = m.editModel.caller.Region;
-                    c.TypeAbbreviate = m.editModel.caller.TypeAbbreviate;
+                    caller = callers.First();
+                    caller.Email = m.editModel.caller.Email == null ? caller.Email : m.editModel.caller.Email;
+                    caller.Region = m.editModel.caller.Region;
+                    caller.TypeAbbreviate = m.editModel.caller.TypeAbbreviate;
                 }
+                // otherwise add a new caller in the database
                 else
-                    db.Callers.Add(m.editModel.caller);
+                {
+                    caller = m.editModel.caller;
+                    db.Callers.Add(caller);
+                }
                 db.SaveChanges();
 
                 // Updating Patient table
-                IQueryable<Patient> patient=null;
+                Patient patient=null;
+                var patients = from p in db.Patients
+                          where p.Name.Equals(m.editModel.patient.Name) && p.AgencyID == m.editModel.patient.AgencyID && p.Gender.Equals(m.editModel.patient.Gender)
+                          select p;
+                // if the user entered valid patient Name and agency ID modify or update the patient info
                 if (m.editModel.patient.Name != null && m.editModel.patient.AgencyID != null)
                 {
-                    patient = from p in db.Patients
-                                  where p.Name.Equals(m.editModel.patient.Name) && p.AgencyID == m.editModel.patient.AgencyID && p.Gender.Equals( m.editModel.patient.Gender)
-                                  select p;
-                    if (patient.Count() != 0)
+                    // if this patient exists in the database, update his/her info
+                    if (patients.Count() != 0)
                     {
-                        Patient p = patient.First();
-                        p.Name = m.editModel.patient.Name == null ? p.Name : m.editModel.patient.Name;
-                        p.AgencyID = m.editModel.patient.AgencyID == null ? p.AgencyID : m.editModel.patient.AgencyID;
-                        p.Age = m.editModel.patient.Age == null ? p.Age : m.editModel.patient.Age;
-                        p.Gender = m.editModel.patient.Gender == null ? p.Gender : m.editModel.patient.Gender;
+                        patient = patients.First();
+                        patient.Name = m.editModel.patient.Name == null ? patient.Name : m.editModel.patient.Name;
+                        patient.AgencyID = m.editModel.patient.AgencyID == null ? patient.AgencyID : m.editModel.patient.AgencyID;
+                        patient.Age = m.editModel.patient.Age == null ? patient.Age : m.editModel.patient.Age;
+                        patient.Gender = m.editModel.patient.Gender == null ? patient.Gender : m.editModel.patient.Gender;
                     }
+                    // otherwise add a new patient in the database
                     else
+                    {
+                        patient = m.editModel.patient;
                         db.Patients.Add(m.editModel.patient);
+                    }
                 }
                 db.SaveChanges();
 
                 // Updating the request table
-                Request r = null;
-                if (m.editModel.request != null)
+                Request request = null;
+                // if the user is currently editing the request
+                if (globalModel.editModel.request != null)
                 {
-                    r = db.Requests.Find(m.editModel.request.RequestId);
-                    r.Name = m.editModel.caller.Name;
-                    r.Phone = m.editModel.caller.Phone;
+                    request = db.Requests.Find(globalModel.editModel.request.RequestId);
+                    request.Name = caller.Name;
+                    request.Phone = caller.Phone;
                     if (patient == null)
-                        r.PatientId = null;
+                        request.PatientId = null;
                     else
-                        r.PatientId = patient.First().PatientId;                    
+                        request.PatientId = patient.PatientId; 
                 }
                 else
                 {
-                    r = new Request();
-                    r.IsActive = true;
-                    r.TotalTimeSpent = null;
-                    r.Name = m.editModel.caller.Name;
-                    r.Phone = m.editModel.caller.Phone;
+                    request = new Request();
+                    request.IsActive = true;
+                    request.TotalTimeSpent = 0;
+                    request.Name = m.editModel.caller.Name;
+                    request.Phone = m.editModel.caller.Phone;
                     if (patient==null)
-                        r.PatientId = null;
+                        request.PatientId = null;
                     else
-                        r.PatientId = patient.First().PatientId;    
-                    
-                    db.Requests.Add(r);
+                        request.PatientId = patient.PatientId;
+
+                    db.Requests.Add(request);
                 }
                 db.SaveChanges();
 
                 // Updating Question table
-                //Question q=null;
-                //if (m.editModel.mode!=null &&m.editModel.mode.Equals("edit"))
-                //{
-                //    q = (from qs in db.Questions
-                //             where qs.QuestionId == m.editModel.newQuestion.QuestionId
-                //             select qs).First();
-                //    q.QuestionContent = m.editModel.newQuestion.QuestionContent;
-                //    q.Response = m.editModel.newQuestion.Response;
-                //    q.Severity = m.editModel.newQuestion.Severity;
-                //    q.Probability= m.editModel.newQuestion.Probability;                    
-                //    q.TumorTypeAbbreviate = m.editModel.newQuestion.TumorTypeAbbreviate;
-                //    q.QuestionTypeAbbreviate = m.editModel.newQuestion.QuestionTypeAbbreviate;
-                //}
-                //else
-                //{
-                Question q = m.editModel.newQuestion;
-                    q.RequestId = r.RequestId;
-                    db.Questions.Add(q);
-                //}
-
+                Question question=null;
+                var questions = (from qs in db.Questions
+                             where qs.QuestionContent.Equals(m.editModel.newQuestion.QuestionContent) && qs.RequestId==request.RequestId
+                             select qs);
+                // question exists in the database
+                if (questions.Count()!=0)
+                {
+                    question = questions.First();
+                    question.QuestionContent = m.editModel.newQuestion.QuestionContent;
+                    question.Response = m.editModel.newQuestion.Response;
+                    question.Severity = m.editModel.newQuestion.Severity;
+                    question.Probability = m.editModel.newQuestion.Probability;
+                    question.TumorTypeAbbreviate = m.editModel.newQuestion.TumorTypeAbbreviate;
+                    question.QuestionTypeAbbreviate = m.editModel.newQuestion.QuestionTypeAbbreviate;
+                    
+                }
+                else
+                {
+                    question = m.editModel.newQuestion;
+                    question.RequestId = request.RequestId;
+                    db.Questions.Add(question);
+                }
+                System.Diagnostics.Debug.WriteLine("QID: "+question.QuestionId);
                 db.SaveChanges();
 
+
                 // update keyword tables
-                var ks = from k in db.Keywords
+                var keywords = from k in db.Keywords
                          where k.Keyword.Equals(m.editModel.newKeyword.Keyword)
-                         select k.Keyword;
-                if (ks.Count()==0)
+                         select k;
+
+                
+                Keywords keyword = null;
+                // if the keyword exists in the database
+                if (keywords.Count() != 0)
                 {
-                    // add keyword if it does not exist in the db
-                    Keywords key=new Keywords();
-                    key.Keyword = m.editModel.newKeyword.Keyword;
-                    key.IsActive = true;
-                    db.Keywords.Add(key);
-                    db.SaveChanges();                   
+                    keyword = keywords.First();                    
+                }
+                // if the keyword is not in the database, add the keyword to the database
+                else 
+                {                    
+                    keyword = new Keywords();
+                    keyword.Keyword = m.editModel.newKeyword.Keyword;
+                    keyword.IsActive = true;
+                    db.Keywords.Add(keyword);
+                    db.SaveChanges();
                 }
 
-                // add reference if it does not exist in the db
-                var qk = from k in db.QuestionKeywords
-                         where k.Keyword.Equals(m.editModel.newKeyword.Keyword)
-                         select k.QuestionId;
-                if (!qk.Contains(q.QuestionId))
+                // add the keyword reference 
+                QuestionKeyword keywordRef=null;
+                var keywordRefs = from k in db.QuestionKeywords
+                         where k.Keyword.Equals(keyword.Keyword) && k.QuestionId==question.QuestionId
+                         select k;
+                // if the keyword reference exists in the db
+                if (keywordRefs.Count() != 0)
                 {
-                    QuestionKeyword qks = new QuestionKeyword();
-                    qks.Keyword = m.editModel.newKeyword.Keyword;
-                    qks.QuestionId = q.QuestionId;
-                    db.QuestionKeywords.Add(qks);
+                    keywordRef = keywordRefs.First();
+
                 }
+                // otherwise create new keyword reference
+                else 
+                {
+                    keywordRef = new QuestionKeyword();
+                    keywordRef.Keyword = m.editModel.newKeyword.Keyword;
+                    keywordRef.QuestionId = question.QuestionId;
+                    db.QuestionKeywords.Add(keywordRef);
+                }
+                // otherwise do nothing
                 db.SaveChanges();
 
                 // update reference tables
+                Reference reference=null;
+                
                 if (m.editModel.newReference.ReferenceContent!=null)
                 {
-                    // add reference content 
-                    Reference reference = new Reference();
-                    reference.ReferenceContent = m.editModel.newReference.ReferenceContent;
 
-                    db.References.Add(reference);
-                    db.SaveChanges();
-                
+                    var refs = from r in db.References
+                               where r.ReferenceContent.Equals(m.editModel.newReference.ReferenceContent)
+                               select r;
+                    // if the reference exists in the db
+                    if (refs.Count() != 0)
+                    {
+                        reference = refs.First();
+                    }
+                    // otherwise add new reference
+                    else
+                    {
+                        // add reference content 
+                        reference = new Reference();
+                        reference.ReferenceContent = m.editModel.newReference.ReferenceContent;
+                        db.References.Add(reference);
+                        db.SaveChanges();                        
+                    }
 
-                // add question reference if it does not exist in the db
-                
-                    QuestionReference qrf = new QuestionReference();
-                    qrf.QuestionId = q.QuestionId;
-                    qrf.ReferenceId = reference.ReferenceId;
-                    db.QuestionReferences.Add(qrf);
-                
+
+                    // add question reference if it does not exist in the db
+                    QuestionReference qrf = null;
+                    var qrfs = from r in db.QuestionReferences
+                               where r.ReferenceId==reference.ReferenceId && r.QuestionId==question.QuestionId
+                               select r;
+                    // if the reference does not exists in the db add one!
+                    if (qrfs.Count() == 0)
+                    {
+                        qrf = new QuestionReference();
+                        qrf.QuestionId = question.QuestionId;
+                        qrf.ReferenceId = reference.ReferenceId;
+                        db.QuestionReferences.Add(qrf);
+                    }
+                    // else do nothing                
                     db.SaveChanges();
                 }
+
+
+
                 // logging
-                //if (m.editModel.mode == null || !m.editModel.mode.Equals("edit"))
-                //{
+                // if the user is creating request
+                if (globalModel.editModel.request == null)
+                {
                     UserCreateRequest ucr = new UserCreateRequest();
-                    ucr.RequestId = r.RequestId;
-                    ucr.UserId = int.Parse(Membership.GetUser().ProviderUserKey.ToString());
+                    ucr.RequestId = request.RequestId;
+                    ucr.UserId = long.Parse(Membership.GetUser().ProviderUserKey.ToString());
                     ucr.TimeCreated = DateTime.Now;
                     db.UserCreateRequest.Add(ucr);
-                //}
+                }
+                // otherwise the user is editing and we update the editing logging table
+                else
+                {
+                    UserEditRequest uer = null;
+                    // find the previously unfinished edit
+                    long uid=long.Parse(Membership.GetUser().ProviderUserKey.ToString());
+                    var uers = from u in db.UserEditRequest
+                               where u.RequestId == request.RequestId && u.UserId == uid && u.FinishTime == null
+                               select u;
+                    uer = uers.First();
+                    uer.RequestId = request.RequestId;
+                    uer.UserId = int.Parse(Membership.GetUser().ProviderUserKey.ToString());
+                    uer.FinishTime= DateTime.Now;
+                    //db.UserEditRequest.Add(uer);
+                }
                 db.SaveChanges();
+
                 globalModel.isEditorOpen = false;
                 globalModel.editModel = new RequestViewModel();
                 return View("DISpecialist", globalModel);
@@ -217,7 +292,29 @@ namespace MvcApplication2.Controllers
                                        select q).First();
             System.Diagnostics.Debug.WriteLine(m.editModel.caller.Name);
              //System.Diagnostics.Debug.WriteLine(m.editModel.request.RequestId);
-            
+
+            // log this edit history
+            long uid = long.Parse(Membership.GetUser().ProviderUserKey.ToString()); 
+            UserEditRequest uer = null;
+            // find previously opened edit log
+            var uers = from u in db.UserEditRequest
+                       where u.RequestId == rid && u.UserId == uid && u.FinishTime == null
+                       select u;
+            // if the un finished log for edit exists
+            if (uers.Count() != 0)
+                uer = uers.First();
+            else
+            {
+                uer = new UserEditRequest();
+                uer.RequestId = rid;
+                uer.UserId = uid;
+                uer.StartTime = DateTime.Now;
+                uer.FinishTime = null;
+                db.UserEditRequest.Add(uer);
+                db.SaveChanges();
+            }
+
+
             globalModel.editModel = m.editModel;
             globalModel.isEditorOpen = true;
             return View("DISpecialist", globalModel);
@@ -225,6 +322,17 @@ namespace MvcApplication2.Controllers
 
         public ActionResult cancel(DISpecialistModel m)
         {
+            DISpecialistContext db = new DISpecialistContext();
+            // delete the edit log if the user cancels the edit action
+            if (globalModel.editModel.request != null)
+            {
+                long uid = long.Parse(Membership.GetUser().ProviderUserKey.ToString());
+                var uers = from u in db.UserEditRequest
+                           where u.RequestId == globalModel.editModel.request.RequestId && u.UserId ==uid  && u.FinishTime == null
+                           select u;
+                db.UserEditRequest.Remove(uers.First());
+                db.SaveChanges();
+            }
             globalModel.editModel= new RequestViewModel();
             globalModel.isEditorOpen = false;
             return View("DISpecialist", globalModel);
@@ -285,7 +393,8 @@ namespace MvcApplication2.Controllers
                   
                 
                 rm.caller = i.caller;
-                result.Add(rm);
+                if (i.requests.IsActive)
+                    result.Add(rm);
             }
             globalModel.requests = result;
 

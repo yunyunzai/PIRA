@@ -235,7 +235,7 @@ namespace MvcApplication2.Models
         [Key, Column(Order = 3)]
         //[Required]
         public DateTime StartTime { get; set; }
-        public DateTime FinishTime { get; set; }
+        public DateTime? FinishTime { get; set; }
     }
 
     [Table("UserViewRequest")]
