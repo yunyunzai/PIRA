@@ -5,16 +5,7 @@
 }
 
 <h2>Edit</h2>
-<div class="content-wrapper">
-    <div class="float-left">
-        <nav>
-            <ul id="menu">
-                <li>@Html.ActionLink("Request Management", "RequestManagement", "Admin")</li>
-                 <li>@Html.ActionLink("User Management", "Index", "Users")</li>
-                <li id="vh"><a href="#">View History</a></li>
-            </ul>
-        </nav>
-    </div>
+
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
