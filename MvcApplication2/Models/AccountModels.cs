@@ -21,6 +21,24 @@ namespace MvcApplication2.Models
         public DbSet<Roles> Roles { get; set; }
         public DbSet<UserBelongsGroup> UserBelongsGroup { get; set; }
         public DbSet<UserGroup> UserGroup { get; set; }
+        public DbSet<UserPasswordHistory> UserPasswordHistory { get; set; }
+        
+    }
+    [Table("UserPasswordHistory")]
+    public class UserPasswordHistory
+    {
+        [Key]
+        [Column(Order = 0)]
+        public Int64 UserId { get; set; }
+        [Column(Order = 1)]
+        public string Password { get; set; }
+        [Column(Order = 2)]
+        public DateTime dateTime { get; set; }
+    }
+    [Table("webpages_Membership")]
+    public class webpages_Membership
+    {
+
     }
 
     [Table("webpages_UsersInRoles")]

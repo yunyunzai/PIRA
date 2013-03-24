@@ -47,59 +47,10 @@ namespace MvcApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            
+            if (ModelState.IsValid&&Membership.ValidateUser(model.UserName,model.Password))
             {
-                // TESTING sql query to add garbage user into UserProfile table
-                /* SqlConnection conn=null;
-                 try
-                 {
-                     conn = new SqlConnection("server=yunyunzai;database=PIRADatabase;Integrated Security=SSPI;");
-                    
-                     SqlCommand cmd = new SqlCommand();
-                     cmd.CommandText = "SET IDENTITY_INSERT UserProfile ON ";
-                     cmd.Connection = conn;
-                     conn.Open();
-                     cmd.Prepare();
-                     cmd.ExecuteNonQuery();
-
-                     cmd = new SqlCommand();
-                     cmd.CommandText = "insert into UserProfile(UserId,UserName,IsActive) values(@UserId,@UserName,@IsActive)";
-                     SqlParameter id = new SqlParameter();
-                     id.SqlDbType = SqlDbType.Int;
-                     id.ParameterName = "@UserId";
-                     id.Value = 67;
-                     SqlParameter name = new SqlParameter();
-                     name.SqlDbType = SqlDbType.NVarChar;
-                     name.ParameterName = "@UserName";
-                     name.Size = 56;
-                     name.Value = "lololol";
-                     SqlParameter isActive = new SqlParameter();
-                     isActive.SqlDbType = SqlDbType.Bit;
-                     isActive.ParameterName = "@IsActive";
-                     isActive.Value = true;
-
-                     cmd.Parameters.Add(id);
-                     cmd.Parameters.Add(name);
-                     cmd.Parameters.Add(isActive);
-                     cmd.Connection = conn;
-                     //conn.Open();
-                     cmd.Prepare();
-                     cmd.ExecuteNonQuery();
-
-                     cmd = new SqlCommand();
-                     cmd.CommandText = "SET IDENTITY_INSERT UserProfile OFF ";
-                     cmd.Connection = conn;
-                     cmd.Prepare();
-                     cmd.ExecuteNonQuery();
-                 }
-                 finally
-                 {
-                     if (conn != null)
-                     {
-                         conn.Close();
-                     }
-                 }*/
-                // TESTING CODE to get logged in user name
+               
                 MembershipUser user = Membership.GetUser(model.UserName);
                 if (user == null)
                 {
@@ -113,12 +64,13 @@ namespace MvcApplication2.Controllers
                     ModelState.AddModelError("", "User " + userID + " is no longer activated");
                     return View(model);
                 }
-                //if (user.LastPasswordChangedDate.Date.AddDays(42) < DateTime.Now.Date)
-                //{
-                //    return RedirectToAction("Manage","Account",ManageMessageId.PasswordExpired);
-                //}
+                else if (WebSecurity.GetPasswordChangedDate(user.UserName).Date.AddDays(42) < DateTime.Now.Date)
+                {
+                    return RedirectToAction("Manage","Account",ManageMessageId.PasswordExpired);
+                }
                 else
                 {
+                    WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe);
                     UsersContext uc = new UsersContext();
                     var info = from table1 in uc.UserProfiles
                                join table2 in uc.UsersInRoles on table1.UserId equals table2.UserId
@@ -217,6 +169,12 @@ namespace MvcApplication2.Controllers
                     //Calls helper methods which manually update the relevant tables using navigation properties
                     UpdateUserRoles(selectedRoles, WebSecurity.GetUserId(model.UserName));
                     UpdateUserGroups(selectedGroups, WebSecurity.GetUserId(model.UserName));
+
+                   // WebSecurity.
+
+
+                   // UpdateUserPasswordHistory(WebSecurity.GetUserId(model.UserName),Membership.);
+                    
                     //No need to log in on registration.
                    // WebSecurity.Login(model.UserName, model.Password);
                   
@@ -539,6 +497,7 @@ namespace MvcApplication2.Controllers
             PasswordExpired,
         }
 
+       
 
         private bool CheckUserActivation(int id)
         {
@@ -553,6 +512,21 @@ namespace MvcApplication2.Controllers
            }
            else return false;
         }
+
+        private void UpdateUserPasswordHistory(Int64 UserId, string hashedPassword)
+        {
+            UserPasswordHistory query = new UserPasswordHistory {
+                UserId = UserId, Password = hashedPassword, dateTime = DateTime.Now
+
+                                                };
+            db.UserPasswordHistory.Add(query);
+            db.SaveChanges();
+
+
+        }
+
+
+
         private void UpdateUserGroups(string[] selectedGroups, int id)
         {
             var userprofile = db.UserProfiles
