@@ -320,7 +320,7 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Admin\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -368,6 +368,8 @@
     <Content Include="Views\Admin\DeactivateQuestionType.cshtml" />
     <Content Include="Views\Admin\ActivateUserGroup.cshtml" />
     <Content Include="Views\Admin\DeactivateUserGroup.cshtml" />
+    <Content Include="Views\Admin\ActivateKeyword.cshtml" />
+    <Content Include="Views\Admin\DeactivateKeyword.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

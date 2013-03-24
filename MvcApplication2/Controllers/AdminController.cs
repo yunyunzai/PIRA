@@ -378,6 +378,43 @@ namespace MvcApplication2.Controllers
             return View(key);
         }
 
+        public ActionResult ActivateKeyword(string abbr)
+        {
+            Keywords k = db.Keywords.Single(i => i.Keyword == abbr);
+            if (k == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(k);
+        }
+        [HttpPost, ActionName("ActivateKeyword")]
+        public ActionResult ActivateKeyword2(string abbr)
+        {
+            Keywords tg = db.Keywords.Single(i=>i.Keyword==abbr);
+            tg.IsActive = true;
+            db.SaveChanges();
+            return RedirectToAction("Admin");
+        }
+
+        public ActionResult DeactivateKeyword(string abbr)
+        {
+            Keywords tg = db.Keywords.Single(i => i.Keyword == abbr);
+            if (tg == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(tg);
+        }
+        [HttpPost, ActionName("DeactivateKeyword")]
+        public ActionResult DeactivateKeyword2(string abbr)
+        {
+            Keywords tg = db.Keywords.Single(i => i.Keyword == abbr);
+            tg.IsActive = false;
+            db.SaveChanges();
+            return RedirectToAction("Admin");
+        }
 
         public ActionResult AddQuestionType()
         {
