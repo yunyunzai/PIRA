@@ -177,8 +177,7 @@ namespace MvcApplication2.Controllers
                     db.UserCreateRequest.Add(ucr);
                 //}
                 db.SaveChanges();
-                globalModel.isEditorOpen = false;
-                globalModel.editModel = new RequestViewModel();
+                m.isEditorOpen = false;
                 return View("DISpecialist", globalModel);
             }
     
@@ -188,7 +187,7 @@ namespace MvcApplication2.Controllers
 
         public ActionResult create(DISpecialistModel m)
         {
-            globalModel.editModel = new RequestViewModel();
+            globalModel = new DISpecialistModel();
             globalModel.isEditorOpen = true;
             return View("DISpecialist", globalModel);
         }
@@ -217,7 +216,7 @@ namespace MvcApplication2.Controllers
             System.Diagnostics.Debug.WriteLine(m.editModel.caller.Name);
              //System.Diagnostics.Debug.WriteLine(m.editModel.request.RequestId);
             
-            globalModel.editModel = m.editModel;
+            globalModel = m;
             return View("DISpecialist", globalModel);
         }
 

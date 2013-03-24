@@ -15,6 +15,8 @@ using System.Web.Security;
 
 namespace MvcApplication2.Controllers
 {
+    [Authorize]
+    [Role(Roles = "DISpecialist")]
     public class DISpecialistController : Controller
     {
         private static DISpecialistModel globalModel=new DISpecialistModel();
@@ -177,8 +179,7 @@ namespace MvcApplication2.Controllers
                     db.UserCreateRequest.Add(ucr);
                 //}
                 db.SaveChanges();
-                globalModel.isEditorOpen = false;
-                globalModel.editModel = new RequestViewModel();
+                m.isEditorOpen = false;
                 return View("DISpecialist", globalModel);
             }
     
@@ -186,12 +187,18 @@ namespace MvcApplication2.Controllers
         }
 
 
+<<<<<<< HEAD
         public ActionResult create(DISpecialistModel m)
         {
-            globalModel.editModel = new RequestViewModel();
+            globalModel = new DISpecialistModel();
             globalModel.isEditorOpen = true;
             return View("DISpecialist", globalModel);
         }
+=======
+
+
+
+>>>>>>> 0a4973c284f12e9806ae834d1ff682121c6ed5fa
 
         public ActionResult edit(DISpecialistModel m, int rid)
         {
@@ -217,7 +224,7 @@ namespace MvcApplication2.Controllers
             System.Diagnostics.Debug.WriteLine(m.editModel.caller.Name);
              //System.Diagnostics.Debug.WriteLine(m.editModel.request.RequestId);
             
-            globalModel.editModel = m.editModel;
+            globalModel = m;
             return View("DISpecialist", globalModel);
         }
 
