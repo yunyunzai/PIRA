@@ -28,11 +28,11 @@ namespace MvcApplication2.Controllers
         //[ValidateInput(true)]
         public ActionResult requestSave(DISpecialistModel m)
         {
-            System.Diagnostics.Debug.WriteLine(globalModel.editModel.request==null);
-           
+            //System.Diagnostics.Debug.WriteLine(globalModel.editModel.request==null);
+            System.Diagnostics.Debug.WriteLine(m.editModel.newQuestions == null);
             if (ModelState.IsValid)
             {
-                System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
+                //System.Diagnostics.Debug.WriteLine(m.editModel.newQuestion.QuestionContent);
                 DISpecialistContext db = new DISpecialistContext();
 
                 // Updating Caller table 
@@ -111,119 +111,273 @@ namespace MvcApplication2.Controllers
                 }
                 db.SaveChanges();
 
-                // Updating Question table
-                Question question=null;
-                var questions = (from qs in db.Questions
-                             where qs.QuestionContent.Equals(m.editModel.newQuestion.QuestionContent) && qs.RequestId==request.RequestId
-                             select qs);
-                // question exists in the database
-                if (questions.Count()!=0)
-                {
-                    question = questions.First();
-                    question.QuestionContent = m.editModel.newQuestion.QuestionContent;
-                    question.Response = m.editModel.newQuestion.Response;
-                    question.Severity = m.editModel.newQuestion.Severity;
-                    question.Probability = m.editModel.newQuestion.Probability;
-                    question.TumorTypeAbbreviate = m.editModel.newQuestion.TumorTypeAbbreviate;
-                    question.QuestionTypeAbbreviate = m.editModel.newQuestion.QuestionTypeAbbreviate;
+                //// Updating Question table
+                //Question question=null;
+                //var questions = (from qs in db.Questions
+                //             where qs.QuestionContent.Equals(m.editModel.newQuestion.QuestionContent) && qs.RequestId==request.RequestId
+                //             select qs);
+                //// question exists in the database
+                //if (questions.Count()!=0)
+                //{
+                //    question = questions.First();
+                //    question.QuestionContent = m.editModel.newQuestion.QuestionContent;
+                //    question.Response = m.editModel.newQuestion.Response;
+                //    question.Severity = m.editModel.newQuestion.Severity;
+                //    question.Probability = m.editModel.newQuestion.Probability;
+                //    question.TumorTypeAbbreviate = m.editModel.newQuestion.TumorTypeAbbreviate;
+                //    question.QuestionTypeAbbreviate = m.editModel.newQuestion.QuestionTypeAbbreviate;
                     
-                }
-                else
-                {
-                    question = m.editModel.newQuestion;
-                    question.RequestId = request.RequestId;
-                    db.Questions.Add(question);
-                }
-                System.Diagnostics.Debug.WriteLine("QID: "+question.QuestionId);
-                db.SaveChanges();
+                //}
+                //else
+                //{
+                //    question = m.editModel.newQuestion;
+                //    question.RequestId = request.RequestId;
+                //    db.Questions.Add(question);
+                //}
+                //System.Diagnostics.Debug.WriteLine("QID: "+question.QuestionId);
+                //db.SaveChanges();
 
 
-                // update keyword tables
-                var keywords = from k in db.Keywords
-                         where k.Keyword.Equals(m.editModel.newKeyword.Keyword)
-                         select k;
+                //// update keyword tables
+                //var keywords = from k in db.Keywords
+                //         where k.Keyword.Equals(m.editModel.newKeyword.Keyword)
+                //         select k;
 
                 
-                Keywords keyword = null;
-                // if the keyword exists in the database
-                if (keywords.Count() != 0)
-                {
-                    keyword = keywords.First();                    
-                }
-                // if the keyword is not in the database, add the keyword to the database
-                else 
-                {                    
-                    keyword = new Keywords();
-                    keyword.Keyword = m.editModel.newKeyword.Keyword;
-                    keyword.IsActive = true;
-                    db.Keywords.Add(keyword);
-                    db.SaveChanges();
-                }
+                //Keywords keyword = null;
+                //// if the keyword exists in the database
+                //if (keywords.Count() != 0)
+                //{
+                //    keyword = keywords.First();                    
+                //}
+                //// if the keyword is not in the database, add the keyword to the database
+                //else 
+                //{                    
+                //    keyword = new Keywords();
+                //    keyword.Keyword = m.editModel.newKeyword.Keyword;
+                //    keyword.IsActive = true;
+                //    db.Keywords.Add(keyword);
+                //    db.SaveChanges();
+                //}
 
-                // add the keyword reference 
-                QuestionKeyword keywordRef=null;
-                var keywordRefs = from k in db.QuestionKeywords
-                         where k.Keyword.Equals(keyword.Keyword) && k.QuestionId==question.QuestionId
-                         select k;
-                // if the keyword reference exists in the db
-                if (keywordRefs.Count() != 0)
-                {
-                    keywordRef = keywordRefs.First();
+                //// add the keyword reference 
+                //QuestionKeyword keywordRef=null;
+                //var keywordRefs = from k in db.QuestionKeywords
+                //         where k.Keyword.Equals(keyword.Keyword) && k.QuestionId==question.QuestionId
+                //         select k;
+                //// if the keyword reference exists in the db
+                //if (keywordRefs.Count() != 0)
+                //{
+                //    keywordRef = keywordRefs.First();
+                //}
+                //// otherwise create new keyword reference
+                //else 
+                //{
+                //    keywordRef = new QuestionKeyword();
+                //    keywordRef.Keyword = m.editModel.newKeyword.Keyword;
+                //    keywordRef.QuestionId = question.QuestionId;
+                //    db.QuestionKeywords.Add(keywordRef);
+                //}
+                //// otherwise do nothing
+                //db.SaveChanges();
 
-                }
-                // otherwise create new keyword reference
-                else 
-                {
-                    keywordRef = new QuestionKeyword();
-                    keywordRef.Keyword = m.editModel.newKeyword.Keyword;
-                    keywordRef.QuestionId = question.QuestionId;
-                    db.QuestionKeywords.Add(keywordRef);
-                }
-                // otherwise do nothing
-                db.SaveChanges();
-
-                // update reference tables
-                Reference reference=null;
+                //// update reference tables
+                //Reference reference=null;
                 
-                if (m.editModel.newReference.ReferenceContent!=null)
-                {
+                //if (m.editModel.newReference.ReferenceContent!=null)
+                //{
 
-                    var refs = from r in db.References
-                               where r.ReferenceContent.Equals(m.editModel.newReference.ReferenceContent)
-                               select r;
-                    // if the reference exists in the db
-                    if (refs.Count() != 0)
+                //    var refs = from r in db.References
+                //               where r.ReferenceContent.Equals(m.editModel.newReference.ReferenceContent)
+                //               select r;
+                //    // if the reference exists in the db
+                //    if (refs.Count() != 0)
+                //    {
+                //        reference = refs.First();
+                //    }
+                //    // otherwise add new reference
+                //    else
+                //    {
+                //        // add reference content 
+                //        reference = new Reference();
+                //        reference.ReferenceContent = m.editModel.newReference.ReferenceContent;
+                //        db.References.Add(reference);
+                //        db.SaveChanges();                        
+                //    }
+
+
+                //    // add question reference if it does not exist in the db
+                //    QuestionReference qrf = null;
+                //    var qrfs = from r in db.QuestionReferences
+                //               where r.ReferenceId==reference.ReferenceId && r.QuestionId==question.QuestionId
+                //               select r;
+                //    // if the reference does not exists in the db add one!
+                //    if (qrfs.Count() == 0)
+                //    {
+                //        qrf = new QuestionReference();
+                //        qrf.QuestionId = question.QuestionId;
+                //        qrf.ReferenceId = reference.ReferenceId;
+                //        db.QuestionReferences.Add(qrf);
+                //    }
+                //    // else do nothing                
+                //    db.SaveChanges();
+                //}
+
+
+                // remove all the old questions relationship
+                
+                var questions = from qs in db.Questions
+                                 where qs.RequestId == request.RequestId
+                                 select qs;
+                List<Question> tempQs=questions.ToList();
+                foreach (Question q in tempQs)
+                {
+                    // remove keyword refs
+                    var keywordRefs = from k in db.QuestionKeywords
+                                      where k.QuestionId == q.QuestionId
+                                      select k;
+                    foreach (QuestionKeyword qk in keywordRefs)
                     {
-                        reference = refs.First();
+                        db.QuestionKeywords.Remove(qk);
                     }
-                    // otherwise add new reference
+                    db.SaveChanges();
+
+                    // remove reference refs
+                    var qrfs = from r in db.QuestionReferences
+                               where r.QuestionId == q.QuestionId
+                               select r;
+                    foreach (QuestionReference qrf in qrfs)
+                    {
+                        db.QuestionReferences.Remove(qrf);
+                    }
+                    db.SaveChanges();
+
+                    db.Questions.Remove(q);
+                }
+                db.SaveChanges();
+                // update all questions
+                for (int numQuestion = 0; numQuestion < m.editModel.newQuestions.Count(); numQuestion++)                
+                {               
+                    // Updating Question table
+                    Question question = null;
+                    Question tempQ=m.editModel.newQuestions[numQuestion];
+                    questions = (from qs in db.Questions
+                                     where qs.QuestionContent.Equals(tempQ.QuestionContent) && qs.RequestId == request.RequestId
+                                     select qs);
+                    // question exists in the database
+                    if (questions.Count() != 0)
+                    {
+                        question = questions.First();
+                        question.QuestionContent = m.editModel.newQuestions[numQuestion].QuestionContent;
+                        question.Response = m.editModel.newQuestions[numQuestion].Response;
+                        question.Severity = m.editModel.newQuestions[numQuestion].Severity;
+                        question.Probability = m.editModel.newQuestions[numQuestion].Probability;
+                        question.TumorTypeAbbreviate = m.editModel.newQuestions[numQuestion].TumorTypeAbbreviate;
+                        question.QuestionTypeAbbreviate = m.editModel.newQuestions[numQuestion].QuestionTypeAbbreviate;
+
+                    }
                     else
                     {
-                        // add reference content 
-                        reference = new Reference();
-                        reference.ReferenceContent = m.editModel.newReference.ReferenceContent;
-                        db.References.Add(reference);
-                        db.SaveChanges();                        
+                        question = m.editModel.newQuestions[numQuestion];
+                        question.RequestId = request.RequestId;
+                        db.Questions.Add(question);
                     }
-
-
-                    // add question reference if it does not exist in the db
-                    QuestionReference qrf = null;
-                    var qrfs = from r in db.QuestionReferences
-                               where r.ReferenceId==reference.ReferenceId && r.QuestionId==question.QuestionId
-                               select r;
-                    // if the reference does not exists in the db add one!
-                    if (qrfs.Count() == 0)
-                    {
-                        qrf = new QuestionReference();
-                        qrf.QuestionId = question.QuestionId;
-                        qrf.ReferenceId = reference.ReferenceId;
-                        db.QuestionReferences.Add(qrf);
-                    }
-                    // else do nothing                
+                   // System.Diagnostics.Debug.WriteLine("QID: " + question.QuestionId);
                     db.SaveChanges();
-                }
 
+                    string keywordsComposite = m.editModel.newKeywords[numQuestion];
+                    string[] separator = {"|"};
+                    string[] userKeywords = keywordsComposite.Split(separator,StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (string newKeyword in userKeywords)
+                    {
+                        // update keyword tables
+                        var keywords = from k in db.Keywords
+                                       where k.Keyword.Equals(newKeyword)
+                                       select k;
+
+
+                        Keywords keyword = null;
+                        // if the keyword exists in the database
+                        if (keywords.Count() != 0)
+                        {
+                            keyword = keywords.First();
+                        }
+                        // if the keyword is not in the database, add the keyword to the database
+                        else
+                        {
+                            keyword = new Keywords();
+                            keyword.Keyword = newKeyword;
+                            keyword.IsActive = true;
+                            db.Keywords.Add(keyword);
+                            db.SaveChanges();
+                        }
+
+                        // add the keyword reference 
+                        QuestionKeyword keywordRef = null;
+                        var keywordRefs = from k in db.QuestionKeywords
+                                          where k.Keyword.Equals(keyword.Keyword) && k.QuestionId == question.QuestionId
+                                          select k;
+                        // if the keyword reference exists in the db
+                        if (keywordRefs.Count() != 0)
+                        {
+                            keywordRef = keywordRefs.First();
+                        }
+                        // otherwise create new keyword reference
+                        else
+                        {
+                            keywordRef = new QuestionKeyword();
+                            keywordRef.Keyword = newKeyword;
+                            keywordRef.QuestionId = question.QuestionId;
+                            db.QuestionKeywords.Add(keywordRef);
+                        }
+                        // otherwise do nothing
+                        db.SaveChanges();
+                    }
+
+
+                    // update reference tables
+                    Reference reference = null;
+
+                    if (m.editModel.newReferences[numQuestion].ReferenceContent != null)
+                    {
+                        Reference tempRef=m.editModel.newReferences[numQuestion];
+                        var refs = from r in db.References
+                                   where r.ReferenceContent.Equals(tempRef.ReferenceContent)
+                                   select r;
+                        // if the reference exists in the db
+                        if (refs.Count() != 0)
+                        {
+                            reference = refs.First();
+                        }
+                        // otherwise add new reference
+                        else
+                        {
+                            // add reference content 
+                            reference = new Reference();
+                            reference.ReferenceContent = m.editModel.newReferences[numQuestion].ReferenceContent;
+                            db.References.Add(reference);
+                            db.SaveChanges();
+                        }
+
+
+                        // add question reference if it does not exist in the db
+                        QuestionReference qrf = null;
+                        var qrfs = from r in db.QuestionReferences
+                                   where r.ReferenceId == reference.ReferenceId && r.QuestionId == question.QuestionId
+                                   select r;
+                        // if the reference does not exists in the db add one!
+                        if (qrfs.Count() == 0)
+                        {
+                            qrf = new QuestionReference();
+                            qrf.QuestionId = question.QuestionId;
+                            qrf.ReferenceId = reference.ReferenceId;
+                            db.QuestionReferences.Add(qrf);
+                        }
+                        // else do nothing                
+                        db.SaveChanges();
+                    }
+                }
 
 
                 // logging
@@ -266,6 +420,10 @@ namespace MvcApplication2.Controllers
         {
             globalModel.editModel = new RequestViewModel();
             globalModel.isEditorOpen = true;
+            globalModel.editModel.newQuestions=new List<Question>();
+            globalModel.editModel.newQuestions.Add(new Question());
+            globalModel.editModel.newReferences = new List<Reference>();
+            globalModel.editModel.newReferences.Add(new Reference());
             return View("DISpecialist", globalModel);
         }
 
@@ -287,10 +445,47 @@ namespace MvcApplication2.Controllers
                                    select p).Count() == 0 ? null : (from p in db.Patients
                                                                     where p.PatientId == m.editModel.request.PatientId
                                                                     select p).First();
-            m.editModel.newQuestion = (from q in db.Questions
+            //m.editModel.newQuestion = (from q in db.Questions
+            //                           where q.RequestId == m.editModel.request.RequestId
+            //                           select q).First();
+
+            var qs = from q in db.Questions
                                        where q.RequestId == m.editModel.request.RequestId
-                                       select q).First();
-            System.Diagnostics.Debug.WriteLine(m.editModel.caller.Name);
+                                       select q;
+            
+            m.editModel.newQuestions = new List<Question>();
+            m.editModel.newReferences = new List<Reference>();
+            m.editModel.newKeywords = new List<string>();
+            foreach (Question q in qs)
+            {
+                m.editModel.newQuestions.Add(q);
+                
+            }
+            foreach (Question q in m.editModel.newQuestions)
+            {
+                var refs = from qr in db.QuestionReferences
+                           join r in db.References on qr.ReferenceId equals r.ReferenceId
+                       where qr.QuestionId==q.QuestionId 
+                       select r;
+                m.editModel.newReferences.Add(refs.Count()==0?new Reference():refs.First());
+                var ks = from qk in db.QuestionKeywords
+                           join k in db.Keywords on qk.Keyword equals k.Keyword
+                           where qk.QuestionId == q.QuestionId
+                           select k;
+
+                string keys = "";
+                foreach (Keywords k in ks)
+                {
+                    //m.editModel.newKeywords.Add(k);
+                    keys += k.Keyword + "|";
+                } 
+                m.editModel.newKeywords.Add(keys);
+               
+            }
+
+            
+
+            //System.Diagnostics.Debug.WriteLine(m.editModel.caller.Name);
              //System.Diagnostics.Debug.WriteLine(m.editModel.request.RequestId);
 
             // log this edit history
@@ -480,7 +675,26 @@ namespace MvcApplication2.Controllers
             return View("DISpecialist", globalModel);
         }
 
+        public ActionResult addQuestion(DISpecialistModel m)
+        {
+            
+            globalModel.editModel.newQuestions.Add(new Question());
+            globalModel.editModel.newReferences.Add(new Reference());
+           // globalModel.editModel.newKeywords.Add(new Keywords());
+            return View("DISpecialist", globalModel);
+        }
 
+        public ActionResult removeQuestion(DISpecialistModel m)
+        {
+            if (globalModel.editModel.newQuestions.Count() - 1 > 0)
+            {
+                int removeIndex = globalModel.editModel.newQuestions.Count() - 1;
+                globalModel.editModel.newQuestions.RemoveAt(removeIndex);
+                globalModel.editModel.newReferences.RemoveAt(removeIndex);
+                globalModel.editModel.newKeywords.RemoveAt(removeIndex);
+            }
+            return View("DISpecialist", globalModel);
+        }
 
     }
 }
