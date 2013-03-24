@@ -1,6 +1,6 @@
-﻿@model MvcApplication2.Models.TumorGroup
+﻿@model MvcApplication2.Models.UserGroup
 
-<h3>Are you sure you want to delete this tumor group?</h3>
+<h3>Change activation status</h3>
 <fieldset>
     <legend></legend>
 
@@ -12,15 +12,15 @@
     </div>
 
     <div class="display-label">
-         <b>@Html.DisplayNameFor(model => model.TumorTypeAbbreviate)</b>
+         <b>@Html.DisplayNameFor(model => model.Abbreviate)</b>
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.TumorTypeAbbreviate)
+        @Html.DisplayFor(model => model.Abbreviate)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Cancel", "TumorGroup")
+        <input type="submit" name="deactivateUserGroup" value="Deactivate" /> |
+        @Html.ActionLink("Cancel", "UserGroup")
     </p>
 }

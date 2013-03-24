@@ -63,6 +63,7 @@ namespace MvcApplication2.Models
         public string Abbreviate { get; set; }
 
         public string Name { get; set; }
+        public Int16 IsActive { get; set; }
 
 
         public virtual ICollection<UserBelongsGroup> UserBelongsGroup { get; set; }

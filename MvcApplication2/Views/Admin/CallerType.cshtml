@@ -71,7 +71,19 @@
             <td style="line-height: 20px;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
-	border-top: 1px solid #fff;">@Html.ActionLink("Delete", "DeleteCallerType", new { id = item.TypeAbbreviate })</td>
+	border-top: 1px solid #fff;">
+                @{
+                    Int16 flag = item.IsActive;
+                    if(flag==1){
+                
+                        @Html.ActionLink("Deactivate", "DeactivateCallerType", new { id = item.TypeAbbreviate })
+                }else{
+                        @Html.ActionLink("Activate","ActivateCallerType", new {id = item.TypeAbbreviate})
+                    }
+               
+                    
+                }
+                </td>
            </tr>
        
    }

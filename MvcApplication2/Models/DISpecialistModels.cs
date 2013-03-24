@@ -38,6 +38,7 @@ namespace MvcApplication2.Models
         public DbSet<UserEditRequest> UserEditRequest { get; set; }
         public DbSet<UserProfile> Users{ get; set; }
         public DbSet<UserExportRequest> UserExportRequests { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
 
 
 
@@ -126,6 +127,7 @@ namespace MvcApplication2.Models
         [Key]
         public string TypeAbbreviate { get; set; }
         public string Name { get; set; }
+        public Int16 IsActive { get; set; }
     }
 
     [Table("Question")]
@@ -190,6 +192,7 @@ namespace MvcApplication2.Models
         public string QuestionTypeAbbreviate { get; set; }
         // [Required]
         public string Name { get; set; }
+        public Int16 IsActive { get; set; }
     }
 
     [Table("Reference")]
@@ -216,6 +219,7 @@ namespace MvcApplication2.Models
         public string TumorTypeAbbreviate { get; set; }
         // [Required]
         public string Name { get; set; }
+        public Int16 IsActive { get; set; }
     }
 
 

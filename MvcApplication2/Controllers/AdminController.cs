@@ -231,7 +231,7 @@ namespace MvcApplication2.Controllers
             return View();
         }
 
-        public ActionResult DeleteTumorGroup(string Abbreviate)
+   /*     public ActionResult DeleteTumorGroup(string Abbreviate)
         {
             TumorGroup TumorGroup = db.TumorGroups.Find(Abbreviate);
             if (TumorGroup == null)
@@ -242,6 +242,7 @@ namespace MvcApplication2.Controllers
         }
 
 
+
         [HttpPost, ActionName("DeleteTumorGroup")]
         public ActionResult DeleteTumorGroup2(string Abbreviate)
         {
@@ -249,8 +250,121 @@ namespace MvcApplication2.Controllers
             db.TumorGroups.Remove(userprofile);
             db.SaveChanges();
             return RedirectToAction("TumorGroup");
+        }   */
+        public ActionResult ActivateTumorGroup(string id)
+        {
+            TumorGroup tg = db.TumorGroups.Find(id);
+            if (tg == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(tg);
+        }
+        [HttpPost, ActionName("ActivateTumorGroup")]
+        public ActionResult ActivateTumorGroup2(string id)
+        {
+            TumorGroup tg = db.TumorGroups.Find(id);
+            tg.IsActive = 1;
+            db.SaveChanges();
+            return RedirectToAction("TumorGroup");
         }
 
+        public ActionResult ActivateQuestionType(string id)
+        {
+            QuestionType tg = db.QuestionTypes.Find(id);
+            if (tg == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(tg);
+        }
+        [HttpPost, ActionName("ActivateQuestionType")]
+        public ActionResult ActivateQuestionType2(string id)
+        {
+            QuestionType tg = db.QuestionTypes.Find(id);
+            tg.IsActive = 1;
+            db.SaveChanges();
+            return RedirectToAction("QuestionType");
+        }
+
+        public ActionResult ActivateUserGroup(string abbr)
+        {
+            UserGroup tg = db.UserGroups.Find(abbr);
+            if (tg == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(tg);
+        }
+        [HttpPost, ActionName("ActivateUserGroup")]
+        public ActionResult ActivateUserGroup2(string abbr)
+        {
+            UserGroup tg = db.UserGroups.Find(abbr);
+            tg.IsActive = 1;
+            db.SaveChanges();
+            return RedirectToAction("UserGroup");
+        }
+
+        public ActionResult DeactivateUserGroup(string abbr)
+        {
+            UserGroup tg = db.UserGroups.Find(abbr);
+            if (tg == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(tg);
+        }
+        [HttpPost, ActionName("DeactivateUserGroup")]
+        public ActionResult DeactivateUserGroup2(string abbr)
+        {
+            UserGroup tg = db.UserGroups.Find(abbr);
+            tg.IsActive = 0;
+            db.SaveChanges();
+            return RedirectToAction("UserGroup");
+        }
+
+
+        public ActionResult DeactivateQuestionType(string id)
+        {
+            QuestionType tg = db.QuestionTypes.Find(id);
+            if (tg == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(tg);
+        }
+        [HttpPost, ActionName("DeactivateQuestionType")]
+        public ActionResult DeactivateQuestionType2(string id)
+        {
+            QuestionType tg = db.QuestionTypes.Find(id);
+            tg.IsActive = 0;
+            db.SaveChanges();
+            return RedirectToAction("QuestionType");
+        }
+
+        public ActionResult DeactivateTumorGroup(string id)
+        {
+            TumorGroup tg = db.TumorGroups.Find(id);
+            if (tg == null)
+            {
+                return HttpNotFound();
+
+            }
+            return View(tg);
+        }
+        [HttpPost, ActionName("DeactivateTumorGroup")]
+        public ActionResult DeactivateTumorGroup2(string id)
+        {
+            TumorGroup tg = db.TumorGroups.Find(id);
+            tg.IsActive = 0;
+            db.SaveChanges();
+            return RedirectToAction("TumorGroup");
+        }
         public ActionResult QuestionType(string searchString)
         {
             var key = from m in db.QuestionTypes select m;
@@ -283,6 +397,48 @@ namespace MvcApplication2.Controllers
             }
             return View();
         }
+        //GET
+      //  [HttpGet]
+        public ActionResult ActivateCallerType(string id)
+        {
+            CallerType ct = db.Callertypes.Find(id);
+            if (ct == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ct);
+        }
+        [HttpPost, ActionName("ActivateCallerType")]
+        public ActionResult ActivateCallerType2(string id)
+        {
+            CallerType ct = db.Callertypes.Find(id);
+            ct.IsActive = 1;
+            db.SaveChanges();
+
+            return RedirectToAction("CallerType");
+        }
+
+        //GET
+       // [HttpGet]
+        public ActionResult DeactivateCallerType(string id)
+        {
+            CallerType ct = db.Callertypes.Find(id);
+            if (ct == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ct);
+        }
+        [HttpPost, ActionName("DeactivateCallerType")]
+        public ActionResult DeactivateCallerType2(string id)
+        {
+            CallerType ct = db.Callertypes.Find(id);
+            ct.IsActive = 0;
+            db.SaveChanges();
+
+            return RedirectToAction("CallerType");
+        }
+
 
         public ActionResult DeleteQuestionType(string id)
         {

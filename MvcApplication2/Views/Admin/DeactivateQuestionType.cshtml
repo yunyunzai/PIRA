@@ -1,0 +1,25 @@
+﻿@model MvcApplication2.Models.QuestionType
+<h3>Change activation status</h3>
+<fieldset>
+    <legend></legend>
+
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.Name)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         <b>@Html.DisplayNameFor(model => model.QuestionTypeAbbreviate)</b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.QuestionTypeAbbreviate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" name="activateQuestionType" value="Deactivate" /> |
+        @Html.ActionLink("Cancel", "CallerType")
+    </p>
+}
