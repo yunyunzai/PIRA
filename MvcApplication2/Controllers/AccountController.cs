@@ -113,9 +113,9 @@ namespace MvcApplication2.Controllers
                     ModelState.AddModelError("", "User " + userID + " is no longer activated");
                     return View(model);
                 }
-                if (user.LastPasswordChangedDate.AddDays(42) < DateTime.Now)
+                if (user.LastPasswordChangedDate.Date.AddDays(42) < DateTime.Now.Date)
                 {
-                    Server.Transfer("~/Account/_ChangePasswordPartial");
+                    return RedirectToAction("Manage","Account",ManageMessageId.PasswordExpired);
                 }
                 else
                 {
@@ -320,6 +320,7 @@ namespace MvcApplication2.Controllers
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                : message == ManageMessageId.PasswordExpired ? "Your password expired. Please change it."
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -535,6 +536,7 @@ namespace MvcApplication2.Controllers
             ChangePasswordSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
+            PasswordExpired,
         }
 
 
@@ -547,9 +549,9 @@ namespace MvcApplication2.Controllers
            if (actStatus == true)
            {
                
-               return false;
+               return true;
            }
-           else return true;
+           else return false;
         }
         private void UpdateUserGroups(string[] selectedGroups, int id)
         {

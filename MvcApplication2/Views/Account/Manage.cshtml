@@ -6,26 +6,28 @@
 <hgroup class="title">
     <h1>@ViewBag.Title.</h1>
 </hgroup>
-
-<p class="message-success">@ViewBag.StatusMessage</p>
-
+@if (ViewBag.StatusMessage == "Your password expired. Please change it.")
+{
+<p class="message-success" style="color:red;">@ViewBag.StatusMessage</p>
+}
+else {<p class="message-success">@ViewBag.StatusMessage</p>}
 <p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
 
-@if (ViewBag.HasLocalPassword)
+@if (ViewBag.StatusMessage != "Your password has been changed.")
 {
     @Html.Partial("_ChangePasswordPartial")
 }
 else
 { 
-    @Html.Partial("_SetPasswordPartial")
+    
 }
 
-<section id="externalLogins">
+@*<section id="externalLogins">
     @Html.Action("RemoveExternalLogins")
 
     <h3>Add an external login</h3>
     @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+</section>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
