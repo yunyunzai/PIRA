@@ -8,6 +8,22 @@
         obj.style.width = width;
     }
 </script>
+<script>
+    $(function () {
+        var availableTags = [@if (Model != null && Model.requests != null)
+        {
+            foreach(var i in Model.requests){
+                if(i != null && i.newKeyword != null){
+                               <text>"@i.newKeyword.Keyword",</text>
+        }
+                           }
+        }
+      ];
+      $("#tags").autocomplete({
+          source: availableTags
+      });
+  });
+  </script>
 
 <script>
     $(function () {

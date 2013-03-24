@@ -1,7 +1,19 @@
-﻿@model IEnumerable<MvcApplication2.Models.Request>
+﻿@model IEnumerable<MvcApplication2.Models.AdminRequestModel>
 @{
     
 }
+<script>
+  $(function() {
+      var availableTags = [@foreach(var i in Model){
+                               
+                               <text>"@i.Keyword",</text>
+                           }
+      ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
 <div class="content-wrapper">
     <div class="float-left">
         <nav>
@@ -20,8 +32,8 @@
 <div id="request_management" style="position:relative;">
     @using (Html.BeginForm())
     {    
-         <p> Request: @Html.TextBox("key") &nbsp;  
-         <input type="submit" value="Filter" /></p> 
+         <div class="ui-widget"> Request Keyword: @Html.TextBox("key", "", new { id = "tags" }) &nbsp;  
+         <input type="submit" value="Filter" /></div> 
     } 
     <div style="height: 400px; overflow-y:scroll;">
     <table style="border: 1px solid #e3e3e3;
@@ -42,6 +54,12 @@
 	font-style: normal;
 	font-weight: normal;
 	text-align: left;
+	text-shadow: white 1px 1px 1px;">Keyword</th>
+               <th style="font-size: 17px;
+	line-height: 20px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
 	text-shadow: white 1px 1px 1px;">Active</th>
            </tr>
         
@@ -53,20 +71,16 @@
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
 	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.RequestId)</td>
+               <td style="line-height: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.Keyword)
+            </td>
             <td style="line-height: 20px;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
 	border-top: 1px solid #fff;">@Html.DisplayFor(modelItem => item.IsActive)</td>
-            <td style="line-height: 20px;
-	font-size: 14px;
-	border-bottom: 1px solid #fff;
-	border-top: 1px solid #fff;">@*@foreach(var q in item.Questions){
-                                  foreach (var k in q.Keywords)
-                                  {
-                                      Html.DisplayFor(key => k.Keyword);
-                                  }
-                              }*@
-            </td>
+            
             <td style="line-height: 20px;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
