@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Net.Mail;
+using System.Net;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -311,6 +312,147 @@ namespace MvcApplication2.Controllers
             return RedirectToAction("Manage", new { Message = message });
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+
+        }
+
+        [HttpPost, ActionName("ForgotPassword")]
+        [AllowAnonymous]
+        public ActionResult ForgotPassword2(string username)
+        {
+           // string password = Membership.GeneratePassword(8,1);
+           // MembershipUser user = Membership.GetUser(username);
+         //   user.ChangePassword(user.ResetPassword(), password);
+         //   var token = WebSecurity.GeneratePasswordResetToken(username);
+         //   WebSecurity.ResetPassword(token, password);
+            
+
+           // sendEmailToUser(username, password);
+
+            var user = Membership.GetUser(username);
+            if (user == null)
+            {
+                TempData["Message"] = "User does not exist";
+            }
+            else
+            {
+                var token = WebSecurity.GeneratePasswordResetToken(username);
+                var resetLink = "<a href='" + Url.Action("ResetPassword", "Account", new { un = username, rt = token }, "http") + "'>Reset Password</a>";
+                var userName = db.UserProfiles.Where(i => i.UserName == username).Single();
+                string emailAddress = userName.Email;
+                string subject = "Password Reset Token";
+                string body = "<b>Please find the Password Reset Token</b><br/>" + resetLink; //edit it
+                try
+                {
+                    sendEmailToUser(emailAddress, subject, body);
+                    TempData["Message"] = "Mail Sent.";
+                }
+                catch (Exception ex)
+                {
+                    TempData["Message"] = "Error occured while sending email." + ex.Message;
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        private void sendEmailToUser(string emailAddress, string subject, string body)
+        {
+            
+            MailMessage mail = new MailMessage("noreply@bc-cancer.ca", emailAddress);
+            mail.Subject = subject;
+            mail.Body = body;
+            mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            mail.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient();
+            client.Host = "smtp.gmail.com";
+           // client.Host = "localhost";
+      
+            client.EnableSsl = true;
+            client.Port = 587;
+          //  client.Port = 2041;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("dirabcca", "pasaworde");
+         
+            client.Send(mail);
+
+
+
+        }
+      
+        private string GenerateRandomPassword(int length)
+        {
+            string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789!@$?_-*&#+";
+            char[] chars = new char[length];
+            Random rd = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                chars[i] = allowedChars[rd.Next(0, allowedChars.Length)];
+            }
+            return new string(chars);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string un, string rt)
+        {
+            UsersContext db = new UsersContext();
+            //TODO: Check the un and rt matching and then perform following
+            //get userid of received username
+            var userid = (from i in db.UserProfiles
+                          where i.UserName == un
+                          select i.UserId).FirstOrDefault();
+            //check userid and token matches
+            bool any = (from j in db.webpages_Memberships
+                        where (j.UserId == userid)
+                        && (j.PasswordVerificationToken == rt)
+                        //&& (j.PasswordVerificationTokenExpirationDate < DateTime.Now)
+                        select j).Any();
+
+            if (any == true)
+            {
+                //generate random password
+                string newpassword = GenerateRandomPassword(6);
+                //reset password
+                bool response = WebSecurity.ResetPassword(rt, newpassword);
+
+                if (response == true)
+                {
+                    //get user emailid to send password
+                    var emailid = (from i in db.UserProfiles
+                                   where i.UserName == un
+                                   select i.Email).FirstOrDefault();
+                    //send email
+                    string subject = "New Password";
+                    string body = "<b>Please find the New Password</b><br/>" + newpassword; //edit it
+                    try
+                    {
+                        sendEmailToUser(emailid, subject, body);
+                        TempData["Message"] = "Mail Sent.";
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["Message"] = "Error occured while sending email." + ex.Message;
+                    }
+
+                    //display message
+                    TempData["Message"] = "Success! Check email we sent. Your New Password Is " + newpassword;
+                }
+                else
+                {
+                    TempData["Message"] = "Hey, avoid random request on this page.";
+                }
+            }
+            else
+            {
+                TempData["Message"] = "Username and token not maching.";
+            }
+
+            return View();
+        }
         //
         // GET: /Account/Manage
 
