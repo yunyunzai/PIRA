@@ -21,6 +21,7 @@ namespace MvcApplication2.Models
         public DbSet<Roles> Roles { get; set; }
         public DbSet<UserBelongsGroup> UserBelongsGroup { get; set; }
         public DbSet<UserGroup> UserGroup { get; set; }
+        public DbSet<webpages_Membership> webpages_Memberships { get; set; }
     }
 
     [Table("webpages_UsersInRoles")]
@@ -39,6 +40,23 @@ namespace MvcApplication2.Models
         public virtual Roles Role { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         
+    }
+
+    [Table("webpages_Membership")]
+    public class webpages_Membership
+    {
+        [Key]
+        public Int64 UserId { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string ConfirmationToken { get; set; }
+        public bool IsConfirmed { get; set; }
+        public DateTime LastPasswordFailureDate { get; set; }
+        public int PasswordFailuresSinceLastSuccess { get; set; }
+        public string Password { get; set; }
+        public DateTime PasswordChangeDate { get; set; }
+        public string PasswordSalt { get; set; }
+        public string PasswordVerificationToken { get; set; }
+        public DateTime PasswordVerificationTokenExpirationDate { get; set; }
     }
     [Table("UserBelongsGroup")]
     public class UserBelongsGroup
@@ -217,5 +235,10 @@ namespace MvcApplication2.Models
         public string Provider { get; set; }
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
+    }
+
+    public class ForgotPassword
+    {
+        public string UserName { get; set; }
     }
 }
