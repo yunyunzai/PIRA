@@ -29,7 +29,7 @@ namespace MvcApplication2.Controllers
             }
             
             
-            return View(key);
+            return View(key.ToList());
         }
         //GET: /Admin
       
@@ -218,7 +218,7 @@ namespace MvcApplication2.Controllers
             }
 
 
-            return View(key);
+            return View(key.ToList());
         }
 
         
